@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housing Affordability — Kara Toone for Utah</title>
+<meta name="description" content="Kara Toone's plan for housing affordability and neighborhood stability in Davis County. Making homeownership attainable for the next generation in House District 14.">
+<meta name="keywords" content="Kara Toone, housing, affordability, homeownership, Davis County, Utah House District 14, zoning, first-time homebuyer">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Housing Affordability — Kara Toone for Utah">
+<meta property="og:description" content="Making homeownership attainable for the next generation. Kara Toone's plan for housing affordability in House District 14.">
+<meta property="og:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+<meta property="og:site_name" content="Kara Toone for Utah">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Housing Affordability — Kara Toone for Utah">
+<meta name="twitter:description" content="Making homeownership attainable for the next generation.">
+<meta name="twitter:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* ─── PAGE-SPECIFIC STYLES ─── */
+.solution-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+  margin: 48px 0;
+}
+.solution-card {
+  background: var(--white);
+  border: 1px solid #E0E8F0;
+  border-radius: 4px;
+  padding: 40px 32px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.solution-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(13,31,60,0.1);
+}
+.solution-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--red);
+}
+.solution-card .card-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem; color: #E0E8F0; line-height: 1;
+  margin-bottom: 12px;
+}
+.solution-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 12px; line-height: 1.3;
+}
+.solution-card p {
+  font-size: 0.9rem; color: #6B7A8D; line-height: 1.7; font-weight: 300;
+}
+.policy-list {
+  list-style: none; margin: 32px 0;
+}
+.policy-list li {
+  font-size: 1rem; line-height: 1.8;
+  color: #4A5568; font-weight: 400;
+  padding: 12px 0 12px 32px;
+  position: relative;
+  border-bottom: 1px solid #E8EFF7;
+}
+.policy-list li:last-child { border-bottom: none; }
+.policy-list li::before {
+  content: '✓';
+  position: absolute; left: 0; top: 12px;
+  color: var(--red); font-weight: 700; font-size: 1.1rem;
+}
+.personal-note {
+  background: var(--cream);
+  border-left: 4px solid var(--gold);
+  padding: 32px 36px;
+  margin: 32px 0;
+  border-radius: 0 4px 4px 0;
+}
+.personal-note p {
+  font-size: 1rem; line-height: 1.8;
+  color: #4A5568; font-weight: 300;
+  font-style: italic;
+}
+.personal-note cite {
+  display: block; margin-top: 16px;
+  font-size: 0.85rem; font-style: normal;
+  color: var(--red); font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+}
+@media (max-width: 768px) {
+  .solution-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuClose" aria-label="Close menu">&#10005;</button>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About Kara</a>
+  <a href="../index.html#priorities">Priorities</a>
+  <a href="../index.html#events">Events</a>
+  <a href="../index.html#involved">Get Involved</a>
+  <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" style="color:var(--gold)">Donate Now &rarr;</a>
+</div>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <a href="../index.html" class="nav-logo">Kara <span>Toone</span></a>
+  <ul class="nav-links">
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#priorities">Priorities</a></li>
+    <li><a href="../index.html#events">Events</a></li>
+    <li><a href="../index.html#involved">Get Involved</a></li>
+    <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="nav-donate" target="_blank">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Priority Navigation -->
+<div class="priority-nav">
+  <div class="section-inner">
+    <a href="growth-infrastructure.html"><span class="priority-nav-num">01</span> Growth &amp; Infrastructure</a>
+    <a href="housing.html" class="active"><span class="priority-nav-num">02</span> Housing</a>
+    <a href="public-safety.html"><span class="priority-nav-num">03</span> Public Safety</a>
+    <a href="education.html"><span class="priority-nav-num">04</span> Education</a>
+    <a href="fiscal-responsibility.html"><span class="priority-nav-num">05</span> Fiscal Responsibility</a>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="page-hero-image">
+    <img src="https://media.kara.fosterlabs.org/House%20For%20Sale.jpg.avif" alt="House for sale in a Davis County neighborhood">
+  </div>
+  <div class="section-inner">
+    <div class="section-eyebrow">Priority 02</div>
+    <h1>Housing Affordability &amp;<br>Neighborhood Stability</h1>
+    <p>Making homeownership attainable for the next generation &mdash; without sacrificing the neighborhoods we love.</p>
+  </div>
+</section>
+
+<!-- Why This Is Personal -->
+<section class="content-section" id="personal">
+  <div class="section-inner">
+    <div class="content-grid reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">Why This Is Personal</div>
+        <h2>Kara&rsquo;s own kids are asking: <em>&ldquo;Can we afford to stay?&rdquo;</em></h2>
+        <p>
+          Kara Toone didn&rsquo;t come to the housing issue through policy papers or campaign strategy sessions. She came to it at the dinner table &mdash; when her own young adult children wondered out loud whether they could afford to buy a home in the community where they grew up.
+        </p>
+        <p>
+          It&rsquo;s a conversation happening in kitchens across Davis County. Young professionals with good jobs, doing everything right, finding themselves priced out of the neighborhoods they call home. Families who have lived here for decades watching their children move away &mdash; not because they want to, but because they have to.
+        </p>
+        <div class="personal-note">
+          <p>
+            &ldquo;When your kids grew up playing at the same parks, going to the same schools, building friendships that last a lifetime &mdash; and then they tell you they can&rsquo;t afford to stay? That&rsquo;s not just a policy problem. That&rsquo;s a family problem. And it&rsquo;s one I&rsquo;m determined to help solve.&rdquo;
+          </p>
+          <cite>&mdash; Kara Toone</cite>
+        </div>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/House%20For%20Sale.jpg.avif" alt="Homes in Davis County, Utah">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Housing Crisis in Utah - Stats -->
+<section class="content-section alt" id="crisis">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">The Housing Crisis</div>
+    <h2 class="content-text reveal" style="margin-bottom:20px;">
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,2.8rem); font-weight:900; line-height:1.2; color:var(--navy);">The numbers tell a <em style="color:var(--red); font-style:italic;">stark story</em></span>
+    </h2>
+    <p class="content-text reveal" style="font-size:1.05rem; line-height:1.8; color:#4A5568; font-weight:300; max-width:720px; margin-bottom:48px;">
+      Utah&rsquo;s housing market has outpaced wages for over a decade. In Davis County, median home prices have soared while starter home inventory has nearly disappeared. The gap between what families earn and what homes cost grows wider every year.
+    </p>
+  </div>
+</section>
+
+<!-- Stats Row -->
+<div class="stats-row reveal">
+  <div class="stat">
+    <div class="stat-num">$485K</div>
+    <div class="stat-desc">Median home price in Davis County</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">38%</div>
+    <div class="stat-desc">Home price increase over five years</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">6.2x</div>
+    <div class="stat-desc">Price-to-income ratio for first-time buyers</div>
+  </div>
+</div>
+
+<!-- Kara's Solutions -->
+<section class="content-section" id="solutions">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Kara's Solutions</div>
+    <h2 class="content-text reveal" style="margin-bottom:20px;">
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,2.8rem); font-weight:900; line-height:1.2; color:var(--navy);">A practical approach to <em style="color:var(--red); font-style:italic;">attainable housing</em></span>
+    </h2>
+    <p class="content-text reveal" style="font-size:1.05rem; line-height:1.8; color:#4A5568; font-weight:300; max-width:720px; margin-bottom:48px;">
+      Kara rejects the false choice between runaway development and doing nothing. Her approach centers on expanding opportunity while protecting the character of existing neighborhoods. Smart policy can do both.
+    </p>
+
+    <div class="solution-grid reveal">
+      <div class="solution-card">
+        <div class="card-num">01</div>
+        <h3>Expand Starter Home Inventory</h3>
+        <p>
+          Through targeted zoning flexibility, Kara will work to encourage the construction of smaller, more affordable starter homes &mdash; townhomes, cottage-style developments, and accessory dwelling units &mdash; in appropriate areas. Young families deserve options that don&rsquo;t require a six-figure down payment.
+        </p>
+      </div>
+      <div class="solution-card">
+        <div class="card-num">02</div>
+        <h3>Cut Permitting Red Tape</h3>
+        <p>
+          Regulatory delays add tens of thousands of dollars to the cost of every home built in Utah. Kara will push to streamline permitting processes, reduce bureaucratic bottlenecks, and speed up the timeline from groundbreaking to move-in &mdash; without compromising safety or quality.
+        </p>
+      </div>
+      <div class="solution-card">
+        <div class="card-num">03</div>
+        <h3>Maintain Strong Local Control</h3>
+        <p>
+          Kara believes cities and counties &mdash; not the state legislature &mdash; should have the primary say over land-use decisions in their communities. She will oppose state mandates that override local zoning and will fight to keep planning authority close to the people it affects most.
+        </p>
+      </div>
+      <div class="solution-card">
+        <div class="card-num">04</div>
+        <h3>Support First-Time Homebuyers</h3>
+        <p>
+          Kara supports expanding state-backed first-time homebuyer programs, including down-payment assistance, low-interest lending programs, and financial literacy resources that help young families navigate the path to homeownership with confidence.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Neighborhood Stability -->
+<section class="content-section alt" id="stability">
+  <div class="section-inner">
+    <div class="content-grid reverse reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">Neighborhood Stability</div>
+        <h2>Protecting the communities <em>we&rsquo;ve built</em></h2>
+        <p>
+          Housing policy is not just about building more &mdash; it&rsquo;s about building right. Kara understands that existing neighborhoods have a character worth protecting. Families chose their homes because of the community around them: the quiet streets, the nearby parks, the neighbors they know by name.
+        </p>
+        <p>
+          Kara will fight against incompatible high-density developments that are shoehorned into established single-family neighborhoods. She believes growth and preservation can coexist when planning is thoughtful, transparent, and driven by community input rather than developer pressure.
+        </p>
+        <p>
+          At the same time, she recognizes that smart, context-sensitive infill &mdash; done right and in the right locations &mdash; can strengthen neighborhoods by adding housing options near transit, commercial corridors, and community centers.
+        </p>
+        <ul class="policy-list">
+          <li>Protect existing neighborhoods from incompatible high-density rezoning</li>
+          <li>Require meaningful community input before major land-use changes</li>
+          <li>Support context-sensitive infill development along appropriate corridors</li>
+          <li>Preserve green space and parks as communities grow</li>
+          <li>Ensure infrastructure capacity before approving large developments</li>
+        </ul>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/House%20For%20Sale.jpg.avif" alt="Established neighborhood in Davis County">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote Callout -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="callout reveal">
+      <blockquote>
+        &ldquo;I want my kids &mdash; and yours &mdash; to be able to raise their families in the same community where they grew up. That means building homes they can actually afford, in neighborhoods that still feel like home. We can grow smartly without losing what makes this place special.&rdquo;
+      </blockquote>
+      <cite>&mdash; Kara Toone</cite>
+    </div>
+  </div>
+</section>
+
+<!-- The Path Forward -->
+<section class="content-section alt" id="path-forward">
+  <div class="section-inner">
+    <div class="content-grid reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">The Path Forward</div>
+        <h2>Housing is an <em>economic issue</em></h2>
+        <p>
+          When young professionals can&rsquo;t afford to live near their workplaces, employers struggle to recruit and retain talent. When teachers, firefighters, and nurses are priced out of the communities they serve, everyone suffers. Housing affordability is not just a personal issue &mdash; it&rsquo;s an economic competitiveness issue.
+        </p>
+        <p>
+          Kara will bring a business-minded, community-focused approach to housing policy. She understands that the market alone won&rsquo;t solve this problem, but heavy-handed mandates won&rsquo;t either. The answer lies in removing barriers, creating incentives, and trusting local communities to guide their own growth.
+        </p>
+        <p>
+          Davis County can be a place where every generation has a fair shot at owning a home. It will take leadership, collaboration, and a willingness to tackle tough questions. Kara is ready.
+        </p>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/House%20For%20Sale.jpg.avif" alt="Housing development in Utah">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Band -->
+<section class="cta-band">
+  <h2>Help Make Homeownership Attainable</h2>
+  <p>
+    Kara Toone believes every family deserves a fair shot at owning a home in the community they love. Support her campaign today.
+  </p>
+  <div class="cta-buttons">
+    <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-white" target="_blank">Donate Now</a>
+    <a href="../index.html#involved" class="btn-white">Volunteer</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">Kara <span>Toone</span></span>
+        <p>Lifelong Davis County resident. Education leader. Community builder. Running to represent House District 14 in the Utah State Legislature.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/karatooneforutah/" class="social-btn" target="_blank" aria-label="Instagram">IG</a>
+          <a href="https://www.facebook.com/profile.php?id=61584720802611" class="social-btn" target="_blank" aria-label="Facebook">FB</a>
+          <a href="mailto:votekaratoone@gmail.com" class="social-btn" aria-label="Email">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Campaign</h4>
+        <ul>
+          <li><a href="../about.html">About Kara</a></li>
+          <li><a href="growth-infrastructure.html">Growth &amp; Infrastructure</a></li>
+          <li><a href="housing.html">Housing Affordability</a></li>
+          <li><a href="public-safety.html">Safe Communities</a></li>
+          <li><a href="education.html">Education &amp; Schools</a></li>
+          <li><a href="fiscal-responsibility.html">Fiscal Responsibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></li>
+          <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" target="_blank">Donate Online</a></li>
+          <li><a href="https://www.venmo.com/u/electkaratoone" target="_blank">Donate via Venmo</a></li>
+          <li><a href="https://www.instagram.com/karatooneforutah/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61584720802611" target="_blank">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Kara Toone for Utah. Paid for by the Committee to Elect Kara Toone.</span>
+      <span>Authorized by Kara Toone &middot; <a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../main.js"></script>
+</body>
+</html>

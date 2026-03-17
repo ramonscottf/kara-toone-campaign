@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Kara Toone — Utah House District 14</title>
+<meta name="description" content="Meet Kara Toone — born in Vernal, raised in Davis County, education leader, and Republican running for Utah House District 14. Learn about her story, family, and commitment to Clearfield and Syracuse.">
+<meta name="keywords" content="Kara Toone, about, Utah House District 14, Davis County, Clearfield, Syracuse, Republican, education, Davis Education Foundation">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="About Kara Toone — Utah House District 14">
+<meta property="og:description" content="Born in Vernal. Raised in Davis County. Education leader, mother of four, and lifelong Republican running for House District 14.">
+<meta property="og:url" content="https://kara.fosterlabs.org/about.html">
+<meta property="og:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+<meta property="og:site_name" content="Kara Toone for Utah">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Kara Toone — Utah House District 14">
+<meta name="twitter:description" content="Born in Vernal. Raised in Davis County. Education leader, mother of four, and lifelong Republican running for House District 14.">
+<meta name="twitter:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+
+<link rel="canonical" href="https://kara.fosterlabs.org/about.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+/* ─── ABOUT-SPECIFIC STYLES ─── */
+.page-hero .hero-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+.page-hero .hero-text {
+  flex: 1;
+}
+
+/* Photo grid for family section — 2x2 */
+.photo-grid-family {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.photo-grid-family img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: cover; border-radius: 4px;
+  transition: transform 0.3s;
+}
+.photo-grid-family img:hover {
+  transform: scale(1.03);
+}
+
+/* Stats row for 4 items */
+.stats-row-4 {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0; margin: 60px 0;
+  background: var(--navy); border-radius: 4px; overflow: hidden;
+}
+.stats-row-4 .stat {
+  text-align: center; padding: 48px 24px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+}
+.stats-row-4 .stat:last-child { border-right: none; }
+.stats-row-4 .stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; color: var(--gold); line-height: 1;
+  margin-bottom: 8px;
+}
+.stats-row-4 .stat-desc {
+  font-size: 0.75rem; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Political leadership list */
+.leadership-list {
+  list-style: none; margin: 32px 0;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.leadership-list li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.92rem; line-height: 1.6;
+  color: #4A5568; font-weight: 400;
+}
+.leadership-list li::before {
+  content: '\2605';
+  color: var(--gold); font-size: 0.8rem;
+  margin-top: 3px; flex-shrink: 0;
+}
+
+/* Why running section */
+.why-running-text {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.why-running-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 900; line-height: 1.2;
+  color: var(--navy); margin-bottom: 24px;
+}
+.why-running-text p {
+  font-size: 1.05rem; line-height: 1.8;
+  color: #4A5568; margin-bottom: 20px; font-weight: 300;
+}
+.why-running-ctas {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+/* Responsive overrides */
+@media (max-width: 1024px) {
+  .stats-row-4 { grid-template-columns: repeat(2, 1fr); }
+  .stats-row-4 .stat:nth-child(2) { border-right: none; }
+  .stats-row-4 .stat:nth-child(1),
+  .stats-row-4 .stat:nth-child(2) { border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .leadership-list { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .stats-row-4 { grid-template-columns: 1fr; }
+  .stats-row-4 .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .stats-row-4 .stat:last-child { border-bottom: none; }
+  .photo-grid-family { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuClose" aria-label="Close menu">&#10005;</button>
+  <a href="index.html">Home</a>
+  <a href="about.html">About Kara</a>
+  <a href="index.html#priorities">Priorities</a>
+  <a href="index.html#events">Events</a>
+  <a href="index.html#involved">Get Involved</a>
+  <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" style="color:var(--gold)">Donate Now &rarr;</a>
+</div>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">Kara <span>Toone</span></a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#priorities">Priorities</a></li>
+    <li><a href="index.html#events">Events</a></li>
+    <li><a href="index.html#involved">Get Involved</a></li>
+    <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="nav-donate" target="_blank">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════
+     1. PAGE HERO
+     ═══════════════════════════════════════════════════ -->
+<section class="page-hero" id="main">
+  <div class="page-hero-image">
+    <img src="https://media.kara.fosterlabs.org/kara-hero.jpg" alt="Kara Toone — candidate for Utah House District 14">
+  </div>
+  <div class="section-inner">
+    <div class="section-eyebrow">Meet Kara</div>
+    <h1>Rooted Here.<br>Ready to Serve.</h1>
+    <p>Education leader. Community builder. Mother of four. A lifelong Davis County resident running to bring real representation to House District 14.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     2. HER STORY
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="content-grid">
+      <div class="content-text reveal">
+        <div class="section-eyebrow">Her Story</div>
+        <h2>Born in Vernal. <em>Built in Davis County.</em></h2>
+        <p>Kara Toone was born in Vernal, Utah &mdash; a small town in the Uinta Basin where wide-open spaces, tight-knit community, and a strong work ethic shaped her earliest years. At three years old, her family made the move to Davis County, and it's been home ever since.</p>
+        <p>Growing up in Davis County, Kara learned what it meant to be part of a community that looks out for one another. She attended Viewmont High School, where she built friendships and developed the leadership instincts that would define her career. From neighborhood block parties to school hallways, she was always the one organizing, listening, and bringing people together.</p>
+        <p>Those formative years in Davis County gave Kara something no resume can capture: a deep, personal understanding of the people, the neighborhoods, and the values that make this part of Utah special. It is not just where she grew up &mdash; it is who she is.</p>
+      </div>
+      <div class="content-image reveal reveal-delay-2">
+        <img src="https://media.kara.fosterlabs.org/GreatSaltLake.jpeg.avif" alt="Utah landscape — the land that shaped Kara's story">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     3. EDUCATION JOURNEY
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section alt">
+  <div class="section-inner">
+    <div class="content-grid reverse">
+      <div class="content-text reveal">
+        <div class="section-eyebrow">Education</div>
+        <h2>A Lifelong <em>Learner</em></h2>
+        <p>Kara's belief in the power of education is not abstract &mdash; it is deeply personal. She has spent her life investing in learning, earning degrees across Utah's public institutions and ultimately pursuing a Master's in Public Policy to better serve her community.</p>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-year">Snow College</div>
+            <h3>Ephraim, Utah</h3>
+            <p>Kara began her higher education journey at Snow College, one of Utah's most respected two-year institutions. It was here she discovered her passion for civic engagement and community-centered work.</p>
+          </div>
+          <div class="timeline-item reveal reveal-delay-1">
+            <div class="timeline-year">Weber State University</div>
+            <h3>Ogden, Utah</h3>
+            <p>At Weber State, Kara earned her bachelor's degree and deepened her understanding of policy, education, and public service &mdash; all within the community she calls home.</p>
+          </div>
+          <div class="timeline-item reveal reveal-delay-2">
+            <div class="timeline-year">University of Utah</div>
+            <h3>Master's in Public Policy</h3>
+            <p>Kara's graduate work at the University of Utah gave her the analytical framework and policy expertise to tackle the complex challenges facing Utah families &mdash; from education funding to housing affordability to infrastructure growth.</p>
+          </div>
+        </div>
+      </div>
+      <div class="content-image reveal reveal-delay-1" style="align-self: start; padding-top: 40px;">
+        <div class="credentials">
+          <span class="credential-chip">Snow College</span>
+          <span class="credential-chip">Weber State University</span>
+          <span class="credential-chip">University of Utah &mdash; MPA</span>
+          <span class="credential-chip">Davis Education Foundation</span>
+          <span class="credential-chip">Davis Chamber of Commerce</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     4. FAMILY SECTION
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Family</div>
+    <h2 class="content-text reveal" style="margin-bottom: 24px;"><span style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,2.8rem); font-weight:900; line-height:1.2; color:var(--navy);">A Clearfield <em style="font-style:italic; color:var(--red);">Family</em></span></h2>
+    <div class="content-grid">
+      <div class="content-text reveal">
+        <p>Kara and her husband Logan have built their life together in Clearfield, the community they have proudly called home since 2003 &mdash; more than twenty years of raising a family, investing in their neighborhood, and showing up for their neighbors.</p>
+        <p>Together, they are raising four children in the same schools, parks, and neighborhoods where Kara has spent most of her own life. Their kids play on local sports teams, attend local schools, and are growing up with the same small-town values that shaped Kara's childhood in Davis County.</p>
+        <p>For Kara, this is not a campaign talking point &mdash; it is her daily life. She drives the same roads, shops at the same stores, and worries about the same things every other parent in HD14 worries about: Are our schools strong enough? Are our neighborhoods safe? Can our kids afford to build their own lives here someday?</p>
+        <p>That is why she is running. Because when your representative is your neighbor, you get someone who truly understands what is at stake.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="photo-grid-family">
+          <img src="https://media.kara.fosterlabs.org/IMG_0742.jpeg.avif" alt="The Toone family">
+          <img src="https://media.kara.fosterlabs.org/IMG_1041.jpeg.avif" alt="Kara with her family">
+          <img src="https://media.kara.fosterlabs.org/IMG_4074.jpeg.avif" alt="Family moments">
+          <img src="https://media.kara.fosterlabs.org/IMG_3274.jpeg.avif" alt="The Toone family in the community">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     5. CAREER & COMMUNITY SERVICE
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section alt">
+  <div class="section-inner">
+    <div class="content-grid reverse">
+      <div class="content-text reveal">
+        <div class="section-eyebrow">Career &amp; Community</div>
+        <h2>Serving <em>72,000+ Students</em></h2>
+        <p>As Executive Director of the Davis Education Foundation, Kara works at the intersection of education, community, and policy every single day. She collaborates with educators, families, business leaders, and community partners to strengthen outcomes for more than 72,000 students across the Davis School District &mdash; one of the largest in Utah.</p>
+        <p>Her work is not behind a desk in Salt Lake City. It is in school board meetings, parent-teacher conferences, community roundtables, and legislative hearings. She understands how policy decisions in the Capitol ripple through classrooms, cafeterias, and family dinner tables.</p>
+        <p>Beyond her role at the Foundation, Kara chairs the Davis Chamber of Commerce Legislative Affairs Committee, connecting local business priorities to state-level decision-making. She has spent over 20 years serving the Clearfield and Syracuse communities &mdash; not for a title, but because she believes in showing up.</p>
+      </div>
+      <div class="reveal reveal-delay-1">
+        <div class="stats-row-4">
+          <div class="stat">
+            <div class="stat-num">72,000+</div>
+            <div class="stat-desc">Students Served</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">20+</div>
+            <div class="stat-desc">Years of Service</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1</div>
+            <div class="stat-desc">Education Foundation</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">14</div>
+            <div class="stat-desc">House District</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     6. POLITICAL LEADERSHIP
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Republican Leadership</div>
+    <div class="content-text reveal">
+      <h2>A Proven <em>Republican Leader</em></h2>
+      <p>Kara has not just voted Republican &mdash; she has built the Republican Party from the ground up in Davis County. From precinct chair to state delegate, from organizing conventions to mentoring the next generation of conservative women leaders, she has put in the work that most people never see.</p>
+    </div>
+
+    <ul class="leadership-list reveal">
+      <li>Utah Republican State Central Committee Member</li>
+      <li>Chaired Davis County Organizing and Nominating Conventions</li>
+      <li>Led Davis County Republican Women</li>
+      <li>Precinct Chair</li>
+      <li>County and State Delegate</li>
+      <li>Utah Federation of Republican Women's Rising Star Award Recipient</li>
+    </ul>
+
+    <div class="callout reveal">
+      <blockquote>
+        &ldquo;House District 14 has been my home for most of my life, and I care deeply about the people who live here.&rdquo;
+      </blockquote>
+      <cite>&mdash; Kara Toone</cite>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     7. WHY SHE'S RUNNING
+     ═══════════════════════════════════════════════════ -->
+<section class="content-section alt">
+  <div class="section-inner">
+    <div class="why-running-text reveal">
+      <div class="section-eyebrow" style="justify-content:center;">Why She's Running</div>
+      <h2>Accessible. Responsive. <em style="color:var(--red);">Committed.</em></h2>
+      <p>Kara first ran for this seat in 2022 because she believed the people of House District 14 deserved a representative who would listen &mdash; truly listen &mdash; to their concerns. That conviction has not changed. If anything, it has grown stronger.</p>
+      <p>She is running because she has seen firsthand what happens when communities do not have a voice at the table. She has watched housing costs climb, infrastructure strain under growth, and families struggle to keep up. She knows that real solutions come from leaders who live the same challenges as the people they represent.</p>
+      <p>Kara is committed to being accessible, responsive, and present. Not a politician who disappears between elections, but a neighbor who picks up the phone, shows up to meetings, and fights for the priorities that matter to Clearfield, Syracuse, and the families of HD14.</p>
+
+      <div class="why-running-ctas">
+        <a href="index.html#priorities" class="btn-primary">See Her Priorities &rarr;</a>
+        <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-outline-dark" target="_blank">Support the Campaign &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     8. CTA BAND
+     ═══════════════════════════════════════════════════ -->
+<section class="cta-band">
+  <div class="section-inner">
+    <h2>Join Kara's Campaign</h2>
+    <p>House District 14 deserves a representative who shows up. Donate, volunteer, or simply spread the word &mdash; every bit of support makes a difference.</p>
+    <div class="cta-buttons">
+      <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-white" target="_blank">Donate Now &rarr;</a>
+      <a href="index.html#involved" class="btn-outline">Get Involved &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">Kara <span>Toone</span></span>
+        <p>Lifelong Davis County resident. Education leader. Community builder. Running to represent House District 14 in the Utah State Legislature.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/karatooneforutah/" class="social-btn" target="_blank" aria-label="Instagram">IG</a>
+          <a href="https://www.facebook.com/profile.php?id=61584720802611" class="social-btn" target="_blank" aria-label="Facebook">FB</a>
+          <a href="mailto:votekaratoone@gmail.com" class="social-btn" aria-label="Email">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Campaign</h4>
+        <ul>
+          <li><a href="about.html">About Kara</a></li>
+          <li><a href="priorities/growth-infrastructure.html">Growth &amp; Infrastructure</a></li>
+          <li><a href="priorities/housing.html">Housing Affordability</a></li>
+          <li><a href="priorities/public-safety.html">Safe Communities</a></li>
+          <li><a href="priorities/education.html">Education &amp; Schools</a></li>
+          <li><a href="priorities/fiscal-responsibility.html">Fiscal Responsibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></li>
+          <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" target="_blank">Donate Online</a></li>
+          <li><a href="https://www.venmo.com/u/electkaratoone" target="_blank">Donate via Venmo</a></li>
+          <li><a href="https://www.instagram.com/karatooneforutah/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61584720802611" target="_blank">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Kara Toone for Utah. Paid for by the Committee to Elect Kara Toone.</span>
+      <span>Authorized by Kara Toone &middot; <a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+<script src="main.js"></script>
+</body>
+</html>

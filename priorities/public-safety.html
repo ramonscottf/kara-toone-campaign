@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Communities — Kara Toone for Utah</title>
+<meta name="description" content="Kara Toone's plan for public safety, law enforcement support, and community-focused policing in Davis County. Supporting those who protect House District 14.">
+<meta name="keywords" content="Kara Toone, public safety, law enforcement, police, first responders, Davis County, Utah House District 14, community policing">
+
+<!-- Open Graph / Social Sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Safe Communities — Kara Toone for Utah">
+<meta property="og:description" content="Safe neighborhoods don't happen by accident. Kara Toone's plan for public safety and law enforcement in House District 14.">
+<meta property="og:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+<meta property="og:site_name" content="Kara Toone for Utah">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Safe Communities — Kara Toone for Utah">
+<meta name="twitter:description" content="Safe neighborhoods don't happen by accident.">
+<meta name="twitter:image" content="https://media.kara.fosterlabs.org/og-image.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* ─── PAGE-SPECIFIC STYLES ─── */
+.agenda-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  margin: 48px 0;
+}
+.agenda-card {
+  background: var(--white);
+  border: 1px solid #E0E8F0;
+  border-radius: 4px;
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.agenda-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(13,31,60,0.1);
+}
+.agenda-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--red);
+}
+.agenda-card .card-icon {
+  font-size: 2rem; margin-bottom: 16px; display: block;
+}
+.agenda-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--navy); margin-bottom: 12px; line-height: 1.3;
+}
+.agenda-card p {
+  font-size: 0.9rem; color: #6B7A8D; line-height: 1.7; font-weight: 300;
+}
+.policy-list {
+  list-style: none; margin: 32px 0;
+}
+.policy-list li {
+  font-size: 1rem; line-height: 1.8;
+  color: #4A5568; font-weight: 400;
+  padding: 12px 0 12px 32px;
+  position: relative;
+  border-bottom: 1px solid #E8EFF7;
+}
+.policy-list li:last-child { border-bottom: none; }
+.policy-list li::before {
+  content: '✓';
+  position: absolute; left: 0; top: 12px;
+  color: var(--red); font-weight: 700; font-size: 1.1rem;
+}
+.highlight-box {
+  background: var(--navy);
+  border-radius: 4px;
+  padding: 48px;
+  margin: 48px 0;
+  position: relative;
+  overflow: hidden;
+}
+.highlight-box::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: rgba(255,255,255,0.03);
+}
+.highlight-box h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; font-weight: 700;
+  color: white; margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.highlight-box p {
+  font-size: 1rem; line-height: 1.8;
+  color: rgba(255,255,255,0.7); font-weight: 300;
+  position: relative; z-index: 1;
+  max-width: 700px;
+}
+@media (max-width: 768px) {
+  .agenda-grid { grid-template-columns: 1fr; }
+  .highlight-box { padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="menu-close" id="menuClose" aria-label="Close menu">&#10005;</button>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About Kara</a>
+  <a href="../index.html#priorities">Priorities</a>
+  <a href="../index.html#events">Events</a>
+  <a href="../index.html#involved">Get Involved</a>
+  <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" style="color:var(--gold)">Donate Now &rarr;</a>
+</div>
+
+<!-- Navigation -->
+<nav id="mainNav">
+  <a href="../index.html" class="nav-logo">Kara <span>Toone</span></a>
+  <ul class="nav-links">
+    <li><a href="../about.html">About</a></li>
+    <li><a href="../index.html#priorities">Priorities</a></li>
+    <li><a href="../index.html#events">Events</a></li>
+    <li><a href="../index.html#involved">Get Involved</a></li>
+    <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="nav-donate" target="_blank">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Priority Navigation -->
+<div class="priority-nav">
+  <div class="section-inner">
+    <a href="growth-infrastructure.html"><span class="priority-nav-num">01</span> Growth &amp; Infrastructure</a>
+    <a href="housing.html"><span class="priority-nav-num">02</span> Housing</a>
+    <a href="public-safety.html" class="active"><span class="priority-nav-num">03</span> Public Safety</a>
+    <a href="education.html"><span class="priority-nav-num">04</span> Education</a>
+    <a href="fiscal-responsibility.html"><span class="priority-nav-num">05</span> Fiscal Responsibility</a>
+  </div>
+</div>
+
+<!-- Page Hero -->
+<section class="page-hero">
+  <div class="page-hero-image">
+    <img src="https://media.kara.fosterlabs.org/Police%20Cars%20at%20Night.jpg.avif" alt="Police vehicles responding to keep communities safe">
+  </div>
+  <div class="section-inner">
+    <div class="section-eyebrow">Priority 03</div>
+    <h1>Safe Communities &amp;<br>Law Enforcement</h1>
+    <p>Safe neighborhoods don&rsquo;t happen by accident. They require investment, support, and leadership.</p>
+  </div>
+</section>
+
+<!-- Supporting Those Who Protect Us -->
+<section class="content-section" id="support">
+  <div class="section-inner">
+    <div class="content-grid reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">Supporting Those Who Protect Us</div>
+        <h2>Our officers need us <em>as much as we need them</em></h2>
+        <p>
+          Across Utah, law enforcement agencies are facing a recruitment and retention crisis. Departments in Davis County are no exception. Experienced officers are leaving for better-paying positions in other states or leaving the profession entirely. Meanwhile, recruiting the next generation has become harder than ever.
+        </p>
+        <p>
+          The consequences are real and immediate. Fewer officers mean longer response times, heavier workloads for those who remain, and growing strain on the men and women who put on a badge every day to keep our families safe. When we fail to invest in our officers, we fail to invest in our safety.
+        </p>
+        <p>
+          Kara believes that supporting law enforcement starts with the basics: competitive pay, strong benefits, modern equipment, and the training officers need to do their jobs effectively. If we want to attract and keep the best, we have to show them &mdash; through action, not just words &mdash; that we value their service.
+        </p>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/Police%20Cars%20at%20Night.jpg.avif" alt="Law enforcement officers serving Davis County">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mental Health & First Responders -->
+<section class="content-section alt" id="mental-health">
+  <div class="section-inner">
+    <div class="content-grid reverse reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">Mental Health &amp; First Responders</div>
+        <h2>The wounds you <em>can&rsquo;t see</em></h2>
+        <p>
+          Every day, police officers, firefighters, and EMTs face situations that most of us will never encounter. Violent crime scenes, fatal accidents, domestic crises, and the constant awareness that any call could turn dangerous &mdash; the cumulative toll of this work is enormous.
+        </p>
+        <p>
+          Studies show that first responders experience PTSD, depression, and anxiety at rates far above the general population. Yet too often, the culture around public safety treats mental health as a weakness rather than a reality of the job. Officers who need help are reluctant to seek it, fearing stigma or professional consequences.
+        </p>
+        <p>
+          Kara will champion state-funded mental health support programs specifically designed for first responders. This includes peer support networks, confidential counseling services, critical incident stress debriefing, and policies that make it clear: seeking help is a sign of strength, not a career risk.
+        </p>
+
+        <div class="highlight-box">
+          <h3>Breaking the Stigma</h3>
+          <p>
+            First responders are trained to be tough. But toughness does not mean suffering in silence. Kara will push for legislation that expands mental health coverage for first responders, funds peer counseling programs, and creates a culture where getting help is respected &mdash; not punished.
+          </p>
+        </div>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/Police%20Cars%20at%20Night.jpg.avif" alt="First responders serving the community">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Kara's Public Safety Agenda -->
+<section class="content-section" id="agenda">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal">Kara's Public Safety Agenda</div>
+    <h2 class="content-text reveal" style="margin-bottom:20px;">
+      <span style="font-family:'Playfair Display',serif; font-size:clamp(2rem,3vw,2.8rem); font-weight:900; line-height:1.2; color:var(--navy);">A comprehensive plan for <em style="color:var(--red); font-style:italic;">safer communities</em></span>
+    </h2>
+    <p class="content-text reveal" style="font-size:1.05rem; line-height:1.8; color:#4A5568; font-weight:300; max-width:720px; margin-bottom:48px;">
+      Public safety requires more than rhetoric. It requires funding, policy, and a willingness to address root causes. Here is what Kara will fight for in the Utah Legislature.
+    </p>
+
+    <div class="agenda-grid reveal">
+      <div class="agenda-card">
+        <span class="card-icon">👮</span>
+        <h3>Officer Recruitment &amp; Retention</h3>
+        <p>
+          Invest in competitive salaries and benefits packages that attract top talent to Utah law enforcement. Support signing bonuses, tuition reimbursement for criminal justice degrees, and career advancement pathways that keep experienced officers on the force.
+        </p>
+      </div>
+      <div class="agenda-card">
+        <span class="card-icon">🧠</span>
+        <h3>Mental Health for First Responders</h3>
+        <p>
+          Fund dedicated mental health programs for police, fire, and EMS personnel. Expand access to confidential counseling, peer support networks, and critical incident stress management. Remove barriers that discourage officers from seeking help.
+        </p>
+      </div>
+      <div class="agenda-card">
+        <span class="card-icon">🎯</span>
+        <h3>Modern Equipment &amp; Training</h3>
+        <p>
+          Ensure officers have the tools, technology, and training they need to serve effectively and safely. Support body camera programs, de-escalation training, and ongoing professional development that reflects best practices in modern law enforcement.
+        </p>
+      </div>
+      <div class="agenda-card">
+        <span class="card-icon">🤝</span>
+        <h3>Community-Focused Policing</h3>
+        <p>
+          Expand programs that build relationships between officers and the communities they serve. Support school resource officers, neighborhood watch partnerships, community advisory boards, and outreach initiatives that foster trust and mutual respect.
+        </p>
+      </div>
+      <div class="agenda-card">
+        <span class="card-icon">🏠</span>
+        <h3>Building Trust</h3>
+        <p>
+          Strong public safety depends on strong relationships. Kara supports transparency initiatives, citizen police academies, and accountability measures that demonstrate law enforcement&rsquo;s commitment to serving every resident fairly and professionally.
+        </p>
+      </div>
+      <div class="agenda-card">
+        <span class="card-icon">🛡️</span>
+        <h3>Drug Prevention &amp; Treatment</h3>
+        <p>
+          Address the root causes of crime by investing in drug prevention education, expanding access to treatment programs, and supporting diversion courts that offer a path to recovery. Combat the opioid crisis with evidence-based strategies that protect families and reduce recidivism.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Community-Focused Policing Deep Dive -->
+<section class="content-section alt" id="community-policing">
+  <div class="section-inner">
+    <div class="content-grid reveal">
+      <div class="content-text">
+        <div class="section-eyebrow">Community-Focused Policing</div>
+        <h2>Building <em>trust</em> between residents and law enforcement</h2>
+        <p>
+          The most effective policing happens when officers are seen not as outsiders, but as neighbors. When residents know their local officers by name, when kids wave at patrol cars instead of avoiding them, when families feel comfortable reaching out for help &mdash; that&rsquo;s when public safety truly works.
+        </p>
+        <p>
+          Community-focused policing is not a slogan for Kara &mdash; it&rsquo;s a strategy. It means officers walking beats, attending community events, coaching youth sports, and being present in the everyday life of the neighborhoods they serve. It means departments that reflect the diversity of their communities and leadership that listens as much as it directs.
+        </p>
+        <p>
+          Kara will advocate for state funding that supports community policing initiatives, school resource officer programs, and citizen engagement efforts. She believes every family in District 14 deserves to feel safe, heard, and respected.
+        </p>
+        <ul class="policy-list">
+          <li>Fund school resource officer programs in every Davis County school</li>
+          <li>Support neighborhood watch and community advisory partnerships</li>
+          <li>Expand citizen police academies and ride-along programs</li>
+          <li>Invest in youth outreach programs that build positive relationships early</li>
+          <li>Promote transparency through regular community safety reports and town halls</li>
+        </ul>
+      </div>
+      <div class="content-image">
+        <img src="https://media.kara.fosterlabs.org/Police%20Cars%20at%20Night.jpg.avif" alt="Community policing in Davis County neighborhoods">
+        <div class="image-accent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Row -->
+<div class="stats-row reveal">
+  <div class="stat">
+    <div class="stat-num">18%</div>
+    <div class="stat-desc">Officer vacancy rate across Utah departments</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">30%</div>
+    <div class="stat-desc">First responders affected by PTSD</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">#1</div>
+    <div class="stat-desc">Public safety is residents' top concern</div>
+  </div>
+</div>
+
+<!-- Quote Callout -->
+<section class="content-section">
+  <div class="section-inner">
+    <div class="callout reveal">
+      <blockquote>
+        &ldquo;Safe communities don&rsquo;t happen by accident. They happen because we invest in the people who protect us, build trust with the families they serve, and address the root causes that threaten our neighborhoods. I will always stand behind our officers &mdash; and I will always stand up for the communities they serve.&rdquo;
+      </blockquote>
+      <cite>&mdash; Kara Toone</cite>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Band -->
+<section class="cta-band">
+  <h2>Stand With Our First Responders</h2>
+  <p>
+    Kara Toone is committed to keeping our communities safe and supporting the men and women who protect us every day. Join her.
+  </p>
+  <div class="cta-buttons">
+    <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-white" target="_blank">Donate Now</a>
+    <a href="../index.html#involved" class="btn-white">Volunteer</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="footer-logo">Kara <span>Toone</span></span>
+        <p>Lifelong Davis County resident. Education leader. Community builder. Running to represent House District 14 in the Utah State Legislature.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/karatooneforutah/" class="social-btn" target="_blank" aria-label="Instagram">IG</a>
+          <a href="https://www.facebook.com/profile.php?id=61584720802611" class="social-btn" target="_blank" aria-label="Facebook">FB</a>
+          <a href="mailto:votekaratoone@gmail.com" class="social-btn" aria-label="Email">@</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Campaign</h4>
+        <ul>
+          <li><a href="../about.html">About Kara</a></li>
+          <li><a href="growth-infrastructure.html">Growth &amp; Infrastructure</a></li>
+          <li><a href="housing.html">Housing Affordability</a></li>
+          <li><a href="public-safety.html">Safe Communities</a></li>
+          <li><a href="education.html">Education &amp; Schools</a></li>
+          <li><a href="fiscal-responsibility.html">Fiscal Responsibility</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></li>
+          <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" target="_blank">Donate Online</a></li>
+          <li><a href="https://www.venmo.com/u/electkaratoone" target="_blank">Donate via Venmo</a></li>
+          <li><a href="https://www.instagram.com/karatooneforutah/" target="_blank">Instagram</a></li>
+          <li><a href="https://www.facebook.com/profile.php?id=61584720802611" target="_blank">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Kara Toone for Utah. Paid for by the Committee to Elect Kara Toone.</span>
+      <span>Authorized by Kara Toone &middot; <a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+<script src="../main.js"></script>
+</body>
+</html>
