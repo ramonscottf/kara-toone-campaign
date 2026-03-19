@@ -15,7 +15,8 @@ logo_url: https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/09_Log
 slug:
   encoding: ascii
   clean_accents: true
-    sanitize_replacement: "-"
+ sanitize_replacement: "-"
+
 collections:
   - name: settings
     label: Site Settings
