@@ -3,11 +3,11 @@
    ═══════════════════════════════════════════════════ */
 
 :root {
-  --navy: #0D1F3C;
-  --deep: #162845;
-  --red: #BF1020;
-  --red-bright: #E01030;
-  --gold: #C9973B;
+  --navy: #1B3A69;
+  --deep: #152E54;
+  --red: #ED2631;
+  --red-bright: #F03A44;
+  --gold: #FFD833;
   --cream: #F7F3EE;
   --white: #FFFFFF;
   --gray: #8A9AB0;
@@ -59,12 +59,12 @@ nav.scrolled {
   box-shadow: 0 2px 32px rgba(0,0,0,0.2);
 }
 .nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem; font-weight: 900;
-  color: var(--white); letter-spacing: -0.5px;
+  display: flex; align-items: center;
   text-decoration: none;
 }
-.nav-logo span { color: var(--gold); }
+.nav-logo img {
+  height: 40px; width: auto;
+}
 .nav-links { display: flex; gap: 36px; align-items: center; list-style: none; }
 .nav-links a {
   color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500;
@@ -174,11 +174,11 @@ footer {
   border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .footer-brand .footer-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; font-weight: 900; color: white;
-  margin-bottom: 16px; display: block;
+  display: block; margin-bottom: 16px;
 }
-.footer-brand .footer-logo span { color: var(--gold); }
+.footer-brand .footer-logo img {
+  height: 48px; width: auto;
+}
 .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 320px; }
 .footer-col h4 {
   font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
@@ -218,7 +218,7 @@ footer {
 }
 .mobile-menu.open { transform: translateY(0); }
 .mobile-menu a {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 2rem; color: white; text-decoration: none;
   opacity: 0; transform: translateY(20px);
   transition: color 0.2s;
@@ -301,7 +301,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   content: '';
   position: absolute; inset: 0;
   background:
-    linear-gradient(135deg, #0D1F3C 0%, #162845 40%, #1A3060 100%);
+    linear-gradient(135deg, #1B3A69 0%, #152E54 40%, #1A3565 100%);
 }
 .page-hero::after {
   content: '';
@@ -320,7 +320,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   background: var(--gold);
 }
 .page-hero h1 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: clamp(2.8rem, 5vw, 4.5rem);
   font-weight: 900; line-height: 1.1;
   color: var(--white); margin-bottom: 20px;
@@ -373,7 +373,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   direction: ltr;
 }
 .content-text h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: clamp(2rem, 3vw, 2.8rem);
   font-weight: 900; line-height: 1.2;
   color: var(--navy); margin-bottom: 24px;
@@ -448,12 +448,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .callout::before {
   content: '"';
   position: absolute; top: -20px; left: 40px;
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 12rem; color: rgba(255,255,255,0.05);
   line-height: 1;
 }
 .callout blockquote {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 1.5rem; font-weight: 700;
   color: white; line-height: 1.5;
   font-style: italic;
@@ -520,7 +520,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   margin-bottom: 4px;
 }
 .timeline-item h3 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: 1.15rem; font-weight: 700;
   color: var(--navy); margin-bottom: 8px;
 }
@@ -543,7 +543,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   background: rgba(255,255,255,0.04);
 }
 .cta-band h2 {
-  font-family: 'Playfair Display', serif;
+  font-family: 'League Spartan', sans-serif;
   font-size: clamp(2rem, 3.5vw, 3rem);
   font-weight: 900; color: white;
   margin-bottom: 16px;
