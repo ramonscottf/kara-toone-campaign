@@ -51,13 +51,6 @@
   background: linear-gradient(to right, rgba(21,46,84,0.88) 0%, rgba(21,46,84,0.82) 35%, rgba(21,46,84,0.5) 55%, rgba(21,46,84,0.15) 75%, transparent 100%);
   z-index: 1;
 }
-.hero-bg-pattern::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px),
-    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px);
-}
 .hero-accent-stripe {
   position: absolute; left: 0; top: 0; bottom: 0;
   width: 6px;
@@ -95,20 +88,6 @@
 }
 .hero-photo-placeholder img {
   width: 100%; height: 100%; object-fit: cover; object-position: center top;
-}
-.stars-field {
-  position: absolute; inset: 0; z-index: 0; overflow: hidden;
-}
-.star {
-  position: absolute; width: 2px; height: 2px;
-  background: white; border-radius: 50%;
-  animation: twinkle var(--dur, 3s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: var(--op, 0.4);
-}
-@keyframes twinkle {
-  0%, 100% { opacity: var(--op, 0.4); }
-  50% { opacity: 0.05; }
 }
 .hero-content {
   position: relative; z-index: 3;
@@ -635,7 +614,6 @@
   </div>
   <div class="hero-bg-pattern"></div>
   <div class="hero-accent-stripe"></div>
-  <div class="stars-field" id="starsField"></div>
 
   <div class="hero-photo-col">
     <div class="hero-photo-placeholder">
@@ -1084,24 +1062,6 @@
 </div>
 <script src="main.js"></script>
 <script>
-// ─── STARS ───
-const starsField = document.getElementById('starsField');
-if (starsField) {
-  for (let i = 0; i < 120; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.cssText = `
-      left: ${Math.random()*100}%;
-      top: ${Math.random()*100}%;
-      --dur: ${2 + Math.random()*4}s;
-      --delay: ${Math.random()*4}s;
-      --op: ${0.2 + Math.random()*0.5};
-      width: ${Math.random() > 0.8 ? '3px' : '2px'};
-      height: ${Math.random() > 0.8 ? '3px' : '2px'};
-    `;
-    starsField.appendChild(star);
-  }
-}
 
 // ─── PARALLAX SUBTLE ───
 window.addEventListener('scroll', () => {
