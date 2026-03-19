@@ -1212,6 +1212,13 @@ window.addEventListener('scroll', () => {
       return;
     }
     player = new Vimeo.Player(iframe);
+    // Lock volume to 0 — prevent unmuting
+    player.setVolume(0).catch(() => {});
+    player.on('volumechange', function(data) {
+      if (data.volume > 0) {
+        player.setVolume(0).catch(() => {});
+      }
+    });
   }
   initPlayer();
 
