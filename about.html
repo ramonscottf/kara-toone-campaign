@@ -131,8 +131,6 @@
 <a href="#main" class="skip-link">Skip to content</a>
 
 <!-- Cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
@@ -350,7 +348,36 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     8. CTA BAND
+     8. FOLLOW ON INSTAGRAM
+     ═══════════════════════════════════════════════════ -->
+<section class="instagram-section">
+  <div class="section-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center;">On the Trail</div>
+    <h2 class="reveal">Follow Kara on <em>Instagram</em></h2>
+    <p class="reveal">See what's happening on the campaign trail — events, community visits, and behind-the-scenes moments.</p>
+    <div class="instagram-grid reveal">
+      <div class="ig-embed-wrap">
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/karatooneforutah/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:0; max-width:100%; min-width:280px; padding:0; width:100%;">
+          <div style="padding:16px;">
+            <a href="https://www.instagram.com/karatooneforutah/" style="background:#FFFFFF; line-height:0; padding:0; text-align:center; text-decoration:none; width:100%;" target="_blank">
+              <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+                <div style="background:#F4F4F4; border-radius:50%; width:40px; height:40px;"></div>
+                <div style="font-size:14px; font-weight:600; color:#262626;">karatooneforutah</div>
+              </div>
+            </a>
+            <p style="color:#666; font-size:14px; line-height:1.5; margin:8px 0 0;">Follow <strong>@karatooneforutah</strong> for campaign updates, community events, and behind-the-scenes moments from the trail.</p>
+          </div>
+        </blockquote>
+      </div>
+    </div>
+    <div class="instagram-follow reveal" style="margin-top:36px;">
+      <a href="https://www.instagram.com/karatooneforutah/" class="btn-primary" target="_blank">Follow @karatooneforutah &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     9. CTA BAND
      ═══════════════════════════════════════════════════ -->
 <section class="cta-band">
   <div class="section-inner">
@@ -409,6 +436,20 @@
 <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
+<script async defer src="https://www.instagram.com/embed.js"></script>
+
+<!-- Floating Donate Button -->
+<button class="floating-donate" id="floatingDonate">
+  <span class="donate-heart">&#x2764;</span> Donate
+</button>
+
+<!-- Donate Modal -->
+<div class="donate-modal-overlay" id="donateModalOverlay">
+  <div class="donate-modal">
+    <button class="donate-modal-close" id="donateModalClose" aria-label="Close donate form">&#10005;</button>
+    <iframe id="donateModalIframe" title="Donate to Kara Toone for Utah" loading="lazy"></iframe>
+  </div>
+</div>
 <script src="main.js"></script>
 </body>
 </html>

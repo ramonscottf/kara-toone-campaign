@@ -27,8 +27,6 @@
 <body>
 
 <!-- Cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
@@ -336,6 +334,19 @@
 <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
+
+<!-- Floating Donate Button -->
+<button class="floating-donate" id="floatingDonate">
+  <span class="donate-heart">&#x2764;</span> Donate
+</button>
+
+<!-- Donate Modal -->
+<div class="donate-modal-overlay" id="donateModalOverlay">
+  <div class="donate-modal">
+    <button class="donate-modal-close" id="donateModalClose" aria-label="Close donate form">&#10005;</button>
+    <iframe id="donateModalIframe" title="Donate to Kara Toone for Utah" loading="lazy"></iframe>
+  </div>
+</div>
 <script src="../main.js"></script>
 </body>
 </html>

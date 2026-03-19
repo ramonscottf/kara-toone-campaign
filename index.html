@@ -48,15 +48,8 @@
 }
 .hero-bg-pattern {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(27,58,105,0.75) 0%, rgba(21,46,84,0.75) 40%, rgba(26,53,101,0.75) 100%);
-  z-index: 0;
-}
-.hero-bg-pattern::before {
-  content: '';
-  position: absolute; inset: 0;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px),
-    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.015) 80px, rgba(255,255,255,0.015) 81px);
+  background: linear-gradient(to right, rgba(21,46,84,0.88) 0%, rgba(21,46,84,0.82) 35%, rgba(21,46,84,0.5) 55%, rgba(21,46,84,0.15) 75%, transparent 100%);
+  z-index: 1;
 }
 .hero-accent-stripe {
   position: absolute; left: 0; top: 0; bottom: 0;
@@ -66,35 +59,35 @@
 }
 .hero-photo-col {
   position: absolute; right: 0; bottom: 0; top: 0;
-  width: 48%; overflow: hidden; z-index: 1;
+  width: 50%; overflow: hidden; z-index: 2;
 }
 .hero-photo-col::before {
   content: '';
-  position: absolute; left: 0; top: 0; bottom: 0; width: 200px;
-  background: linear-gradient(to right, var(--navy), transparent);
+  position: absolute; left: -60px; top: 0; bottom: 0; width: 400px;
+  background: linear-gradient(to right,
+    rgba(21,46,84,0.95) 0%,
+    rgba(21,46,84,0.7) 25%,
+    rgba(21,46,84,0.35) 50%,
+    rgba(21,46,84,0.1) 75%,
+    transparent 100%);
   z-index: 2;
+  pointer-events: none;
+}
+.hero-photo-col::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 0; height: 200px;
+  background: linear-gradient(to top, rgba(21,46,84,0.8) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
 }
 .hero-photo-placeholder {
   width: 100%; height: 100%;
+  position: relative;
   background: linear-gradient(160deg, #152E54 0%, #1B3A69 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
 }
 .hero-photo-placeholder img {
   width: 100%; height: 100%; object-fit: cover; object-position: center top;
-}
-.stars-field {
-  position: absolute; inset: 0; z-index: 0; overflow: hidden;
-}
-.star {
-  position: absolute; width: 2px; height: 2px;
-  background: white; border-radius: 50%;
-  animation: twinkle var(--dur, 3s) ease-in-out infinite;
-  animation-delay: var(--delay, 0s);
-  opacity: var(--op, 0.4);
-}
-@keyframes twinkle {
-  0%, 100% { opacity: var(--op, 0.4); }
-  50% { opacity: 0.05; }
 }
 .hero-content {
   position: relative; z-index: 3;
@@ -587,8 +580,6 @@
 <a href="#about" class="skip-link">Skip to main content</a>
 
 <!-- Custom Cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
@@ -619,11 +610,10 @@
 <!-- Hero -->
 <section id="hero">
   <div class="hero-video-wrap">
-    <iframe src="https://player.vimeo.com/video/1174994782?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;background=1" allow="autoplay; fullscreen" title="Hero background video"></iframe>
+    <iframe src="https://player.vimeo.com/video/1175010648?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;background=1" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Hero background video"></iframe>
   </div>
   <div class="hero-bg-pattern"></div>
   <div class="hero-accent-stripe"></div>
-  <div class="stars-field" id="starsField"></div>
 
   <div class="hero-photo-col">
     <div class="hero-photo-placeholder">
@@ -1057,26 +1047,21 @@
 <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
 <script src="https://player.vimeo.com/api/player.js"></script>
+
+<!-- Floating Donate Button -->
+<button class="floating-donate" id="floatingDonate">
+  <span class="donate-heart">&#x2764;</span> Donate
+</button>
+
+<!-- Donate Modal -->
+<div class="donate-modal-overlay" id="donateModalOverlay">
+  <div class="donate-modal">
+    <button class="donate-modal-close" id="donateModalClose" aria-label="Close donate form">&#10005;</button>
+    <iframe id="donateModalIframe" title="Donate to Kara Toone for Utah" loading="lazy"></iframe>
+  </div>
+</div>
 <script src="main.js"></script>
 <script>
-// ─── STARS ───
-const starsField = document.getElementById('starsField');
-if (starsField) {
-  for (let i = 0; i < 120; i++) {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.cssText = `
-      left: ${Math.random()*100}%;
-      top: ${Math.random()*100}%;
-      --dur: ${2 + Math.random()*4}s;
-      --delay: ${Math.random()*4}s;
-      --op: ${0.2 + Math.random()*0.5};
-      width: ${Math.random() > 0.8 ? '3px' : '2px'};
-      height: ${Math.random() > 0.8 ? '3px' : '2px'};
-    `;
-    starsField.appendChild(star);
-  }
-}
 
 // ─── PARALLAX SUBTLE ───
 window.addEventListener('scroll', () => {
