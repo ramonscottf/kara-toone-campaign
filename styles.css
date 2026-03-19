@@ -63,7 +63,7 @@ nav.scrolled {
   text-decoration: none;
 }
 .nav-logo img {
-  height: 40px; width: auto;
+  height: 36px; width: auto; max-width: 160px; object-fit: contain;
 }
 .nav-links { display: flex; gap: 36px; align-items: center; list-style: none; }
 .nav-links a {
@@ -177,7 +177,7 @@ footer {
   display: block; margin-bottom: 16px;
 }
 .footer-brand .footer-logo img {
-  height: 48px; width: auto;
+  height: 40px; width: auto; max-width: 160px; object-fit: contain;
 }
 .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 320px; }
 .footer-col h4 {
