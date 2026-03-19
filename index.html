@@ -33,9 +33,22 @@
   overflow: hidden;
   background: var(--navy);
 }
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.hero-video-wrap iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 177.78vh;
+  height: 100vh;
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
+  border: 0;
+}
 .hero-bg-pattern {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, #1B3A69 0%, #152E54 40%, #1A3565 100%);
+  background: linear-gradient(135deg, rgba(27,58,105,0.75) 0%, rgba(21,46,84,0.75) 40%, rgba(26,53,101,0.75) 100%);
   z-index: 0;
 }
 .hero-bg-pattern::before {
@@ -605,6 +618,9 @@
 
 <!-- Hero -->
 <section id="hero">
+  <div class="hero-video-wrap">
+    <iframe src="https://player.vimeo.com/video/1174994782?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1&amp;background=1" allow="autoplay; fullscreen" title="Hero background video"></iframe>
+  </div>
   <div class="hero-bg-pattern"></div>
   <div class="hero-accent-stripe"></div>
   <div class="stars-field" id="starsField"></div>
@@ -1040,6 +1056,7 @@
 <!-- Back to Top -->
 <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script src="main.js"></script>
 <script>
 // ─── STARS ───
