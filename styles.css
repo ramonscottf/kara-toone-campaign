@@ -185,6 +185,17 @@ footer {
 }
 .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
 .footer-bottom a:hover { color: var(--gold); }
+.footer-credit {
+  text-align: center; padding-top: 24px; margin-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  font-size: 0.68rem; color: rgba(255,255,255,0.25);
+  letter-spacing: 0.06em;
+}
+.footer-credit a {
+  color: rgba(255,255,255,0.35); text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-credit a:hover { color: var(--gold); }
 
 /* ─── MOBILE MENU ─── */
 .mobile-menu {
@@ -237,18 +248,30 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 
 /* ─── BACK TO TOP ─── */
-.back-to-top {
-  position: fixed; bottom: 32px; right: 32px;
-  width: 48px; height: 48px; border-radius: 50%;
-  background: var(--navy); color: white; border: none;
-  font-size: 1.2rem; cursor: pointer;
+/* removed */
+
+/* ─── FLOATING DONATE HEART ─── */
+.donate-heart-float {
+  position: fixed; bottom: 28px; right: 28px;
+  z-index: 950;
   display: flex; align-items: center; justify-content: center;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s, transform 0.2s;
-  z-index: 900; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  width: 52px; height: 52px;
+  background: var(--gold);
+  border: none; border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(255,216,51,0.4);
+  animation: heartPulse 2s ease-in-out infinite;
 }
-.back-to-top.visible { opacity: 1; visibility: visible; }
-.back-to-top:hover { transform: translateY(-3px); background: var(--red); }
+.donate-heart-float svg {
+  width: 24px; height: 24px; fill: var(--navy);
+}
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
+  15% { transform: scale(1.12); box-shadow: 0 6px 28px rgba(255,216,51,0.55); }
+  30% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
+  45% { transform: scale(1.10); box-shadow: 0 6px 28px rgba(255,216,51,0.55); }
+  60% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
+}
 
 /* ─── ANIMATIONS ─── */
 @keyframes fadeUp {
@@ -682,66 +705,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 .donate-venmo:hover { border-color: white; background: rgba(255,255,255,0.1); }
 
-/* ─── FLOATING DONATE BUTTON ─── */
-.floating-donate {
-  position: fixed; bottom: 32px; left: 32px;
-  z-index: 950;
-  display: flex; align-items: center; gap: 10px;
-  background: var(--red); color: white;
-  padding: 14px 28px; border: none; border-radius: 100px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 0.85rem; font-weight: 700;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 6px 24px rgba(237,38,49,0.4);
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
-}
-.floating-donate:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 36px rgba(237,38,49,0.5);
-  background: var(--red-bright);
-}
-.floating-donate .donate-heart {
-  font-size: 1.1rem; line-height: 1;
-}
-
-/* ─── DONATE MODAL ─── */
-.donate-modal-overlay {
-  position: fixed; inset: 0; z-index: 10000;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(4px);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.3s, visibility 0.3s;
-}
-.donate-modal-overlay.open {
-  opacity: 1; visibility: visible;
-}
-.donate-modal {
-  position: relative;
-  width: 90vw; max-width: 520px;
-  height: 85vh; max-height: 720px;
-  background: white; border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
-  transform: translateY(20px);
-  transition: transform 0.3s;
-}
-.donate-modal-overlay.open .donate-modal {
-  transform: translateY(0);
-}
-.donate-modal-close {
-  position: absolute; top: 12px; right: 12px; z-index: 10;
-  width: 36px; height: 36px; border-radius: 50%;
-  background: rgba(0,0,0,0.06); border: none;
-  font-size: 1.2rem; line-height: 1; cursor: pointer;
-  color: #666; transition: background 0.2s;
-  display: flex; align-items: center; justify-content: center;
-}
-.donate-modal-close:hover { background: rgba(0,0,0,0.12); }
-.donate-modal iframe {
-  width: 100%; height: 100%; border: 0;
-}
+/* ─── (floating donate + modal moved to heart button above) ─── */
 
 /* ─── TRAIL GALLERY (Instagram-style photo cards) ─── */
 .trail-gallery-section {
@@ -830,8 +794,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 600px) {
   .trail-card { width: 280px; }
   .trail-gallery-track { padding: 0 24px; gap: 16px; }
-  .floating-donate { left: 50%; transform: translateX(-50%); bottom: 20px; }
-  .floating-donate:hover { transform: translateX(-50%) translateY(-3px); }
 }
 
 /* ─── RESPONSIVE ─── */

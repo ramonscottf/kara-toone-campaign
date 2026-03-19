@@ -532,8 +532,8 @@
 }
 .donate-inner {
   position: relative; z-index: 1;
-  max-width: 1100px; margin: 0 auto; padding: 0 48px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+  max-width: 1000px; margin: 0 auto; padding: 0 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
 .donate-text .section-eyebrow { color: rgba(255,255,255,0.7); }
 .donate-text .section-eyebrow::before { background: rgba(255,255,255,0.7); }
@@ -543,13 +543,6 @@
   color: white; line-height: 1.2; margin-bottom: 20px;
 }
 .donate-text p { color: rgba(255,255,255,0.75); line-height: 1.7; font-weight: 300; }
-.donate-embed-wrap {
-  background: white; border-radius: 8px; overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-}
-.donate-embed-iframe {
-  width: 100%; height: 620px; border: 0; display: block;
-}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
@@ -559,7 +552,6 @@
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .involved-grid { grid-template-columns: repeat(2, 1fr); }
   .donate-inner { grid-template-columns: 1fr; gap: 48px; }
-  .donate-embed-iframe { height: 560px; }
   .endorsements-grid { grid-template-columns: 1fr 1fr; }
   .priorities-grid { grid-template-columns: 1fr 1fr; }
   .priority-card.featured { grid-column: span 2; }
@@ -692,7 +684,7 @@
         <div class="section-eyebrow reveal">Meet Kara</div>
         <h2 class="reveal reveal-delay-1">A <em>lifetime</em> of<br>roots in Davis County.</h2>
         <p class="reveal reveal-delay-2">
-          Born in Vernal and raised in Davis County since age three, Kara Toone has spent her entire life here &mdash; attending Viewmont High, earning degrees from Snow College and Weber State University, and completing a Master's in Public Policy from the University of Utah.
+          Kara Toone has spent virtually her entire life in Davis County &mdash; attending Viewmont High, earning degrees from Snow College and Weber State University, and completing a Master's in Public Policy from the University of Utah.
         </p>
         <p class="reveal reveal-delay-3">
           She and her husband Logan have lived in Clearfield since 2003 &mdash; more than two decades raising their four children in the same neighborhood. As Executive Director of Davis Education Foundation, she works daily to ensure every student in the district has the support they need.
@@ -986,13 +978,23 @@
       <p class="reveal reveal-delay-2">
         Every dollar helps Kara reach more voters, share her message, and build the coalition District 14 deserves. No amount is too small &mdash; and no campaign wins without its people.
       </p>
-      <a href="https://www.venmo.com/u/electkaratoone" class="donate-venmo reveal reveal-delay-3" target="_blank" style="margin-top:24px;">
-        &#x1F4F1; Donate via Venmo &mdash; @electkaratoone
-      </a>
     </div>
 
-    <div class="donate-embed-wrap reveal reveal-delay-1">
-      <iframe src="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" title="Donate to Kara Toone for Utah" class="donate-embed-iframe"></iframe>
+    <div class="donate-amounts reveal reveal-delay-1">
+      <div class="amounts-grid">
+        <button class="amount-btn" data-amount="25">$25<span class="amount-sublabel">Neighbor</span></button>
+        <button class="amount-btn active" data-amount="50">$50<span class="amount-sublabel">Supporter</span></button>
+        <button class="amount-btn" data-amount="100">$100<span class="amount-sublabel">Champion</span></button>
+        <button class="amount-btn" data-amount="250">$250<span class="amount-sublabel">Leader</span></button>
+        <button class="amount-btn" data-amount="500">$500<span class="amount-sublabel">Trailblazer</span></button>
+        <button class="amount-btn" data-amount="custom">Other<span class="amount-sublabel">Amount</span></button>
+      </div>
+      <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="donate-main-btn" target="_blank" id="donateBtn">
+        Donate Online &mdash; $50
+      </a>
+      <a href="https://www.venmo.com/u/electkaratoone" class="donate-venmo" target="_blank">
+        &#x1F4F1; Donate via Venmo &mdash; @electkaratoone
+      </a>
     </div>
   </div>
 </section>
@@ -1036,26 +1038,19 @@
       <span>&copy; 2026 Kara Toone for Utah. Paid for by the Committee to Elect Kara Toone.</span>
       <span>Authorized by Kara Toone &middot; <a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></span>
     </div>
+    <div class="footer-credit">
+      Built by <a href="https://wickowaypoint.com" target="_blank">Wickoway Point</a>
+    </div>
   </div>
 </footer>
 
-<!-- Back to Top -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
-
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-<!-- Floating Donate Button -->
-<button class="floating-donate" id="floatingDonate">
-  <span class="donate-heart">&#x2764;</span> Donate
-</button>
+<!-- Floating Donate Heart -->
+<a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="donate-heart-float" target="_blank" aria-label="Donate">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+</a>
 
-<!-- Donate Modal -->
-<div class="donate-modal-overlay" id="donateModalOverlay">
-  <div class="donate-modal">
-    <button class="donate-modal-close" id="donateModalClose" aria-label="Close donate form">&#10005;</button>
-    <iframe id="donateModalIframe" title="Donate to Kara Toone for Utah" loading="lazy"></iframe>
-  </div>
-</div>
 <script src="main.js"></script>
 <script>
 
