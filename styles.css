@@ -301,17 +301,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   content: '';
   position: absolute; inset: 0;
   background:
-    linear-gradient(135deg, #1B3A69 0%, #152E54 40%, #1A3565 100%);
+    linear-gradient(135deg, rgba(27,58,105,0.7) 0%, rgba(21,46,84,0.7) 40%, rgba(26,53,101,0.7) 100%);
+  z-index: 1;
 }
 .page-hero::after {
   content: '';
   position: absolute; left: 0; top: 0; bottom: 0;
   width: 6px;
   background: linear-gradient(to bottom, var(--red), var(--gold));
-  z-index: 2;
+  z-index: 3;
 }
 .page-hero .section-inner {
-  position: relative; z-index: 2;
+  position: relative; z-index: 3;
 }
 .page-hero .section-eyebrow {
   color: var(--gold);
@@ -329,6 +330,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   font-size: 1.1rem; line-height: 1.7;
   color: rgba(255,255,255,0.7);
   max-width: 600px; font-weight: 300;
+}
+/* Video background for hero sections */
+.hero-video-bg {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.hero-video-bg iframe {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 177.78vh; /* 16:9 aspect ratio */
+  height: 100vh;
+  min-width: 100%; min-height: 100%;
+  transform: translate(-50%, -50%);
+  border: 0;
 }
 .page-hero-image {
   position: absolute; right: 0; top: 0; bottom: 0;
@@ -692,7 +707,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 @media (max-width: 1024px) {
   .content-grid { grid-template-columns: 1fr; gap: 48px; }
   .content-grid.reverse { direction: ltr; }
-  .page-hero-image { display: none; }
+  .page-hero-image:not(.hero-video-bg) { display: none; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .stats-row { grid-template-columns: repeat(3, 1fr); }
   .photo-grid { grid-template-columns: repeat(2, 1fr); }
