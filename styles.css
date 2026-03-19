@@ -21,6 +21,7 @@ body {
   background: var(--cream);
   color: var(--navy);
   overflow-x: hidden;
+  cursor: default;
 }
 
 /* ─── NAV ─── */
@@ -742,49 +743,93 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   width: 100%; height: 100%; border: 0;
 }
 
-/* ─── INSTAGRAM EMBED SECTION ─── */
-.instagram-section {
-  padding: 80px 0;
+/* ─── TRAIL GALLERY (Instagram-style photo cards) ─── */
+.trail-gallery-section {
+  padding: 80px 0 60px;
   background: var(--white);
+  overflow: hidden;
 }
-.instagram-section .section-inner {
-  text-align: center;
-}
-.instagram-section h2 {
+.trail-gallery-heading {
   font-family: 'League Spartan', sans-serif;
   font-size: clamp(1.8rem, 2.5vw, 2.4rem);
   font-weight: 900; color: var(--navy);
-  margin-bottom: 12px;
+  margin-bottom: 12px; text-align: center;
 }
-.instagram-section h2 em {
+.trail-gallery-heading em {
   font-style: italic; color: var(--red);
 }
-.instagram-section > .section-inner > p {
+.trail-gallery-sub {
   font-size: 0.95rem; color: #6B7A8D;
-  margin-bottom: 40px; font-weight: 300;
+  margin-bottom: 40px; font-weight: 300; text-align: center;
 }
-.instagram-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.trail-gallery-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27,58,105,0.2) transparent;
+  padding: 8px 0 24px;
+}
+.trail-gallery-scroll::-webkit-scrollbar { height: 6px; }
+.trail-gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+.trail-gallery-scroll::-webkit-scrollbar-thumb { background: rgba(27,58,105,0.15); border-radius: 3px; }
+.trail-gallery-track {
+  display: flex;
   gap: 24px;
-  justify-items: center;
+  padding: 0 max(48px, calc((100vw - 1200px) / 2 + 48px));
+  width: max-content;
 }
-.instagram-grid .ig-embed-wrap {
-  width: 100%;
-  min-width: 0;
+.trail-card {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--white);
+  border-radius: 8px;
+  border: 1px solid #E0E8F0;
   overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.instagram-grid .ig-embed-wrap iframe {
-  max-width: 100% !important;
+.trail-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(13,31,60,0.1);
 }
-.instagram-follow {
-  margin-top: 40px;
+.trail-card-img {
+  width: 100%; aspect-ratio: 1/1;
+  overflow: hidden; position: relative;
 }
-@media (max-width: 1024px) {
-  .instagram-grid { grid-template-columns: repeat(2, 1fr); }
+.trail-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
 }
+.trail-card:hover .trail-card-img img {
+  transform: scale(1.03);
+}
+.trail-card-body {
+  padding: 16px 20px 20px;
+}
+.trail-card-handle {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.trail-card-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--red), var(--gold));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  color: white; font-size: 0.65rem; flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.trail-card-user {
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--navy); letter-spacing: 0.01em;
+}
+.trail-card-caption {
+  font-size: 0.85rem; line-height: 1.6;
+  color: #4A5568; font-weight: 300;
+}
+
 @media (max-width: 600px) {
-  .instagram-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .trail-card { width: 280px; }
+  .trail-gallery-track { padding: 0 24px; gap: 16px; }
   .floating-donate { left: 50%; transform: translateX(-50%); bottom: 20px; }
   .floating-donate:hover { transform: translateX(-50%) translateY(-3px); }
 }
