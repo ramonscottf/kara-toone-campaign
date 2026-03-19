@@ -331,10 +331,17 @@
 }
 #endorsements::before {
   content: '';
-  position: absolute; inset: 0;
-  background:
-    repeating-linear-gradient(0deg, transparent, transparent 80px, rgba(255,255,255,0.01) 80px, rgba(255,255,255,0.01) 81px),
-    repeating-linear-gradient(90deg, transparent, transparent 80px, rgba(255,255,255,0.01) 80px, rgba(255,255,255,0.01) 81px);
+  position: absolute; top: -80px; left: -60px;
+  width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.08) 0%, transparent 70%);
+  animation: driftBlob 13s ease-in-out infinite alternate;
+}
+#endorsements::after {
+  content: '';
+  position: absolute; bottom: -60px; right: -40px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.06) 0%, transparent 70%);
+  animation: driftBlob 10s ease-in-out 1.5s infinite alternate-reverse;
 }
 .endorsements-header {
   position: relative; z-index: 1;
@@ -520,15 +527,17 @@
 }
 #donate::before {
   content: '';
-  position: absolute; top: -100px; right: -100px;
-  width: 500px; height: 500px; border-radius: 50%;
-  background: rgba(255,255,255,0.04);
+  position: absolute; top: -100px; right: -80px;
+  width: 450px; height: 450px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.12) 0%, transparent 70%);
+  animation: driftBlob 13s ease-in-out infinite alternate;
 }
 #donate::after {
   content: '';
-  position: absolute; bottom: -150px; left: -50px;
-  width: 400px; height: 400px; border-radius: 50%;
-  background: rgba(0,0,0,0.1);
+  position: absolute; bottom: -120px; left: -50px;
+  width: 380px; height: 380px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.07) 0%, transparent 70%);
+  animation: driftBlob 11s ease-in-out 2s infinite alternate-reverse;
 }
 .donate-inner {
   position: relative; z-index: 1;
@@ -543,6 +552,110 @@
   color: white; line-height: 1.2; margin-bottom: 20px;
 }
 .donate-text p { color: rgba(255,255,255,0.75); line-height: 1.7; font-weight: 300; }
+
+/* ─── VIDEO SPOTLIGHT ─── */
+.video-spotlight {
+  padding: 0;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.video-spotlight::before {
+  content: '';
+  position: absolute; top: -60px; left: -40px;
+  width: 350px; height: 350px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.08) 0%, transparent 70%);
+  animation: driftBlob 12s ease-in-out infinite alternate;
+  pointer-events: none; z-index: 0;
+}
+.video-spotlight::after {
+  content: '';
+  position: absolute; bottom: -80px; right: -60px;
+  width: 300px; height: 300px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,216,51,0.06) 0%, transparent 70%);
+  animation: driftBlob 10s ease-in-out 2s infinite alternate-reverse;
+  pointer-events: none; z-index: 0;
+}
+.video-spotlight-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 48px;
+  transition: max-width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              padding 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.video-spotlight.expanded .video-spotlight-inner {
+  max-width: 100%;
+  padding: 0;
+}
+.video-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  transition: border-radius 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.video-spotlight.expanded .video-card {
+  border-radius: 0;
+  box-shadow: none;
+}
+.video-card-embed {
+  position: relative;
+  padding-top: 56.25%;
+}
+.video-card-embed iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: 0;
+}
+.video-card-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(21,46,84,0.35);
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.video-spotlight.playing .video-card-overlay {
+  opacity: 0;
+}
+.video-play-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+.video-play-btn svg {
+  width: 28px; height: 28px;
+  fill: var(--navy);
+  margin-left: 4px;
+}
+.video-card-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  z-index: 3; padding: 32px 40px;
+  background: linear-gradient(to top, rgba(21,46,84,0.85), transparent);
+  transition: opacity 0.5s;
+}
+.video-spotlight.playing .video-card-label {
+  opacity: 0;
+}
+.video-card-label span {
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+}
+.video-card-label h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.4rem; font-weight: 700; color: white; margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .video-spotlight-inner { padding: 48px 24px; }
+  .video-play-btn { width: 60px; height: 60px; }
+  .video-play-btn svg { width: 22px; height: 22px; }
+  .video-card-label { padding: 20px 24px; }
+  .video-card-label h3 { font-size: 1.1rem; }
+}
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
@@ -578,8 +691,6 @@
 
 <!-- Skip Link -->
 <a href="#about" class="skip-link">Skip to main content</a>
-
-<!-- Custom Cursor -->
 
 <!-- Mobile Menu -->
 <div class="mobile-menu" id="mobileMenu">
@@ -669,6 +780,26 @@
   </div>
 </div>
 
+<!-- Video Spotlight -->
+<section class="video-spotlight" id="videoSpotlight">
+  <div class="video-spotlight-inner">
+    <div class="video-card">
+      <div class="video-card-embed">
+        <iframe id="spotlightVideo" src="https://player.vimeo.com/video/1175037474?badge=0&amp;autopause=0&amp;player_id=spotlightVideo&amp;app_id=58479&amp;autoplay=0&amp;muted=1&amp;loop=1&amp;background=0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Kara Toone — Meet the Candidate"></iframe>
+      </div>
+      <div class="video-card-overlay">
+        <div class="video-play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-card-label">
+        <span>Watch the Video</span>
+        <h3>Meet Kara Toone</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- About Preview -->
 <section id="about">
   <div class="section-inner">
@@ -686,7 +817,7 @@
         <div class="section-eyebrow reveal">Meet Kara</div>
         <h2 class="reveal reveal-delay-1">A <em>lifetime</em> of<br>roots in Davis County.</h2>
         <p class="reveal reveal-delay-2">
-          Born in Vernal and raised in Davis County since age three, Kara Toone has spent her entire life here &mdash; attending Viewmont High, earning degrees from Snow College and Weber State University, and completing a Master's in Public Policy from the University of Utah.
+          Kara Toone has spent virtually her entire life in Davis County &mdash; attending Viewmont High, earning degrees from Snow College and Weber State University, and completing a Master's in Public Policy from the University of Utah.
         </p>
         <p class="reveal reveal-delay-3">
           She and her husband Logan have lived in Clearfield since 2003 &mdash; more than two decades raising their four children in the same neighborhood. As Executive Director of Davis Education Foundation, she works daily to ensure every student in the district has the support they need.
@@ -1040,29 +1171,21 @@
       <span>&copy; 2026 Kara Toone for Utah. Paid for by the Committee to Elect Kara Toone.</span>
       <span>Authorized by Kara Toone &middot; <a href="mailto:votekaratoone@gmail.com">votekaratoone@gmail.com</a></span>
     </div>
+    <div class="footer-credit">
+      Built by <a href="https://wickowaypoint.com" target="_blank">Wickoway Point</a>
+    </div>
   </div>
 </footer>
 
-<!-- Back to Top -->
-<button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
-
 <script src="https://player.vimeo.com/api/player.js"></script>
 
-<!-- Floating Donate Button -->
-<button class="floating-donate" id="floatingDonate">
-  <span class="donate-heart">&#x2764;</span> Donate
-</button>
+<!-- Floating Donate Heart -->
+<a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="donate-heart-float" target="_blank" aria-label="Donate">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+</a>
 
-<!-- Donate Modal -->
-<div class="donate-modal-overlay" id="donateModalOverlay">
-  <div class="donate-modal">
-    <button class="donate-modal-close" id="donateModalClose" aria-label="Close donate form">&#10005;</button>
-    <iframe id="donateModalIframe" title="Donate to Kara Toone for Utah" loading="lazy"></iframe>
-  </div>
-</div>
 <script src="main.js"></script>
 <script>
-
 // ─── PARALLAX SUBTLE ───
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY;
@@ -1072,6 +1195,50 @@ window.addEventListener('scroll', () => {
     heroContent.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
   }
 });
+
+// ─── VIDEO SPOTLIGHT — scroll-driven expand + autoplay ───
+(function() {
+  const section = document.getElementById('videoSpotlight');
+  const iframe = document.getElementById('spotlightVideo');
+  if (!section || !iframe) return;
+
+  let player;
+  let isPlaying = false;
+
+  // Init Vimeo player once SDK is ready
+  function initPlayer() {
+    if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
+      setTimeout(initPlayer, 200);
+      return;
+    }
+    player = new Vimeo.Player(iframe);
+  }
+  initPlayer();
+
+  // Expand when center of section is in viewport
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const ratio = entry.intersectionRatio;
+      if (ratio > 0.55) {
+        section.classList.add('expanded');
+        if (player && !isPlaying) {
+          player.play().catch(() => {});
+          section.classList.add('playing');
+          isPlaying = true;
+        }
+      } else if (ratio < 0.25) {
+        section.classList.remove('expanded');
+        if (player && isPlaying) {
+          player.pause().catch(() => {});
+          section.classList.remove('playing');
+          isPlaying = false;
+        }
+      }
+    });
+  }, { threshold: [0, 0.25, 0.4, 0.55, 0.7, 0.85, 1] });
+
+  obs.observe(section);
+})();
 </script>
 
 </body>
