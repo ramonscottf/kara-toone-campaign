@@ -133,3 +133,54 @@ if (ticker && ticker.children.length < 16) {
     ticker.appendChild(item.cloneNode(true));
   });
 }
+
+// ─── DONATE MODAL ───
+const donateOverlay = document.getElementById('donateModalOverlay');
+const donateModalClose = document.getElementById('donateModalClose');
+const donateModalIframe = document.getElementById('donateModalIframe');
+const ANEDOT_URL = 'https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate';
+
+function openDonateModal(e) {
+  if (e) e.preventDefault();
+  if (donateOverlay) {
+    if (donateModalIframe && !donateModalIframe.src) {
+      donateModalIframe.src = ANEDOT_URL;
+    }
+    donateOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+function closeDonateModal() {
+  if (donateOverlay) {
+    donateOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+if (donateOverlay) {
+  donateOverlay.addEventListener('click', e => {
+    if (e.target === donateOverlay) closeDonateModal();
+  });
+}
+if (donateModalClose) {
+  donateModalClose.addEventListener('click', closeDonateModal);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDonateModal();
+});
+
+// Floating donate button
+const floatingDonate = document.getElementById('floatingDonate');
+if (floatingDonate) {
+  floatingDonate.addEventListener('click', openDonateModal);
+}
+
+// Intercept Anedot links to open in modal instead
+document.querySelectorAll('a[href*="anedot.com"]').forEach(link => {
+  // Skip nav-donate links on mobile (let them open normally as fallback)
+  link.addEventListener('click', e => {
+    if (donateOverlay) {
+      openDonateModal(e);
+    }
+  });
+});
