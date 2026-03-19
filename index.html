@@ -544,6 +544,94 @@
 }
 .donate-text p { color: rgba(255,255,255,0.75); line-height: 1.7; font-weight: 300; }
 
+/* ─── VIDEO SPOTLIGHT ─── */
+.video-spotlight {
+  padding: 0;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+.video-spotlight-inner {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 80px 48px;
+  transition: max-width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              padding 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.video-spotlight.expanded .video-spotlight-inner {
+  max-width: 100%;
+  padding: 0;
+}
+.video-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  transition: border-radius 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.video-spotlight.expanded .video-card {
+  border-radius: 0;
+  box-shadow: none;
+}
+.video-card-embed {
+  position: relative;
+  padding-top: 56.25%;
+}
+.video-card-embed iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: 0;
+}
+.video-card-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(21,46,84,0.35);
+  transition: opacity 0.5s;
+  pointer-events: none;
+}
+.video-spotlight.playing .video-card-overlay {
+  opacity: 0;
+}
+.video-play-btn {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: transform 0.3s;
+}
+.video-play-btn svg {
+  width: 28px; height: 28px;
+  fill: var(--navy);
+  margin-left: 4px;
+}
+.video-card-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  z-index: 3; padding: 32px 40px;
+  background: linear-gradient(to top, rgba(21,46,84,0.85), transparent);
+  transition: opacity 0.5s;
+}
+.video-spotlight.playing .video-card-label {
+  opacity: 0;
+}
+.video-card-label span {
+  font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--gold); font-weight: 600;
+}
+.video-card-label h3 {
+  font-family: 'League Spartan', sans-serif;
+  font-size: 1.4rem; font-weight: 700; color: white; margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .video-spotlight-inner { padding: 48px 24px; }
+  .video-play-btn { width: 60px; height: 60px; }
+  .video-play-btn svg { width: 22px; height: 22px; }
+  .video-card-label { padding: 20px 24px; }
+  .video-card-label h3 { font-size: 1.1rem; }
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .hero-photo-col { display: none; }
@@ -666,6 +754,26 @@
     <div class="ticker-item">Vote Kara Toone 2026</div>
   </div>
 </div>
+
+<!-- Video Spotlight -->
+<section class="video-spotlight" id="videoSpotlight">
+  <div class="video-spotlight-inner">
+    <div class="video-card">
+      <div class="video-card-embed">
+        <iframe id="spotlightVideo" src="https://player.vimeo.com/video/1175037474?badge=0&amp;autopause=0&amp;player_id=spotlightVideo&amp;app_id=58479&amp;autoplay=0&amp;muted=1&amp;loop=1&amp;background=0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Kara Toone — Meet the Candidate"></iframe>
+      </div>
+      <div class="video-card-overlay">
+        <div class="video-play-btn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-card-label">
+        <span>Watch the Video</span>
+        <h3>Meet Kara Toone</h3>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- About Preview -->
 <section id="about">
@@ -1053,7 +1161,6 @@
 
 <script src="main.js"></script>
 <script>
-
 // ─── PARALLAX SUBTLE ───
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY;
@@ -1063,6 +1170,50 @@ window.addEventListener('scroll', () => {
     heroContent.style.opacity = 1 - scrolled / (window.innerHeight * 0.8);
   }
 });
+
+// ─── VIDEO SPOTLIGHT — scroll-driven expand + autoplay ───
+(function() {
+  const section = document.getElementById('videoSpotlight');
+  const iframe = document.getElementById('spotlightVideo');
+  if (!section || !iframe) return;
+
+  let player;
+  let isPlaying = false;
+
+  // Init Vimeo player once SDK is ready
+  function initPlayer() {
+    if (typeof Vimeo === 'undefined' || !Vimeo.Player) {
+      setTimeout(initPlayer, 200);
+      return;
+    }
+    player = new Vimeo.Player(iframe);
+  }
+  initPlayer();
+
+  // Expand when center of section is in viewport
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const ratio = entry.intersectionRatio;
+      if (ratio > 0.55) {
+        section.classList.add('expanded');
+        if (player && !isPlaying) {
+          player.play().catch(() => {});
+          section.classList.add('playing');
+          isPlaying = true;
+        }
+      } else if (ratio < 0.25) {
+        section.classList.remove('expanded');
+        if (player && isPlaying) {
+          player.pause().catch(() => {});
+          section.classList.remove('playing');
+          isPlaying = false;
+        }
+      }
+    });
+  }, { threshold: [0, 0.25, 0.4, 0.55, 0.7, 0.85, 1] });
+
+  obs.observe(section);
+})();
 </script>
 
 </body>
