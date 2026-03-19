@@ -1,0 +1,21 @@
+{
+  "name": "kara-toone-campaign",
+  "version": "1.0.0",
+  "description": "Kara Toone for Utah County Council - Campaign website with DecapCMS",
+  "main": "index.html",
+  "scripts": {
+    "dev": "wrangler pages dev",
+    "deploy": "wrangler pages deploy"
+  },
+  "keywords": [
+    "campaign",
+    "utah",
+    "county",
+    "decap-cms"
+  ],
+  "author": "Kara Toone Campaign",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+name = "kara-toone-campaign"
+type = "service"
+
+[env.production]
+routes = [
+  { pattern = "*.kara.wickowaypoint.com", zone_name = "kara.wickowaypoint.com" }
+]
+
+[build]
+command = ""
+watch_paths = []
+
+[build.upload]
+format = "service-worker"
+
+# Environment variables
+[env.production.vars]
+# GITHUB_CLIENT_SECRET should be set in Cloudflare Pages UI
+# Do not commit secrets to this file
+
+[[env.production.r2_buckets]]
+binding = "R2_UPLOADS"
+bucket_name = "kara-toone-campaign-uploads"
+jwt_token_binding = "CLOUDFLARE_JWT"
+
+[triggers]
+crons = []

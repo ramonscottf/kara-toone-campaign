@@ -4,3 +4,30 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# Node modules
+node_modules/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+_site/
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Note: static/images/uploads/ should be committed to git
+# as DecapCMS needs to store images there

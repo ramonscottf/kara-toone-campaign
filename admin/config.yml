@@ -1,0 +1,437 @@
+backend:
+  name: github
+  repo: ramonscottf/kara-toone-campaign
+  branch: main
+  base_url: https://kara.wickowaypoint.com
+  auth_endpoint: /api/auth
+
+media_folder: static/images/uploads
+public_folder: /images/uploads
+
+site_url: https://kara.wickowaypoint.com
+display_url: https://kara.wickowaypoint.com
+logo_url: https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/09_Logos_and_Graphics/Logo_Aligned_White.png
+
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: -
+
+collections:
+  - name: settings
+    label: Site Settings
+    description: Global site configuration
+    files:
+      - name: settings
+        label: Settings
+        file: content/settings.yml
+        fields:
+          - label: Site Title
+            name: site_title
+            widget: string
+            default: "Kara Toone for Utah House District 14"
+          - label: Tagline
+            name: tagline
+            widget: string
+            default: "Lifelong Davis County resident. Education leader. Community builder."
+          - label: Description
+            name: description
+            widget: text
+            default: "Kara Toone is running for Utah House District 14. A lifelong Davis County resident, education leader, and Republican committed to growth, housing, schools, and fiscal responsibility."
+          - label: Logo White
+            name: logo_white
+            widget: image
+            allow_multiple: false
+          - label: Logo Round
+            name: logo_round
+            widget: image
+            allow_multiple: false
+          - label: Donate URL
+            name: donate_url
+            widget: string
+            default: "https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate"
+          - label: Venmo URL
+            name: venmo_url
+            widget: string
+            default: "https://www.venmo.com/u/electkaratoone"
+          - label: Email
+            name: email
+            widget: string
+            default: "votekaratoone@gmail.com"
+          - label: Instagram URL
+            name: instagram_url
+            widget: string
+            default: "https://www.instagram.com/karatooneforutah/"
+          - label: Facebook URL
+            name: facebook_url
+            widget: string
+            default: "https://www.facebook.com/profile.php?id=61584720802611"
+          - label: Footer Tagline
+            name: footer_tagline
+            widget: text
+            default: "Paid for by friends of Kara Toone"
+
+  - name: home
+    label: Home Page
+    files:
+      - name: home
+        label: Home
+        file: content/home.yml
+        fields:
+          - label: Hero Eyebrow
+            name: hero_eyebrow
+            widget: string
+          - label: Hero Title
+            name: hero_title
+            widget: string
+          - label: Hero Subtitle
+            name: hero_subtitle
+            widget: text
+          - label: Hero Image
+            name: hero_image
+            widget: image
+            allow_multiple: false
+          - label: Hero CTA Text
+            name: hero_cta_text
+            widget: string
+          - label: Hero CTA URL
+            name: hero_cta_url
+            widget: string
+          - label: Ticker Items
+            name: ticker_items
+            widget: list
+            fields:
+              - label: Text
+                name: text
+                widget: string
+          - label: Priorities Intro
+            name: priorities_intro
+            widget: text
+          - label: Priorities
+            name: priorities
+            widget: list
+            fields:
+              - label: Title
+                name: title
+                widget: string
+              - label: Description
+                name: description
+                widget: text
+              - label: Icon
+                name: icon
+                widget: string
+              - label: Link
+                name: link
+                widget: string
+          - label: Events Section Title
+            name: events_title
+            widget: string
+          - label: Events Section Intro
+            name: events_intro
+            widget: text
+          - label: Get Involved Title
+            name: get_involved_title
+            widget: string
+          - label: Get Involved Description
+            name: get_involved_description
+            widget: text
+          - label: Volunteer Form Intro
+            name: volunteer_intro
+            widget: text
+          - label: Donate Section Title
+            name: donate_title
+            widget: string
+          - label: Donate Section Description
+            name: donate_description
+            widget: text
+
+  - name: about
+    label: About Page
+    files:
+      - name: about
+        label: About Kara
+        file: content/about.yml
+        fields:
+          - label: Hero Title
+            name: hero_title
+            widget: string
+          - label: Hero Subtitle
+            name: hero_subtitle
+            widget: text
+          - label: Hero Image
+            name: hero_image
+            widget: image
+            allow_multiple: false
+          - label: Story Section Title
+            name: story_title
+            widget: string
+          - label: Story Content
+            name: story_content
+            widget: markdown
+          - label: Education Timeline
+            name: education
+            widget: list
+            fields:
+              - label: School/Program
+                name: school
+                widget: string
+              - label: Year
+                name: year
+                widget: string
+              - label: Description
+                name: description
+                widget: text
+          - label: Family Section
+            name: family_section
+            widget: markdown
+          - label: Career Section Title
+            name: career_title
+            widget: string
+          - label: Career Positions
+            name: career_positions
+            widget: list
+            fields:
+              - label: Position
+                name: position
+                widget: string
+              - label: Organization
+                name: organization
+                widget: string
+              - label: Years
+                name: years
+                widget: string
+              - label: Description
+                name: description
+                widget: text
+          - label: Leadership Section
+            name: leadership_section
+            widget: markdown
+          - label: Why Running Title
+            name: why_running_title
+            widget: string
+          - label: Why Running Content
+            name: why_running_content
+            widget: markdown
+
+  - name: priorities
+    label: Priorities
+    folder: content/priorities
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Priority Title
+        name: title
+        widget: string
+      - label: Priority Number
+        name: priority_number
+        widget: number
+      - label: Meta Description
+        name: meta_description
+        widget: text
+      - label: Hero Title
+        name: hero_title
+        widget: string
+      - label: Hero Subtitle
+        name: hero_subtitle
+        widget: text
+      - label: Hero Image
+        name: hero_image
+        widget: image
+        allow_multiple: false
+      - label: Overview Section
+        name: overview_section
+        widget: object
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: Content
+            name: content
+            widget: markdown
+      - label: Stats
+        name: stats
+        widget: list
+        fields:
+          - label: Stat Number
+            name: number
+            widget: string
+          - label: Stat Label
+            name: label
+            widget: string
+          - label: Description
+            name: description
+            widget: text
+      - label: Sections
+        name: sections
+        widget: list
+        fields:
+          - label: Eyebrow
+            name: eyebrow
+            widget: string
+          - label: Title
+            name: title
+            widget: string
+          - label: Content
+            name: content
+            widget: markdown
+          - label: Image
+            name: image
+            widget: image
+            allow_multiple: false
+            required: false
+      - label: Solution Cards
+        name: solutions
+        widget: list
+        fields:
+          - label: Icon
+            name: icon
+            widget: string
+          - label: Title
+            name: title
+            widget: string
+          - label: Description
+            name: description
+            widget: text
+      - label: Policy Lists
+        name: policy_lists
+        widget: list
+        fields:
+          - label: Section Title
+            name: title
+            widget: string
+          - label: Items
+            name: items
+            widget: list
+            fields:
+              - label: Item
+                name: text
+                widget: string
+      - label: Quotes
+        name: quotes
+        widget: list
+        fields:
+          - label: Quote Text
+            name: quote
+            widget: text
+          - label: Attribution
+            name: attribution
+            widget: string
+      - label: Body
+        name: body
+        widget: markdown
+
+  - name: blog
+    label: Blog
+    folder: content/blog
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: HH:mm
+      - label: Author
+        name: author
+        widget: string
+        default: "Kara Toone"
+      - label: Featured Image
+        name: featured_image
+        widget: image
+        allow_multiple: false
+      - label: Excerpt
+        name: excerpt
+        widget: text
+      - label: Body
+        name: body
+        widget: markdown
+
+  - name: events
+    label: Events
+    folder: content/events
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: yml
+    format: yaml
+    fields:
+      - label: Event Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: HH:mm
+      - label: End Date
+        name: end_date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: HH:mm
+        required: false
+      - label: Location Name
+        name: location
+        widget: string
+      - label: Address
+        name: address
+        widget: string
+      - label: Description
+        name: description
+        widget: markdown
+      - label: Event Image
+        name: image
+        widget: image
+        allow_multiple: false
+        required: false
+      - label: RSVP URL
+        name: rsvp_url
+        widget: string
+        required: false
+
+  - name: gallery
+    label: Gallery
+    folder: content/gallery
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - label: Gallery Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        required: false
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - Campaign Events
+          - Community Engagement
+          - Press
+          - Personal
+      - label: Featured Image
+        name: featured_image
+        widget: image
+        allow_multiple: false
+      - label: Gallery Images
+        name: images
+        widget: list
+        fields:
+          - label: Image
+            name: image
+            widget: image
+          - label: Caption
+            name: caption
+            widget: string
+            required: false
+      - label: Description
+        name: description
+        widget: text
+        required: false
+      - label: Body
+        name: body
+        widget: markdown
+        required: false

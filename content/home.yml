@@ -1,0 +1,48 @@
+hero_eyebrow: Ready to lead
+hero_title: Kara Toone for Utah County Council
+hero_subtitle: A lifelong Utah County resident committed to sustainable growth, affordable housing, and our community's future.
+hero_image: https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/01_Hero_Images/Hero_Home.jpg
+hero_cta_text: Support Kara's Campaign
+hero_cta_url: "#donate"
+
+ticker_items:
+  - text: "Sustainable growth and infrastructure"
+  - text: "Affordable housing for families"
+  - text: "Public safety and community support"
+  - text: "Quality education funding"
+  - text: "Fiscal responsibility and transparency"
+
+priorities_intro: "Kara's five key priorities for Utah County:"
+
+priorities:
+  - title: Growth & Infrastructure
+    description: "Managing sustainable growth and building the infrastructure our community needs"
+    icon: "🏗️"
+    link: "priorities/growth-infrastructure.html"
+  - title: Housing
+    description: "Ensuring affordable, quality housing for Utah County families"
+    icon: "🏠"
+    link: "priorities/housing.html"
+  - title: Public Safety
+    description: "Supporting our law enforcement and mental health services"
+    icon: "🚔"
+    link: "priorities/public-safety.html"
+  - title: Education
+    description: "Investing in schools, teachers, and student success"
+    icon: "📚"
+    link: "priorities/education.html"
+  - title: Fiscal Responsibility
+    description: "Transparent government and responsible stewardship of taxpayer funds"
+    icon: "💰"
+    link: "priorities/fiscal-responsibility.html"
+
+events_title: "Upcoming Events"
+events_intro: "Join Kara at community events throughout Utah County to discuss our shared priorities."
+
+get_involved_title: "Get Involved"
+get_involved_description: "There are many ways to support Kara's campaign and help build the future Utah County deserves. Whether you can volunteer your time, make a donation, or simply spread the word, every contribution matters."
+
+volunteer_intro: "Fill out the form below to get involved with the campaign. Kara will be in touch with next steps."
+
+donate_title: "Support the Campaign"
+donate_description: "Your contribution helps Kara reach more voters and share her vision for Utah County's future. Donations of all amounts are welcome."
