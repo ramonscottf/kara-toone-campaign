@@ -114,6 +114,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
+// ─── READ MORE TOGGLE ───
+document.querySelectorAll('.read-more-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = btn.previousElementSibling;
+    if (target && target.classList.contains('expandable-content')) {
+      const isExpanded = target.classList.toggle('expanded');
+      btn.classList.toggle('expanded', isExpanded);
+      btn.textContent = isExpanded ? 'Read Less' : (btn.dataset.label || 'Read More');
+    }
+  });
+});
+
 // ─── TICKER DUPLICATE (for seamless loop) ───
 const ticker = document.getElementById('ticker');
 if (ticker && ticker.children.length < 16) {

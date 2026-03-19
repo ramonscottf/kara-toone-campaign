@@ -826,6 +826,94 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .trail-gallery-track { padding: 0 24px; gap: 16px; }
 }
 
+/* ─── EXPANDABLE READ MORE ─── */
+.expandable-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+.expandable-content.expanded {
+  max-height: 2000px;
+  opacity: 1;
+}
+.read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--red);
+  padding: 12px 0 4px;
+  transition: gap 0.2s, color 0.2s;
+}
+.read-more-btn:hover {
+  color: var(--red-bright);
+  gap: 12px;
+}
+.read-more-btn::after {
+  content: '+';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: transform 0.3s, background 0.3s;
+}
+.read-more-btn.expanded::after {
+  content: '\2212';
+  transform: rotate(180deg);
+}
+.read-more-btn.expanded {
+  color: var(--gray);
+}
+
+/* ─── KEY HIGHLIGHTS ─── */
+.key-highlight {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: var(--white);
+  border: 1px solid #E0E8F0;
+  border-left: 4px solid var(--red);
+  border-radius: 0 4px 4px 0;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--navy);
+  font-weight: 500;
+}
+.key-highlight::before {
+  content: '\2713';
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--red);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.content-section.alt .key-highlight {
+  background: var(--cream);
+}
+
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .content-grid { grid-template-columns: 1fr; gap: 48px; }
