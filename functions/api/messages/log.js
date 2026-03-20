@@ -3,50 +3,12 @@
 // Retrieve communication log with optional filtering
 // ──────────────────────────────────────────────
 
-// ── Inline Sheets helpers ────────────────────
-
-async function getAccessToken(env) {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: env.GOOGLE_CLIENT_ID,
-      client_secret: env.GOOGLE_CLIENT_SECRET,
-      refresh_token: env.GOOGLE_REFRESH_TOKEN,
-      grant_type: 'refresh_token',
-    }),
-  });
-  const data = await response.json();
-  if (!data.access_token) throw new Error('Failed to obtain Google access token');
-  return data.access_token;
-}
-
-async function readSheet(env, tab, range) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${range}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await res.json();
-  return data.values || [];
-}
-
-// ── CORS helpers ─────────────────────────────
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
-
-function corsResponse(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
-  });
-}
+import {
+  sheetsGet,
+  CORS_HEADERS,
+  jsonResponse,
+  errorResponse,
+} from "../_shared/sheets.js";
 
 // ── CommLog column definitions ───────────────
 // Expected columns: contact_id, channel, message_preview, sent_at, status
@@ -73,10 +35,11 @@ export async function onRequestGet(context) {
     const sinceFilter = url.searchParams.get('since');
 
     // Read CommLog sheet
-    const rows = await readSheet(env, 'CommLog', 'A1:E');
+    const data = await sheetsGet(env, 'CommLog!A1:E');
+    const rows = data.values || [];
 
     if (rows.length < 2) {
-      return corsResponse({ logs: [], count: 0 });
+      return jsonResponse({ logs: [], count: 0 });
     }
 
     // First row is header; skip it
@@ -96,7 +59,6 @@ export async function onRequestGet(context) {
     }
 
     if (sinceFilter) {
-      // Parse the since date — accept ISO or YYYY-MM-DD format
       const sinceDate = new Date(sinceFilter);
       if (!isNaN(sinceDate.getTime())) {
         logs = logs.filter((log) => {
@@ -113,9 +75,9 @@ export async function onRequestGet(context) {
       return dateA - dateB;
     });
 
-    return corsResponse({ logs, count: logs.length });
+    return jsonResponse({ logs, count: logs.length });
   } catch (err) {
-    return corsResponse({ error: err.message || 'Internal server error' }, 500);
+    return errorResponse(err.message || 'Internal server error', 500);
   }
 }
 

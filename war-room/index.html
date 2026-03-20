@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kara Toone — Campaign Connect</title>
+  <style>
+    :root {
+      --pink: #E91E63;
+      --navy: #1a237e;
+      --navy-dark: #0d1440;
+      --light-bg: #f5f5f5;
+      --white: #ffffff;
+      --emerald: #2e7d32;
+      --dark: #0D1F3C;
+      --light-blue: #BED2E3;
+      --yellow: #FFC958;
+      --text-muted: #6B7B8D;
+      --text-light: #8899AA;
+      --border: #E0E7EE;
+      --card-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--light-bg);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Loading Overlay ── */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease;
+    }
+
+    #loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 48px;
+      height: 48px;
+      border: 5px solid var(--light-blue);
+      border-top-color: var(--pink);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Header ── */
+    .app-header {
+      background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 2px solid var(--pink);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 22px;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .header-text {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 20px;
+      color: var(--white);
+      font-weight: 700;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: var(--light-blue);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      margin-top: 2px;
+      text-transform: uppercase;
+    }
+
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4CAF50;
+    }
+
+    .status-label {
+      font-size: 12px;
+      color: #4CAF50;
+      font-weight: 600;
+    }
+
+    /* ── Tab Navigation ── */
+    .tab-nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      color: var(--text-light);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .tab-btn:hover {
+      color: var(--dark);
+    }
+
+    .tab-btn.active {
+      border-bottom-color: var(--pink);
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    /* ── Main Content ── */
+    .app-main {
+      flex: 1;
+      padding: 32px;
+      max-width: 1100px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .view-title {
+      margin: 0 0 20px;
+      color: var(--dark);
+      font-size: 22px;
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      color: var(--dark);
+      font-size: 18px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+    }
+
+    /* ── Stat Cards ── */
+    .stat-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px 24px;
+      box-shadow: var(--card-shadow);
+      border-top: 4px solid var(--navy);
+      min-width: 160px;
+      flex: 1 1 180px;
+    }
+
+    .stat-card-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-card-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-top: 4px;
+    }
+
+    .stat-card-sub {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* ── Quick Actions ── */
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .btn-action {
+      padding: 10px 20px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s;
+    }
+
+    .btn-action:hover {
+      opacity: 0.9;
+    }
+
+    /* ── Delegate Chart ── */
+    .delegate-chart {
+      margin-bottom: 14px;
+    }
+
+    .delegate-chart:last-child {
+      margin-bottom: 0;
+    }
+
+    .delegate-chart-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .delegate-chart-bar-bg {
+      background: #E8EDF2;
+      border-radius: 6px;
+      height: 22px;
+      overflow: hidden;
+    }
+
+    .delegate-chart-bar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.4s ease;
+    }
+
+    /* ── Contacts ── */
+    .search-input {
+      width: 100%;
+      padding: 10px 16px;
+      border: 2px solid var(--light-blue);
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .search-input:focus {
+      border-color: var(--pink);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .filter-pill {
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 2px solid var(--light-blue);
+      background: var(--white);
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .filter-pill.active {
+      border-color: var(--pink);
+      background: var(--pink);
+      color: var(--white);
+    }
+
+    .contacts-table-wrap {
+      overflow-x: auto;
+    }
+
+    .contacts-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .contacts-table thead tr {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .contacts-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .contacts-table td {
+      padding: 10px 16px;
+      font-size: 14px;
+      color: #5A6B7D;
+      border-bottom: 1px solid #E8EDF2;
+    }
+
+    .contacts-table td:first-child {
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .contact-type-badge {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .contacts-footer {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    /* ── Forms ── */
+    .forms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s;
+      border: 2px solid transparent;
+    }
+
+    .form-card:hover {
+      border-color: var(--pink);
+    }
+
+    .form-card-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .form-card-title {
+      margin: 0 0 6px;
+      color: var(--dark);
+      font-size: 17px;
+    }
+
+    .form-card-desc {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .form-card-meta {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .embed-code-wrap {
+      margin-top: 16px;
+      display: none;
+    }
+
+    .embed-code-wrap.open {
+      display: block;
+    }
+
+    .embed-code-toggle {
+      background: none;
+      border: none;
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      padding: 0;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .embed-code-toggle:hover {
+      color: var(--pink);
+    }
+
+    .embed-code-block {
+      background: var(--dark);
+      color: var(--light-blue);
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      overflow-x: auto;
+      line-height: 1.6;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", Menlo, monospace;
+      white-space: pre;
+    }
+
+    /* ── Blast ── */
+    .audience-list {
+      margin-bottom: 20px;
+    }
+
+    .audience-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .audience-option:hover {
+      background: rgba(26, 35, 126, 0.05);
+    }
+
+    .audience-option input[type="radio"] {
+      accent-color: var(--pink);
+    }
+
+    .audience-option-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      flex: 1;
+    }
+
+    .audience-option-count {
+      font-size: 13px;
+      color: var(--text-muted);
+      background: var(--light-blue);
+      padding: 2px 10px;
+      border-radius: 10px;
+    }
+
+    .field-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+
+    .field-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid var(--light-blue);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .field-input:focus {
+      border-color: var(--pink);
+    }
+
+    .field-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid var(--light-blue);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .field-textarea:focus {
+      border-color: var(--pink);
+    }
+
+    .char-counter {
+      font-size: 12px;
+      color: var(--text-light);
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .char-counter.warning {
+      color: var(--pink);
+    }
+
+    .merge-fields-info {
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--light-bg);
+      border-radius: 8px;
+      font-size: 13px;
+      color: #5A6B7D;
+    }
+
+    .merge-fields-info strong {
+      color: var(--dark);
+    }
+
+    .btn-send {
+      padding: 14px 32px;
+      background: var(--pink);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.15s;
+    }
+
+    .btn-send:hover {
+      opacity: 0.9;
+    }
+
+    .btn-send:disabled {
+      background: var(--text-light);
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .send-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .send-cost {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── Settings ── */
+    .settings-form {
+      max-width: 560px;
+    }
+
+    .settings-field {
+      margin-bottom: 18px;
+    }
+
+    .settings-field input {
+      font-family: "SF Mono", "Fira Code", Menlo, monospace;
+    }
+
+    .btn-save {
+      padding: 12px 28px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .btn-save:hover {
+      opacity: 0.9;
+    }
+
+    .settings-note {
+      background: var(--dark);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 560px;
+      margin-top: 24px;
+    }
+
+    .settings-note h3 {
+      margin: 0 0 12px;
+      color: var(--yellow);
+      font-size: 15px;
+    }
+
+    .settings-note p {
+      margin: 0;
+      color: var(--light-blue);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .settings-note strong {
+      color: var(--white);
+    }
+
+    .settings-note code {
+      background: rgba(255,255,255,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ── Footer ── */
+    .app-footer {
+      text-align: center;
+      padding: 24px 32px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .app-header {
+        padding: 16px 20px;
+      }
+
+      .header-status {
+        display: none;
+      }
+
+      .tab-nav {
+        padding: 0 16px;
+      }
+
+      .tab-btn {
+        padding: 12px 14px;
+        font-size: 13px;
+      }
+
+      .app-main {
+        padding: 20px 16px;
+      }
+
+      .stat-card {
+        min-width: 140px;
+        flex: 1 1 140px;
+        padding: 16px 18px;
+      }
+
+      .stat-card-value {
+        font-size: 26px;
+      }
+
+      .contacts-table th,
+      .contacts-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+
+      .forms-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .send-footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-title {
+        font-size: 17px;
+      }
+
+      .header-subtitle {
+        font-size: 10px;
+      }
+
+      .stat-grid {
+        gap: 10px;
+      }
+
+      .stat-card {
+        min-width: 120px;
+        flex: 1 1 120px;
+      }
+
+      .quick-actions {
+        flex-direction: column;
+      }
+
+      .btn-action {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-logo">K</div>
+    <div class="header-text">
+      <h1 class="header-title">Kara Toone</h1>
+      <div class="header-subtitle">Campaign Connect</div>
+    </div>
+    <div class="header-status">
+      <div class="status-dot"></div>
+      <span class="status-label">Connected</span>
+    </div>
+  </header>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav" id="tab-nav">
+    <button class="tab-btn active" data-tab="dashboard" onclick="app.switchTab('dashboard')">Dashboard</button>
+    <button class="tab-btn" data-tab="contacts" onclick="app.switchTab('contacts')">Contacts</button>
+    <button class="tab-btn" data-tab="forms" onclick="app.switchTab('forms')">Forms</button>
+    <button class="tab-btn" data-tab="blast" onclick="app.switchTab('blast')">Blast</button>
+    <button class="tab-btn" data-tab="settings" onclick="app.switchTab('settings')">Settings</button>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="app-main">
+
+    <!-- ════════════════ Dashboard View ════════════════ -->
+    <section id="dashboard-view" class="view active">
+      <h2 class="view-title">Campaign Overview</h2>
+
+      <div class="stat-grid" id="stat-grid">
+        <div class="stat-card" data-stat="totalContacts" style="border-top-color: var(--navy);">
+          <div class="stat-card-label">Total Contacts</div>
+          <div class="stat-card-value">--</div>
+        </div>
+        <div class="stat-card" data-stat="donors" style="border-top-color: #C62828;">
+          <div class="stat-card-label">Donors</div>
+          <div class="stat-card-value">--</div>
+          <div class="stat-card-sub"></div>
+        </div>
+        <div class="stat-card" data-stat="totalRaised" style="border-top-color: var(--emerald);">
+          <div class="stat-card-label">Total Raised</div>
+          <div class="stat-card-value">--</div>
+        </div>
+        <div class="stat-card" data-stat="volunteers" style="border-top-color: var(--pink);">
+          <div class="stat-card-label">Volunteers</div>
+          <div class="stat-card-value">--</div>
+        </div>
+        <div class="stat-card" data-stat="delegatesContacted" style="border-top-color: var(--navy);">
+          <div class="stat-card-label">Delegates Contacted</div>
+          <div class="stat-card-value">--</div>
+          <div class="stat-card-sub"></div>
+        </div>
+        <div class="stat-card" data-stat="yardSigns" style="border-top-color: var(--yellow);">
+          <div class="stat-card-label">Yard Signs</div>
+          <div class="stat-card-value">--</div>
+          <div class="stat-card-sub"></div>
+        </div>
+        <div class="stat-card" data-stat="commsSent" style="border-top-color: var(--light-blue);">
+          <div class="stat-card-label">Comms Sent</div>
+          <div class="stat-card-value">--</div>
+          <div class="stat-card-sub">emails + texts</div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Quick Actions</h3>
+      <div class="quick-actions">
+        <button class="btn-action" data-action="send-email" onclick="app.switchTab('blast')">Send Email Blast</button>
+        <button class="btn-action" data-action="send-text" onclick="app.switchTab('blast')">Send Text Blast</button>
+        <button class="btn-action" data-action="add-contact" onclick="app.switchTab('contacts')">Add Contact</button>
+        <button class="btn-action" data-action="view-forms" onclick="app.switchTab('forms')">View Forms</button>
+      </div>
+
+      <h3 class="section-title" style="margin-bottom: 16px;">Delegate Support Breakdown</h3>
+      <div class="card" id="delegate-chart">
+        <div class="delegate-chart" data-level="strong-support">
+          <div class="delegate-chart-header">
+            <span>Strong Support</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: var(--emerald);"></div>
+          </div>
+        </div>
+        <div class="delegate-chart" data-level="leaning">
+          <div class="delegate-chart-header">
+            <span>Leaning</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: #66BB6A;"></div>
+          </div>
+        </div>
+        <div class="delegate-chart" data-level="undecided">
+          <div class="delegate-chart-header">
+            <span>Undecided</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: var(--yellow);"></div>
+          </div>
+        </div>
+        <div class="delegate-chart" data-level="leaning-opponent">
+          <div class="delegate-chart-header">
+            <span>Leaning Opponent</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: #EF6C00;"></div>
+          </div>
+        </div>
+        <div class="delegate-chart" data-level="strong-opponent">
+          <div class="delegate-chart-header">
+            <span>Strong Opponent</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: #C62828;"></div>
+          </div>
+        </div>
+        <div class="delegate-chart" data-level="not-contacted">
+          <div class="delegate-chart-header">
+            <span>Not Contacted</span>
+            <span class="delegate-chart-count">--</span>
+          </div>
+          <div class="delegate-chart-bar-bg">
+            <div class="delegate-chart-bar-fill" style="width: 0%; background: #9E9E9E;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Contacts View ════════════════ -->
+    <section id="contacts-view" class="view">
+      <h2 class="view-title">Contacts</h2>
+
+      <input
+        type="text"
+        id="contacts-search"
+        class="search-input"
+        placeholder="Search contacts..."
+        oninput="app.filterContacts()"
+      >
+
+      <div class="filter-pills" id="filter-pills">
+        <button class="filter-pill active" data-filter="All" onclick="app.setContactFilter('All')">All</button>
+        <button class="filter-pill" data-filter="Supporter" onclick="app.setContactFilter('Supporter')">Supporter</button>
+        <button class="filter-pill" data-filter="Volunteer" onclick="app.setContactFilter('Volunteer')">Volunteer</button>
+        <button class="filter-pill" data-filter="Donor" onclick="app.setContactFilter('Donor')">Donor</button>
+        <button class="filter-pill" data-filter="Delegate" onclick="app.setContactFilter('Delegate')">Delegate</button>
+        <button class="filter-pill" data-filter="Yard Sign" onclick="app.setContactFilter('Yard Sign')">Yard Sign</button>
+      </div>
+
+      <div class="contacts-table-wrap">
+        <table class="contacts-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Type</th>
+              <th>Source</th>
+              <th>Email Opt-in</th>
+              <th>Text Opt-in</th>
+            </tr>
+          </thead>
+          <tbody id="contacts-tbody">
+            <!-- Populated by app.js -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="contacts-footer" id="contacts-footer">
+        Showing 0 contacts
+      </div>
+    </section>
+
+    <!-- ════════════════ Forms View ════════════════ -->
+    <section id="forms-view" class="view">
+      <h2 class="view-title">Forms</h2>
+
+      <div class="forms-grid">
+        <div class="form-card" data-form="get-involved">
+          <div class="form-card-icon">&#129309;</div>
+          <h3 class="form-card-title">Get Involved</h3>
+          <p class="form-card-desc">Volunteer signup form</p>
+          <div class="form-card-meta">6 fields &#8594;</div>
+          <button class="embed-code-toggle" onclick="app.toggleEmbed(this)">Show Embed Code</button>
+          <div class="embed-code-wrap">
+            <pre class="embed-code-block">&lt;!-- Get Involved Form --&gt;
+&lt;iframe
+  src="https://kara-toone.pages.dev/forms/get-involved"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: none; border-radius: 12px;"
+&gt;&lt;/iframe&gt;
+
+&lt;!-- Or link directly --&gt;
+&lt;a href="https://kara-toone.pages.dev/forms/get-involved"&gt;
+  Get Involved
+&lt;/a&gt;</pre>
+          </div>
+        </div>
+
+        <div class="form-card" data-form="yard-sign">
+          <div class="form-card-icon">&#129703;</div>
+          <h3 class="form-card-title">Request Yard Sign</h3>
+          <p class="form-card-desc">Yard sign request form</p>
+          <div class="form-card-meta">7 fields &#8594;</div>
+          <button class="embed-code-toggle" onclick="app.toggleEmbed(this)">Show Embed Code</button>
+          <div class="embed-code-wrap">
+            <pre class="embed-code-block">&lt;!-- Request Yard Sign Form --&gt;
+&lt;iframe
+  src="https://kara-toone.pages.dev/forms/yard-sign"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: none; border-radius: 12px;"
+&gt;&lt;/iframe&gt;
+
+&lt;!-- Or link directly --&gt;
+&lt;a href="https://kara-toone.pages.dev/forms/yard-sign"&gt;
+  Request Yard Sign
+&lt;/a&gt;</pre>
+          </div>
+        </div>
+
+        <div class="form-card" data-form="contact">
+          <div class="form-card-icon">&#128236;</div>
+          <h3 class="form-card-title">Contact Kara</h3>
+          <p class="form-card-desc">General contact form</p>
+          <div class="form-card-meta">5 fields &#8594;</div>
+          <button class="embed-code-toggle" onclick="app.toggleEmbed(this)">Show Embed Code</button>
+          <div class="embed-code-wrap">
+            <pre class="embed-code-block">&lt;!-- Contact Kara Form --&gt;
+&lt;iframe
+  src="https://kara-toone.pages.dev/forms/contact"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: none; border-radius: 12px;"
+&gt;&lt;/iframe&gt;
+
+&lt;!-- Or link directly --&gt;
+&lt;a href="https://kara-toone.pages.dev/forms/contact"&gt;
+  Contact Kara
+&lt;/a&gt;</pre>
+          </div>
+        </div>
+
+        <div class="form-card" data-form="donate">
+          <div class="form-card-icon">&#128181;</div>
+          <h3 class="form-card-title">Donate</h3>
+          <p class="form-card-desc">Donation form</p>
+          <div class="form-card-meta">6 fields &#8594;</div>
+          <button class="embed-code-toggle" onclick="app.toggleEmbed(this)">Show Embed Code</button>
+          <div class="embed-code-wrap">
+            <pre class="embed-code-block">&lt;!-- Donate Form --&gt;
+&lt;iframe
+  src="https://kara-toone.pages.dev/forms/donate"
+  width="100%"
+  height="600"
+  frameborder="0"
+  style="border: none; border-radius: 12px;"
+&gt;&lt;/iframe&gt;
+
+&lt;!-- Or link directly --&gt;
+&lt;a href="https://kara-toone.pages.dev/forms/donate"&gt;
+  Donate
+&lt;/a&gt;</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════ Blast View ════════════════ -->
+    <section id="blast-view" class="view">
+      <h2 class="view-title">Send Blast</h2>
+
+      <div class="card" style="margin-bottom: 20px;">
+        <h3 class="section-title" style="margin-bottom: 14px;">Select Audience</h3>
+        <div class="audience-list" id="audience-list">
+          <label class="audience-option" data-audience="all">
+            <input type="radio" name="audience" value="all" checked>
+            <span class="audience-option-label">All opt-ins</span>
+            <span class="audience-option-count" data-count="all">--</span>
+          </label>
+          <label class="audience-option" data-audience="volunteers">
+            <input type="radio" name="audience" value="volunteers">
+            <span class="audience-option-label">Volunteers</span>
+            <span class="audience-option-count" data-count="volunteers">--</span>
+          </label>
+          <label class="audience-option" data-audience="donors">
+            <input type="radio" name="audience" value="donors">
+            <span class="audience-option-label">Donors</span>
+            <span class="audience-option-count" data-count="donors">--</span>
+          </label>
+          <label class="audience-option" data-audience="delegates">
+            <input type="radio" name="audience" value="delegates">
+            <span class="audience-option-label">Delegates</span>
+            <span class="audience-option-count" data-count="delegates">--</span>
+          </label>
+          <label class="audience-option" data-audience="yardsign">
+            <input type="radio" name="audience" value="yardsign">
+            <span class="audience-option-label">Yard Sign</span>
+            <span class="audience-option-count" data-count="yardsign">--</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom: 20px;">
+        <h3 class="section-title" style="margin-bottom: 14px;">Compose Message</h3>
+
+        <div style="margin-bottom: 16px;">
+          <label class="field-label" for="blast-subject">Subject Line</label>
+          <input
+            type="text"
+            id="blast-subject"
+            class="field-input"
+            placeholder="Enter email subject..."
+          >
+        </div>
+
+        <div>
+          <label class="field-label" for="blast-message">Message</label>
+          <textarea
+            id="blast-message"
+            class="field-textarea"
+            rows="8"
+            placeholder="Compose your message..."
+            oninput="app.updateCharCounter()"
+          ></textarea>
+          <div class="char-counter" id="char-counter"></div>
+        </div>
+
+        <div class="merge-fields-info">
+          <strong>Merge Fields:</strong> {first_name}, {last_name}, {precinct}
+        </div>
+      </div>
+
+      <div class="send-footer">
+        <button class="btn-send" id="blast-send-btn" onclick="app.sendBlast()">
+          Send Blast
+        </button>
+        <span class="send-cost" id="send-cost"></span>
+      </div>
+    </section>
+
+    <!-- ════════════════ Settings View ════════════════ -->
+    <section id="settings-view" class="view">
+      <h2 class="view-title">Settings</h2>
+
+      <div class="card settings-form" style="padding: 32px; margin-bottom: 24px;">
+        <div class="settings-field">
+          <label class="field-label" for="setting-sheetId">Google Sheet ID</label>
+          <input
+            type="text"
+            id="setting-sheetId"
+            class="field-input"
+            data-setting="sheetId"
+            placeholder="1aBcDeFgHiJkLmNoPqRsTuVwXyZ"
+          >
+        </div>
+
+        <div class="settings-field">
+          <label class="field-label" for="setting-resendKey">Resend API Key</label>
+          <input
+            type="password"
+            id="setting-resendKey"
+            class="field-input"
+            data-setting="resendKey"
+            placeholder="re_xxxxxxxxxxxx"
+          >
+        </div>
+
+        <div class="settings-field">
+          <label class="field-label" for="setting-twilioSid">Twilio Account SID</label>
+          <input
+            type="password"
+            id="setting-twilioSid"
+            class="field-input"
+            data-setting="twilioSid"
+            placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          >
+        </div>
+
+        <div class="settings-field">
+          <label class="field-label" for="setting-twilioAuth">Twilio Auth Token</label>
+          <input
+            type="password"
+            id="setting-twilioAuth"
+            class="field-input"
+            data-setting="twilioAuth"
+            placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          >
+        </div>
+
+        <div class="settings-field">
+          <label class="field-label" for="setting-twilioPhone">Twilio Phone Number</label>
+          <input
+            type="text"
+            id="setting-twilioPhone"
+            class="field-input"
+            data-setting="twilioPhone"
+            placeholder="+18045551234"
+          >
+        </div>
+
+        <div class="settings-field">
+          <label class="field-label" for="setting-fromEmail">From Email</label>
+          <input
+            type="email"
+            id="setting-fromEmail"
+            class="field-input"
+            data-setting="fromEmail"
+            placeholder="kara@karatoone.com"
+          >
+        </div>
+
+        <button class="btn-save" id="settings-save-btn" onclick="app.saveSettings()">Save Settings</button>
+      </div>
+
+      <div class="settings-note">
+        <h3>&#9888;&#65039; Architecture Note</h3>
+        <p>
+          In production, API keys and secrets are stored as
+          <strong>Cloudflare Worker environment variables</strong>
+          (encrypted at rest), never in client-side code. The settings above are for
+          local development reference only. Use
+          <code>wrangler secret put</code> to set secrets in production.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    Powered by Campaign Connect
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

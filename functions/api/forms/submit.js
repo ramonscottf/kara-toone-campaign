@@ -3,98 +3,18 @@
 // Handle website form submissions (volunteer, yard sign, contact, donate)
 // ──────────────────────────────────────────────
 
-// ── Inline Sheets helpers ────────────────────
-
-async function getAccessToken(env) {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: env.GOOGLE_CLIENT_ID,
-      client_secret: env.GOOGLE_CLIENT_SECRET,
-      refresh_token: env.GOOGLE_REFRESH_TOKEN,
-      grant_type: 'refresh_token',
-    }),
-  });
-  const data = await response.json();
-  if (!data.access_token) throw new Error('Failed to obtain Google access token');
-  return data.access_token;
-}
-
-async function readSheet(env, tab, range) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${range}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await res.json();
-  return data.values || [];
-}
-
-async function appendSheet(env, tab, rows) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const range = `${tab}!A1`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ values: rows }),
-  });
-}
-
-async function updateSheetRow(env, tab, rowRange, values) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${rowRange}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}?valueInputOption=USER_ENTERED`;
-  await fetch(url, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ values: [values] }),
-  });
-}
-
-// ── CORS helpers ─────────────────────────────
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
-
-function corsResponse(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
-  });
-}
+import {
+  sheetsGet,
+  sheetsAppend,
+  sheetsUpdate,
+  CORS_HEADERS,
+  jsonResponse,
+  errorResponse,
+  CONTACT_COLUMNS,
+  generateId,
+} from "../_shared/sheets.js";
 
 // ── Contact column definitions ───────────────
-
-const CONTACT_COLUMNS = [
-  'id', 'first_name', 'last_name', 'email', 'phone',
-  'address', 'city', 'zip', 'precinct', 'type',
-  'source', 'confirmed', 'support_level', 'priority', 'contacted',
-  'contact_attempts', 'last_contact_date', 'email_opened', 'phone_answered',
-  'opt_email', 'opt_text', 'notes', 'tags', 'created_at', 'updated_at',
-];
-
-// ── ID generator ─────────────────────────────
-
-function generateId() {
-  const now = Date.now();
-  const rand = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-  return `C${now}-${rand}`;
-}
 
 // ── Validation ───────────────────────────────
 
@@ -124,21 +44,21 @@ function validateFields(formType, fields) {
 
 // ── Find existing contact by email or phone ──
 
-function findExistingContact(rows, headers, email, phone) {
-  const emailIdx = headers.indexOf('email');
-  const phoneIdx = headers.indexOf('phone');
+function findExistingContact(rows, email, phone) {
+  const emailIdx = CONTACT_COLUMNS.indexOf('email');
+  const phoneIdx = CONTACT_COLUMNS.indexOf('phone');
 
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = 0; i < rows.length; i++) {
     const rowEmail = (rows[i][emailIdx] || '').trim().toLowerCase();
     const rowPhone = (rows[i][phoneIdx] || '').replace(/\D/g, '');
 
     if (email && rowEmail === email.trim().toLowerCase()) {
-      return { row: rows[i], rowIndex: i + 1 };
+      return { row: rows[i], rowIndex: i + 2 }; // +2 because data starts at row 2 (1-indexed, skip header)
     }
     if (phone) {
       const normalizedPhone = phone.replace(/\D/g, '');
       if (rowPhone && normalizedPhone && rowPhone === normalizedPhone) {
-        return { row: rows[i], rowIndex: i + 1 };
+        return { row: rows[i], rowIndex: i + 2 };
       }
     }
   }
@@ -228,32 +148,30 @@ export async function onRequestPost(context) {
     const { form_type, ...fields } = body;
 
     if (!form_type) {
-      return corsResponse({ error: 'Missing required field: form_type' }, 400);
+      return errorResponse('Missing required field: form_type', 400);
     }
 
     // Validate required fields for this form type
     const validationErrors = validateFields(form_type, fields);
     if (validationErrors.length > 0) {
-      return corsResponse({ error: validationErrors.join('; ') }, 400);
+      return errorResponse(validationErrors.join('; '), 400);
     }
 
     const now = new Date().toISOString();
 
     // Read existing contacts to check for duplicates
-    const rows = await readSheet(env, 'Contacts', 'A1:Z');
-    const headers = rows.length > 0
-      ? rows[0].map((h) => h.trim().toLowerCase())
-      : CONTACT_COLUMNS;
+    const data = await sheetsGet(env, 'Contacts!A2:Y');
+    const rows = data.values || [];
 
-    const existing = rows.length >= 2
-      ? findExistingContact(rows, headers, fields.email, fields.phone)
+    const existing = rows.length > 0
+      ? findExistingContact(rows, fields.email, fields.phone)
       : null;
 
     let contactId;
 
     if (existing) {
       // Update existing contact — merge new data without overwriting existing values
-      contactId = existing.row[headers.indexOf('id')] || generateId();
+      contactId = existing.row[CONTACT_COLUMNS.indexOf('id')] || generateId();
       const updatedRow = [...existing.row];
 
       // Ensure row is long enough for all columns
@@ -263,14 +181,14 @@ export async function onRequestPost(context) {
 
       // Update fields that are provided and non-empty
       for (const [key, value] of Object.entries(fields)) {
-        const colIdx = headers.indexOf(key);
+        const colIdx = CONTACT_COLUMNS.indexOf(key);
         if (colIdx !== -1 && value && value.toString().trim()) {
           updatedRow[colIdx] = value.toString().trim();
         }
       }
 
       // Update type if it adds a new role (append with comma)
-      const typeIdx = headers.indexOf('type');
+      const typeIdx = CONTACT_COLUMNS.indexOf('type');
       const newType = FORM_TYPE_MAP[form_type] || form_type;
       const existingType = (updatedRow[typeIdx] || '').toLowerCase();
       if (typeIdx !== -1 && !existingType.includes(newType)) {
@@ -278,7 +196,7 @@ export async function onRequestPost(context) {
       }
 
       // Update source to note the new form submission
-      const sourceIdx = headers.indexOf('source');
+      const sourceIdx = CONTACT_COLUMNS.indexOf('source');
       if (sourceIdx !== -1) {
         const existingSource = updatedRow[sourceIdx] || '';
         const newSource = `${form_type}-form`;
@@ -288,18 +206,18 @@ export async function onRequestPost(context) {
       }
 
       // Update timestamps
-      const updatedAtIdx = headers.indexOf('updated_at');
+      const updatedAtIdx = CONTACT_COLUMNS.indexOf('updated_at');
       if (updatedAtIdx !== -1) updatedRow[updatedAtIdx] = now;
 
       // Ensure opt-in defaults
-      const optEmailIdx = headers.indexOf('opt_email');
+      const optEmailIdx = CONTACT_COLUMNS.indexOf('opt_email');
       if (optEmailIdx !== -1 && !updatedRow[optEmailIdx]) updatedRow[optEmailIdx] = 'true';
-      const optTextIdx = headers.indexOf('opt_text');
+      const optTextIdx = CONTACT_COLUMNS.indexOf('opt_text');
       if (optTextIdx !== -1 && !updatedRow[optTextIdx]) updatedRow[optTextIdx] = 'true';
 
       // Write back the updated row
-      const rowRange = `A${existing.rowIndex}:${String.fromCharCode(64 + CONTACT_COLUMNS.length)}${existing.rowIndex}`;
-      await updateSheetRow(env, 'Contacts', rowRange, updatedRow);
+      const rowRange = `Contacts!A${existing.rowIndex}:${String.fromCharCode(64 + CONTACT_COLUMNS.length)}${existing.rowIndex}`;
+      await sheetsUpdate(env, rowRange, [updatedRow]);
     } else {
       // Create new contact
       contactId = generateId();
@@ -318,7 +236,7 @@ export async function onRequestPost(context) {
         return fields[col] ? fields[col].toString().trim() : '';
       });
 
-      await appendSheet(env, 'Contacts', [newRow]);
+      await sheetsAppend(env, 'Contacts!A:Y', [newRow]);
     }
 
     // Send welcome email (non-blocking — fire and forget)
@@ -334,14 +252,14 @@ export async function onRequestPost(context) {
       donate: `Thank you for your generous support!`,
     };
 
-    return corsResponse({
+    return jsonResponse({
       success: true,
       message: messages[form_type] || 'Form submitted successfully.',
       contact_id: contactId,
       action,
     });
   } catch (err) {
-    return corsResponse({ error: err.message || 'Internal server error' }, 500);
+    return errorResponse(err.message || 'Internal server error', 500);
   }
 }
 

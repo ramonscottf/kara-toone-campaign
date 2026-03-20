@@ -3,65 +3,11 @@
 // Handle incoming SMS replies from Twilio
 // ──────────────────────────────────────────────
 
-// ── Inline Sheets helpers ────────────────────
-
-async function getAccessToken(env) {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: env.GOOGLE_CLIENT_ID,
-      client_secret: env.GOOGLE_CLIENT_SECRET,
-      refresh_token: env.GOOGLE_REFRESH_TOKEN,
-      grant_type: 'refresh_token',
-    }),
-  });
-  const data = await response.json();
-  if (!data.access_token) throw new Error('Failed to obtain Google access token');
-  return data.access_token;
-}
-
-async function readSheet(env, tab, range) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${range}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await res.json();
-  return data.values || [];
-}
-
-async function appendSheet(env, tab, rows) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const range = `${tab}!A1`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ values: rows }),
-  });
-}
-
-async function updateSheetCell(env, tab, cellRange, value) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${cellRange}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}?valueInputOption=USER_ENTERED`;
-  await fetch(url, {
-    method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ values: [[value]] }),
-  });
-}
+import {
+  sheetsGet,
+  sheetsAppend,
+  sheetsUpdate,
+} from "../_shared/sheets.js";
 
 // ── Twilio signature verification ────────────
 
@@ -100,9 +46,7 @@ async function verifyTwilioSignature(request, env) {
 // ── Normalize phone number ───────────────────
 
 function normalizePhone(phone) {
-  // Strip everything except digits
   const digits = (phone || '').replace(/\D/g, '');
-  // Handle US numbers: add leading 1 if 10 digits
   if (digits.length === 10) return '1' + digits;
   return digits;
 }
@@ -115,10 +59,10 @@ function findContactByPhone(rows, headers, phone) {
 
   const normalizedSearch = normalizePhone(phone);
 
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = 0; i < rows.length; i++) {
     const contactPhone = normalizePhone(rows[i][phoneIdx]);
     if (contactPhone && contactPhone === normalizedSearch) {
-      return { row: rows[i], rowIndex: i + 1, headers };
+      return { row: rows[i], rowIndex: i + 2, headers }; // +2: 1-indexed + skip header
     }
   }
   return null;
@@ -171,14 +115,16 @@ export async function onRequestPost(context) {
     const now = new Date().toISOString();
 
     // Find contact by phone number in sheet
-    let contactId = from; // Default to phone number if contact not found
+    let contactId = from;
     let contactRow = null;
 
     try {
-      const rows = await readSheet(env, 'Contacts', 'A1:Z');
+      const data = await sheetsGet(env, 'Contacts!A1:Z');
+      const rows = data.values || [];
       if (rows.length >= 2) {
-        const headers = rows[0].map((h) => h.trim().toLowerCase());
-        const found = findContactByPhone(rows, headers, from);
+        const headers = rows[0].map((h) => String(h).trim().toLowerCase());
+        const dataRows = rows.slice(1);
+        const found = findContactByPhone(dataRows, headers, from);
         if (found) {
           const idIdx = headers.indexOf('id');
           contactId = found.row[idIdx] || from;
@@ -191,11 +137,11 @@ export async function onRequestPost(context) {
 
     // Log the reply to CommLog
     try {
-      await appendSheet(env, 'CommLog', [
+      await sheetsAppend(env, 'CommLog!A:E', [
         [contactId, 'sms-reply', body.substring(0, 200), now, `sid:${messageSid}`],
       ]);
     } catch {
-      // Non-fatal: logging failure shouldn't break the webhook
+      // Non-fatal
     }
 
     // Update contact's last_contact_date
@@ -204,19 +150,18 @@ export async function onRequestPost(context) {
         const lastContactIdx = contactRow.headers.indexOf('last_contact_date');
         if (lastContactIdx !== -1) {
           const colLetter = String.fromCharCode(65 + lastContactIdx);
-          await updateSheetCell(env, 'Contacts', `${colLetter}${contactRow.rowIndex}`, now);
+          await sheetsUpdate(env, `Contacts!${colLetter}${contactRow.rowIndex}`, [[now]]);
         }
       } catch {
         // Non-fatal
       }
     }
 
-    // Return TwiML response — empty by default, or auto-reply if configured
+    // Return TwiML response
     const autoReply = env.TWILIO_AUTO_REPLY || '';
     return twimlResponse(autoReply || null);
   } catch (err) {
     console.error('Twilio webhook error:', err.message);
-    // Return valid TwiML even on error to avoid Twilio retries
     return twimlResponse();
   }
 }

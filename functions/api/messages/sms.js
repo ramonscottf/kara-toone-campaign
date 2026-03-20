@@ -3,65 +3,13 @@
 // Send SMS blasts via Twilio API
 // ──────────────────────────────────────────────
 
-// ── Inline Sheets helpers ────────────────────
-
-async function getAccessToken(env) {
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: env.GOOGLE_CLIENT_ID,
-      client_secret: env.GOOGLE_CLIENT_SECRET,
-      refresh_token: env.GOOGLE_REFRESH_TOKEN,
-      grant_type: 'refresh_token',
-    }),
-  });
-  const data = await response.json();
-  if (!data.access_token) throw new Error('Failed to obtain Google access token');
-  return data.access_token;
-}
-
-async function readSheet(env, tab, range) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const fullRange = `${tab}!${range}`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(fullRange)}`;
-  const res = await fetch(url, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await res.json();
-  return data.values || [];
-}
-
-async function appendSheet(env, tab, rows) {
-  const token = await getAccessToken(env);
-  const sheetId = env.GOOGLE_SHEET_ID;
-  const range = `${tab}!A1`;
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}:append?valueInputOption=USER_ENTERED&insertDataOption=INSERT_ROWS`;
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ values: rows }),
-  });
-}
-
-// ── CORS helpers ─────────────────────────────
-
-const CORS_HEADERS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
-
-function corsResponse(body, status = 200) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json', ...CORS_HEADERS },
-  });
-}
+import {
+  sheetsGet,
+  sheetsAppend,
+  CORS_HEADERS,
+  jsonResponse,
+  errorResponse,
+} from "../_shared/sheets.js";
 
 // ── Audience filter ──────────────────────────
 
@@ -142,29 +90,30 @@ export async function onRequestPost(context) {
     const { audience, message } = await request.json();
 
     if (!audience || !message) {
-      return corsResponse({ error: 'Missing required fields: audience, message' }, 400);
+      return errorResponse('Missing required fields: audience, message', 400);
     }
 
     // Read contacts from Sheets
-    const rows = await readSheet(env, 'Contacts', 'A1:Z');
+    const data = await sheetsGet(env, 'Contacts!A1:Z');
+    const rows = data.values || [];
     if (rows.length < 2) {
-      return corsResponse({ error: 'No contacts found in sheet' }, 404);
+      return errorResponse('No contacts found in sheet', 404);
     }
 
-    const headers = rows[0].map((h) => h.trim().toLowerCase());
+    const headers = rows[0].map((h) => String(h).trim().toLowerCase());
     const contacts = rows.slice(1);
     const phoneIdx = headers.indexOf('phone');
     const idIdx = headers.indexOf('id');
 
     if (phoneIdx === -1) {
-      return corsResponse({ error: 'Contacts sheet missing phone column' }, 500);
+      return errorResponse('Contacts sheet missing phone column', 500);
     }
 
     // Filter by audience + opt_text + has phone
     const recipients = contacts.filter((c) => matchesAudience(c, headers, audience));
 
     if (recipients.length === 0) {
-      return corsResponse({ sent: 0, failed: 0, errors: [], message: 'No matching recipients' });
+      return jsonResponse({ sent: 0, failed: 0, errors: [], message: 'No matching recipients' });
     }
 
     // Send in batches of 50
@@ -223,15 +172,15 @@ export async function onRequestPost(context) {
     // Log to CommLog
     if (commLogRows.length > 0) {
       try {
-        await appendSheet(env, 'CommLog', commLogRows);
+        await sheetsAppend(env, 'CommLog!A:E', commLogRows);
       } catch (logErr) {
         errors.push(`CommLog write failed: ${logErr.message}`);
       }
     }
 
-    return corsResponse({ sent, failed, errors });
+    return jsonResponse({ sent, failed, errors });
   } catch (err) {
-    return corsResponse({ error: err.message || 'Internal server error' }, 500);
+    return errorResponse(err.message || 'Internal server error', 500);
   }
 }
 
