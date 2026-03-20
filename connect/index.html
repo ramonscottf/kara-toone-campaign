@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#152E54">
+<title>Campaign Connect — Kara Toone</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- ─── HEADER ─── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="header-logo">
+          <span class="header-logo-mark">K</span>
+          <span class="header-logo-divider"></span>
+          <span class="header-logo-text">Campaign Connect</span>
+        </div>
+        <div class="header-subtitle">Kara Toone &middot; House District 14 &middot; Convention 2026</div>
+      </div>
+      <div class="header-right">
+        <div class="header-stat">
+          <span class="header-stat-label">Win Number</span>
+          <span class="header-stat-value" id="winNumber">—</span>
+        </div>
+        <div class="header-stat-divider"></div>
+        <div class="header-stat">
+          <span class="header-stat-label">Safe Votes</span>
+          <span class="header-stat-value color-sage" id="safeVotes">—</span>
+        </div>
+        <div class="header-stat-divider"></div>
+        <div class="header-stat">
+          <span class="header-stat-label">Gap</span>
+          <span class="header-stat-value" id="voteGap">—</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── NAV ─── -->
+  <nav class="nav" id="mainNav">
+    <button class="nav-tab active" data-view="dashboard">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Dashboard
+    </button>
+    <button class="nav-tab" data-view="delegates">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Delegates
+    </button>
+    <button class="nav-tab" data-view="messages">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Messages
+    </button>
+    <button class="nav-tab" data-view="map">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      Precincts
+    </button>
+    <button class="nav-tab" data-view="playbook">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Playbook
+    </button>
+    <button class="nav-tab" data-view="forms">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Forms
+    </button>
+  </nav>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <main class="main" id="mainContent">
+    <!-- Views are rendered by app.js -->
+    <div class="loading-state">
+      <div class="loading-spinner"></div>
+      <p class="text-stone text-sm" style="margin-top:12px">Loading campaign data...</p>
+    </div>
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <p>Campaign Connect &middot; Data syncs from Google Sheet &middot; <a href="/">Back to campaign site</a></p>
+  </footer>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
