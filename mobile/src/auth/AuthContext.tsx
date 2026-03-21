@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import * as AppleAuthentication from 'expo-apple-authentication';
 import { Platform } from 'react-native';
 import {
   saveToken,
@@ -20,6 +19,7 @@ interface AuthState {
 
 interface AuthContextType extends AuthState {
   signInWithApple: () => Promise<void>;
+  signInAsPreview: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -28,6 +28,7 @@ const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   user: null,
   signInWithApple: async () => {},
+  signInAsPreview: async () => {},
   signOut: async () => {},
 });
 
@@ -56,7 +57,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signInWithApple = useCallback(async () => {
+    if (Platform.OS !== 'ios') {
+      throw new Error('Apple Sign In is only available on iOS');
+    }
+
     try {
+      const AppleAuthentication = require('expo-apple-authentication');
       const credential = await AppleAuthentication.signInAsync({
         requestedScopes: [
           AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -85,11 +91,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setState({ isLoading: false, isAuthenticated: true, user: data.user });
     } catch (error: any) {
       if (error.code === 'ERR_REQUEST_CANCELED') {
-        // User cancelled - not an error
         return;
       }
       throw error;
     }
+  }, []);
+
+  // Preview mode: skip auth for web/development previews
+  const signInAsPreview = useCallback(async () => {
+    const previewUser: UserData = {
+      id: 'preview',
+      email: 'preview@karatoone.com',
+      name: 'Preview User',
+      role: 'admin', // Show all tabs in preview
+    };
+    await saveToken('preview-token');
+    await saveUser(previewUser);
+    setState({ isLoading: false, isAuthenticated: true, user: previewUser });
   }, []);
 
   const signOut = useCallback(async () => {
@@ -103,6 +121,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         ...state,
         signInWithApple,
+        signInAsPreview,
         signOut,
       }}
     >

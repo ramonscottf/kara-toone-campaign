@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '../src/auth/AuthContext';
 import { StatusBar } from 'expo-status-bar';
+import { Platform, View, ActivityIndicator, StyleSheet } from 'react-native';
 
-SplashScreen.preventAutoHideAsync();
+// Only use SplashScreen on native
+let SplashScreen: any = null;
+if (Platform.OS !== 'web') {
+  SplashScreen = require('expo-splash-screen');
+  SplashScreen.preventAutoHideAsync().catch(() => {});
+}
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,7 +23,7 @@ const queryClient = new QueryClient({
 });
 
 export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     'LeagueSpartan-Bold': require('../assets/fonts/LeagueSpartan-Bold.ttf'),
     'LeagueSpartan-SemiBold': require('../assets/fonts/LeagueSpartan-SemiBold.ttf'),
     'DMSans-Regular': require('../assets/fonts/DMSans-Regular.ttf'),
@@ -29,13 +34,18 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
+    if (fontsLoaded || fontError) {
+      SplashScreen?.hideAsync().catch(() => {});
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) {
-    return null;
+  // On web, proceed even if fonts fail (system fonts will be used as fallback)
+  if (!fontsLoaded && !fontError && Platform.OS !== 'web') {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#1B3A69" />
+      </View>
+    );
   }
 
   return (
@@ -50,3 +60,12 @@ export default function RootLayout() {
     </QueryClientProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F7F3EE',
+  },
+});

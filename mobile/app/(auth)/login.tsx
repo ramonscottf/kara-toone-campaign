@@ -4,15 +4,14 @@ import {
   StyleSheet,
   Platform,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
-import * as AppleAuthentication from 'expo-apple-authentication';
-import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import { useAuth } from '../../src/auth/AuthContext';
-import { Text } from '../../src/components/ui';
+import { Text, Button } from '../../src/components/ui';
 import { colors, fonts, fontSizes, spacing } from '../../src/theme';
 
 export default function LoginScreen() {
-  const { signInWithApple } = useAuth();
+  const { signInWithApple, signInAsPreview } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const handleSignIn = async () => {
@@ -26,51 +25,66 @@ export default function LoginScreen() {
     }
   };
 
+  const handlePreview = async () => {
+    setLoading(true);
+    try {
+      await signInAsPreview();
+    } catch {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Top decorative rule */}
       <View style={styles.topRule} />
 
       {/* Monogram */}
-      <Animated.View entering={FadeInUp.duration(800).delay(200)} style={styles.monogramContainer}>
+      <View style={styles.monogramContainer}>
         <Text style={styles.monogram}>K</Text>
-      </Animated.View>
+      </View>
 
       {/* Title block */}
-      <Animated.View entering={FadeInUp.duration(800).delay(400)} style={styles.titleBlock}>
+      <View style={styles.titleBlock}>
         <Text style={styles.nameText}>KARA TOONE</Text>
         <View style={styles.rule} />
         <Text style={styles.subtitleText}>for Utah House District 14</Text>
-      </Animated.View>
+      </View>
 
       {/* Campaign tagline */}
-      <Animated.View entering={FadeInUp.duration(800).delay(600)} style={styles.taglineBlock}>
+      <View style={styles.taglineBlock}>
         <Text style={styles.tagline}>Campaign Command Center</Text>
-      </Animated.View>
+      </View>
 
       {/* Sign in button */}
-      <Animated.View entering={FadeInDown.duration(800).delay(800)} style={styles.signInBlock}>
+      <View style={styles.signInBlock}>
         {Platform.OS === 'ios' ? (
-          <AppleAuthentication.AppleAuthenticationButton
-            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-            buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
-            cornerRadius={8}
-            style={styles.appleButton}
-            onPress={handleSignIn}
-          />
+          <AppleSignInButton onPress={handleSignIn} />
         ) : (
-          <View style={styles.fallbackNotice}>
-            <Text variant="caption">Apple Sign In requires an iOS device</Text>
-          </View>
+          <Button
+            title="Preview App (Admin View)"
+            variant="primary"
+            size="lg"
+            onPress={handlePreview}
+            loading={loading}
+            style={{ width: 280 }}
+          />
         )}
-      </Animated.View>
+
+        {/* Preview mode for iOS dev too */}
+        {Platform.OS === 'ios' && (
+          <TouchableOpacity onPress={handlePreview} style={styles.previewLink}>
+            <Text style={styles.previewText}>Preview without signing in</Text>
+          </TouchableOpacity>
+        )}
+      </View>
 
       {/* Dateline */}
-      <Animated.View entering={FadeInDown.duration(800).delay(1000)} style={styles.dateline}>
+      <View style={styles.dateline}>
         <View style={styles.datelineRule} />
         <Text style={styles.datelineText}>Republican Convention 2026</Text>
         <View style={styles.datelineRule} />
-      </Animated.View>
+      </View>
 
       {/* Bottom decorative */}
       <View style={styles.bottomDecoration}>
@@ -79,6 +93,20 @@ export default function LoginScreen() {
         </Text>
       </View>
     </View>
+  );
+}
+
+// Lazy-loaded Apple Sign In button (only on iOS)
+function AppleSignInButton({ onPress }: { onPress: () => void }) {
+  const AppleAuthentication = require('expo-apple-authentication');
+  return (
+    <AppleAuthentication.AppleAuthenticationButton
+      buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+      buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+      cornerRadius={8}
+      style={{ width: 280, height: 50 }}
+      onPress={onPress}
+    />
   );
 }
 
@@ -154,12 +182,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: spacing['3xl'],
   },
-  appleButton: {
-    width: 280,
-    height: 50,
+  previewLink: {
+    marginTop: spacing.md,
+    padding: spacing.sm,
   },
-  fallbackNotice: {
-    padding: spacing.base,
+  previewText: {
+    fontFamily: fonts.body,
+    fontSize: fontSizes.sm,
+    color: colors.gray,
+    textDecorationLine: 'underline',
   },
   dateline: {
     flexDirection: 'row',
