@@ -2,6 +2,7 @@
   "expo": {
     "name": "Kara Toone",
     "slug": "kara-toone",
+    "owner": "rscottf",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.karatoone.campaign",
+      "bundleIdentifier": "com.wickowaypoint.campaignconnect",
       "usesAppleSignIn": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID to securely sign in"
