@@ -13,16 +13,10 @@
     "preview": {
       "distribution": "store",
       "ios": {
-        "bundleIdentifier": "com.wickowaypoint.campaignconnect",
         "autoIncrement": true
       }
     },
-    "production": {
-      "ios": {
-        "bundleIdentifier": "com.wickowaypoint.campaignconnect",
-        "buildNumber": "auto"
-      }
-    }
+    "production": {}
   },
   "submit": {
     "preview": {
