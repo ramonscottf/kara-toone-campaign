@@ -16,6 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wickowaypoint.campaignconnect",
+      "appleTeamId": "572R4QQ2ZA",
       "usesAppleSignIn": true,
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID to securely sign in",
