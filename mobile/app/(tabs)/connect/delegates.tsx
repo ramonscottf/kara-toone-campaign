@@ -4,9 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import { Text, Card, Badge } from '../../../src/components/ui';
 import { fetchContacts, Contact } from '../../../src/api/contacts';
 import { getSupportConfig } from '../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes } from '../../../src/theme';
+import { useTheme } from '../../../src/theme/ThemeContext';
+import { spacing } from '../../../src/theme';
 
 export default function DelegatesScreen() {
+  const { sys } = useTheme();
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['contacts'],
     queryFn: () => fetchContacts(),
@@ -40,7 +43,7 @@ export default function DelegatesScreen() {
 
   return (
     <FlatList
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       data={delegates}
       renderItem={renderDelegate}
@@ -51,7 +54,7 @@ export default function DelegatesScreen() {
         </Text>
       }
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={colors.navy} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
       }
     />
   );
@@ -60,7 +63,6 @@ export default function DelegatesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   content: {
     padding: spacing.base,

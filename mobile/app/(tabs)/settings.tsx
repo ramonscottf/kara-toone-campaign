@@ -1,32 +1,35 @@
 import React from 'react';
-import { View, ScrollView, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, StyleSheet, Alert, Text as RNText } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import Constants from 'expo-constants';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuth } from '../../src/auth/AuthContext';
 import { Text, Card, Button, Badge } from '../../src/components/ui';
-import { colors, spacing, fonts, fontSizes } from '../../src/theme';
+import { GlassCard } from '../../src/components/ui/GlassCard';
+import { useTheme } from '../../src/theme/ThemeContext';
+import { typography } from '../../src/theme/typography';
+import { spacing } from '../../src/theme/spacing';
+import { brand } from '../../src/config/brand';
 
 export default function SettingsScreen() {
   const { user, signOut } = useAuth();
   const queryClient = useQueryClient();
+  const { sys, isDark } = useTheme();
+  const insets = useSafeAreaInsets();
 
   const handleSignOut = () => {
-    Alert.alert(
-      'Sign Out',
-      'Are you sure you want to sign out?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Sign Out',
-          style: 'destructive',
-          onPress: async () => {
-            await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-            await signOut();
-          },
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: async () => {
+          await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+          await signOut();
         },
-      ]
-    );
+      },
+    ]);
   };
 
   const handleClearCache = async () => {
@@ -35,36 +38,46 @@ export default function SettingsScreen() {
     Alert.alert('Cache Cleared', 'All cached data has been cleared.');
   };
 
-  const roleLabel = {
+  const roleLabel: Record<string, string> = {
     admin: 'Administrator',
     staff: 'Campaign Staff',
     volunteer: 'Volunteer',
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* User Info */}
-      <Card style={styles.profileCard}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: sys.groupedBackground }]}
+      contentContainerStyle={[styles.content, { paddingTop: insets.top + 16 }]}
+    >
+      <RNText style={[styles.pageTitle, { color: sys.label }]}>Settings</RNText>
+
+      {/* Profile */}
+      <GlassCard style={styles.profileCard} tint={isDark ? 'dark' : 'light'}>
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>
+          <RNText style={styles.avatarText}>
             {user?.name?.[0] || 'U'}
-          </Text>
+          </RNText>
         </View>
-        <Text variant="h2">{user?.name || 'Campaign User'}</Text>
-        <Text variant="caption">{user?.email || 'No email'}</Text>
+        <Text variant="title2">{user?.name || 'Campaign User'}</Text>
+        <Text variant="footnote" secondary>
+          {user?.email || 'No email'}
+        </Text>
         <Badge
           label={roleLabel[user?.role || 'volunteer'] || 'Volunteer'}
           type="info"
         />
-      </Card>
+      </GlassCard>
 
-      {/* Role Info */}
+      {/* Access Level */}
       <Card style={styles.section}>
         <Text variant="label">Your Access Level</Text>
-        <Text variant="body" style={styles.roleDescription}>
-          {user?.role === 'admin' && 'Full access to all features including War Room, Campaign Connect, CMS editing, and all campaign tools.'}
-          {user?.role === 'staff' && 'Access to War Room and Campaign Connect. Contact an admin for CMS editing access.'}
-          {user?.role === 'volunteer' && 'Access to Landing Pages and Campaign Connect. Contact campaign leadership for additional access.'}
+        <Text variant="body" secondary style={styles.roleDescription}>
+          {user?.role === 'admin' &&
+            'Full access to all features including War Room, Campaign Connect, and all campaign tools.'}
+          {user?.role === 'staff' &&
+            'Access to War Room and Campaign Connect. Contact an admin for additional access.'}
+          {user?.role === 'volunteer' &&
+            'Access to Priorities and Campaign Connect. Contact campaign leadership for additional access.'}
         </Text>
       </Card>
 
@@ -90,52 +103,60 @@ export default function SettingsScreen() {
         <Text variant="label">About</Text>
         <View style={styles.aboutRow}>
           <Text variant="body">Version</Text>
-          <Text variant="caption">1.0.0</Text>
+          <Text variant="footnote" secondary>1.0.0</Text>
         </View>
         <View style={styles.aboutRow}>
           <Text variant="body">Build</Text>
-          <Text variant="caption">{Constants.expoConfig?.version || '1.0.0'}</Text>
+          <Text variant="footnote" secondary>
+            {Constants.expoConfig?.version || '1.0.0'}
+          </Text>
         </View>
         <View style={styles.aboutRow}>
           <Text variant="body">SDK</Text>
-          <Text variant="caption">Expo {Constants.expoConfig?.sdkVersion || '55'}</Text>
+          <Text variant="footnote" secondary>
+            Expo {Constants.expoConfig?.sdkVersion || '55'}
+          </Text>
         </View>
       </Card>
 
-      <Text style={styles.footer}>
-        Paid for by Kara Toone for Utah House District 14
-      </Text>
+      <RNText style={[styles.footer, { color: sys.tertiaryLabel }]}>
+        {brand.footerDisclaimer}
+      </RNText>
+      <RNText style={[styles.poweredBy, { color: sys.tertiaryLabel }]}>
+        {brand.poweredBy}
+      </RNText>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.cream },
-  content: { padding: spacing.base, paddingBottom: spacing['3xl'], gap: spacing.md },
+  container: { flex: 1 },
+  content: { padding: 16, paddingBottom: 120, gap: 12 },
+  pageTitle: {
+    ...typography.largeTitle,
+    marginBottom: 8,
+  },
   profileCard: {
-    padding: spacing.xl,
     alignItems: 'center',
-    gap: spacing.sm,
+    gap: 8,
   },
   avatar: {
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: colors.navy,
+    backgroundColor: '#0EA5E9',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
-    fontFamily: fonts.display,
-    fontSize: fontSizes.xl,
-    color: colors.white,
+    ...typography.title1,
+    color: '#FFFFFF',
   },
   section: {
     padding: spacing.base,
     gap: spacing.md,
   },
   roleDescription: {
-    color: colors.textSecondary,
     lineHeight: 22,
   },
   actionButton: {
@@ -147,10 +168,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footer: {
-    fontFamily: fonts.body,
-    fontSize: fontSizes.xs,
-    color: colors.gray,
+    ...typography.caption1,
     textAlign: 'center',
     marginTop: spacing.lg,
+  },
+  poweredBy: {
+    ...typography.caption2,
+    textAlign: 'center',
+    marginTop: 4,
   },
 });

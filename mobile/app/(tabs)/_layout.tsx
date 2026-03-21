@@ -1,50 +1,52 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Platform } from 'react-native';
+import { Platform, StyleSheet, Text as RNText } from 'react-native';
+import { BlurView } from 'expo-blur';
 import * as Haptics from 'expo-haptics';
 import { useAuth } from '../../src/auth/AuthContext';
-import { colors, fonts, fontSizes } from '../../src/theme';
-
-// SF Symbol names for tab icons (iOS)
-// We use emoji as cross-platform fallback; on a real iOS build these would be SF Symbols
-const TAB_ICONS: Record<string, string> = {
-  pages: '📄',
-  'war-room': '🛡️',
-  connect: '👥',
-  cms: '✏️',
-  settings: '⚙️',
-};
+import { useTheme } from '../../src/theme/ThemeContext';
 
 export default function TabLayout() {
   const { user } = useAuth();
+  const { sys, isDark } = useTheme();
   const role = user?.role || 'volunteer';
-
-  // Role hierarchy: admin > staff > volunteer
   const canSeeWarRoom = role === 'admin' || role === 'staff';
-  const canSeeCms = role === 'admin';
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.navy,
-        tabBarInactiveTintColor: colors.gray,
+        tabBarActiveTintColor: '#0EA5E9',
+        tabBarInactiveTintColor: isDark ? 'rgba(235,235,245,0.4)' : 'rgba(60,60,67,0.4)',
+        tabBarBackground: () =>
+          Platform.OS === 'ios' ? (
+            <BlurView
+              intensity={80}
+              tint={isDark ? 'dark' : 'light'}
+              style={StyleSheet.absoluteFill}
+            />
+          ) : null,
         tabBarStyle: {
-          backgroundColor: colors.cream,
-          borderTopColor: colors.border,
-          borderTopWidth: 0.5,
+          position: Platform.OS === 'ios' ? 'absolute' : 'relative',
+          borderTopWidth: 0,
+          elevation: 0,
+          backgroundColor: Platform.OS === 'ios'
+            ? 'transparent'
+            : isDark
+              ? 'rgba(28,28,30,0.95)'
+              : 'rgba(255,255,255,0.95)',
           paddingBottom: Platform.OS === 'ios' ? 0 : 8,
         },
         tabBarLabelStyle: {
-          fontFamily: fonts.bodySemiBold,
-          fontSize: fontSizes.xs,
+          fontSize: 10,
+          fontWeight: '500',
         },
         headerStyle: {
-          backgroundColor: colors.cream,
+          backgroundColor: sys.background,
         },
         headerTitleStyle: {
-          fontFamily: fonts.display,
-          fontSize: fontSizes.lg,
-          color: colors.deep,
+          fontSize: 17,
+          fontWeight: '600',
+          color: sys.label,
         },
         headerShadowVisible: false,
       }}
@@ -55,22 +57,26 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="pages"
+        name="home"
         options={{
-          title: 'Pages',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon={TAB_ICONS.pages} focused={focused} />
-          ),
-          headerTitle: 'Landing Pages',
+          title: 'Home',
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon icon="🏠" focused={focused} />,
+        }}
+      />
+      <Tabs.Screen
+        name="priorities"
+        options={{
+          title: 'Priorities',
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon icon="📋" focused={focused} />,
         }}
       />
       <Tabs.Screen
         name="war-room"
         options={{
           title: 'War Room',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon={TAB_ICONS['war-room']} focused={focused} />
-          ),
+          tabBarIcon: ({ focused }) => <TabIcon icon="🛡️" focused={focused} />,
           headerTitle: 'War Room',
           href: canSeeWarRoom ? undefined : null,
         }}
@@ -79,40 +85,26 @@ export default function TabLayout() {
         name="connect"
         options={{
           title: 'Connect',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon={TAB_ICONS.connect} focused={focused} />
-          ),
+          tabBarIcon: ({ focused }) => <TabIcon icon="👥" focused={focused} />,
           headerTitle: 'Campaign Connect',
-        }}
-      />
-      <Tabs.Screen
-        name="cms"
-        options={{
-          title: 'CMS',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon={TAB_ICONS.cms} focused={focused} />
-          ),
-          headerTitle: 'Content Manager',
-          href: canSeeCms ? undefined : null,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          tabBarIcon: ({ focused }) => (
-            <TabIcon icon={TAB_ICONS.settings} focused={focused} />
-          ),
-          headerTitle: 'Settings',
+          headerShown: false,
+          tabBarIcon: ({ focused }) => <TabIcon icon="⚙️" focused={focused} />,
         }}
       />
+      {/* Hide old routes that still exist as files */}
+      <Tabs.Screen name="pages" options={{ href: null }} />
+      <Tabs.Screen name="cms" options={{ href: null }} />
     </Tabs>
   );
 }
 
 function TabIcon({ icon, focused }: { icon: string; focused: boolean }) {
-  const React = require('react');
-  const { Text: RNText } = require('react-native');
   return (
     <RNText style={{ fontSize: 22, opacity: focused ? 1 : 0.5 }}>
       {icon}

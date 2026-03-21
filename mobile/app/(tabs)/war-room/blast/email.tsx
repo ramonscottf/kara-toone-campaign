@@ -13,12 +13,15 @@ import * as Haptics from 'expo-haptics';
 import { Text, Button, FilterChipGroup } from '../../../../src/components/ui';
 import { sendEmail } from '../../../../src/api/messages';
 import { audienceOptions } from '../../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../../src/theme';
+import { useTheme } from '../../../../src/theme/ThemeContext';
+import { typography } from '../../../../src/theme/typography';
+import { spacing, borderRadius } from '../../../../src/theme';
 
 const mergeFields = ['{first_name}', '{last_name}', '{precinct}', '{city}'];
 
 export default function EmailBlastScreen() {
   const router = useRouter();
+  const { sys } = useTheme();
   const [audience, setAudience] = useState('all-optin');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
@@ -72,7 +75,7 @@ export default function EmailBlastScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView contentContainerStyle={styles.content}>
@@ -83,11 +86,11 @@ export default function EmailBlastScreen() {
         {/* Subject */}
         <Text variant="label" style={styles.label}>Subject</Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, { backgroundColor: sys.secondaryBackground, borderColor: sys.separator, color: sys.label }]}
           value={subject}
           onChangeText={setSubject}
           placeholder="Email subject line..."
-          placeholderTextColor={colors.gray}
+          placeholderTextColor={sys.secondaryLabel}
         />
 
         {/* Merge Fields */}
@@ -107,11 +110,11 @@ export default function EmailBlastScreen() {
         {/* Body */}
         <Text variant="label" style={styles.label}>Message Body</Text>
         <TextInput
-          style={[styles.input, styles.bodyInput]}
+          style={[styles.input, styles.bodyInput, { backgroundColor: sys.secondaryBackground, borderColor: sys.separator, color: sys.label }]}
           value={body}
           onChangeText={setBody}
           placeholder="Write your email message..."
-          placeholderTextColor={colors.gray}
+          placeholderTextColor={sys.secondaryLabel}
           multiline
           textAlignVertical="top"
         />
@@ -134,7 +137,6 @@ export default function EmailBlastScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   content: {
     padding: spacing.base,
@@ -146,14 +148,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xs,
   },
   input: {
-    backgroundColor: colors.white,
     borderRadius: borderRadius.md,
     borderWidth: 1,
-    borderColor: colors.border,
     padding: spacing.md,
-    fontFamily: fonts.body,
-    fontSize: fontSizes.base,
-    color: colors.text,
+    ...typography.subheadline,
   },
   bodyInput: {
     height: 200,

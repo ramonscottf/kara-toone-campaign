@@ -1,29 +1,38 @@
 import React from 'react';
 import {
-  TouchableOpacity,
-  TouchableOpacityProps,
+  Pressable,
+  PressableProps,
   StyleSheet,
   ActivityIndicator,
+  Text,
 } from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
 import * as Haptics from 'expo-haptics';
-import { Text } from './Text';
-import { colors, borderRadius, spacing, fonts, fontSizes } from '../../theme';
+import { borderRadius, spacing, fontSizes } from '../../theme';
+import { typography } from '../../theme/typography';
 
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 
-interface ButtonProps extends TouchableOpacityProps {
+interface ButtonProps extends Omit<PressableProps, 'style'> {
   title: string;
   variant?: ButtonVariant;
   loading?: boolean;
   icon?: React.ReactNode;
   size?: 'sm' | 'md' | 'lg';
+  style?: any;
 }
 
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+
 const variantColors: Record<ButtonVariant, { bg: string; text: string; border?: string }> = {
-  primary: { bg: colors.red, text: colors.white },
-  secondary: { bg: 'transparent', text: colors.navy, border: colors.navy },
-  ghost: { bg: 'transparent', text: colors.navy },
-  danger: { bg: colors.error, text: colors.white },
+  primary: { bg: '#0EA5E9', text: '#FFFFFF' },
+  secondary: { bg: 'transparent', text: '#0EA5E9', border: '#0EA5E9' },
+  ghost: { bg: 'transparent', text: '#0EA5E9' },
+  danger: { bg: '#FF3B30', text: '#FFFFFF' },
 };
 
 const sizeStyles = {
@@ -45,14 +54,19 @@ export function Button({
 }: ButtonProps) {
   const scheme = variantColors[variant];
   const sizeStyle = sizeStyles[size];
+  const scale = useSharedValue(1);
 
-  const handlePress = async (e: any) => {
-    await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const handlePress = (e: any) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPress?.(e);
   };
 
   return (
-    <TouchableOpacity
+    <AnimatedPressable
       style={[
         styles.button,
         {
@@ -62,11 +76,17 @@ export function Button({
         },
         scheme.border && { borderWidth: 1.5, borderColor: scheme.border },
         disabled && styles.disabled,
+        animatedStyle,
         style,
       ]}
+      onPressIn={() => {
+        scale.value = withSpring(0.96, { damping: 15, stiffness: 300 });
+      }}
+      onPressOut={() => {
+        scale.value = withSpring(1, { damping: 15, stiffness: 300 });
+      }}
       onPress={handlePress}
       disabled={disabled || loading}
-      activeOpacity={0.7}
       {...props}
     >
       {loading ? (
@@ -85,7 +105,7 @@ export function Button({
           </Text>
         </>
       )}
-    </TouchableOpacity>
+    </AnimatedPressable>
   );
 }
 
@@ -94,10 +114,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: borderRadius.md,
+    borderRadius: borderRadius.lg,
   },
   text: {
-    fontFamily: fonts.bodySemiBold,
+    ...typography.headline,
     textAlign: 'center',
   },
   disabled: {

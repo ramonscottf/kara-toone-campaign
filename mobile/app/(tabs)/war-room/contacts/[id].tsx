@@ -6,7 +6,9 @@ import * as Haptics from 'expo-haptics';
 import { Text, Card, Button, Badge } from '../../../../src/components/ui';
 import { fetchContact, updateContact } from '../../../../src/api/contacts';
 import { getSupportConfig } from '../../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../../src/theme';
+import { useTheme } from '../../../../src/theme/ThemeContext';
+import { typography } from '../../../../src/theme/typography';
+import { spacing, borderRadius } from '../../../../src/theme';
 
 const supportLevels = [
   'strong-support',
@@ -20,6 +22,7 @@ const supportLevels = [
 export default function ContactDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const { sys } = useTheme();
 
   const { data: contact, isLoading } = useQuery({
     queryKey: ['contact', id],
@@ -38,8 +41,8 @@ export default function ContactDetailScreen() {
 
   if (isLoading || !contact) {
     return (
-      <View style={styles.loading}>
-        <Text variant="body" color={colors.textSecondary}>Loading...</Text>
+      <View style={[styles.loading, { backgroundColor: sys.background }]}>
+        <Text variant="body" color={sys.secondaryLabel}>Loading...</Text>
       </View>
     );
   }
@@ -50,7 +53,7 @@ export default function ContactDetailScreen() {
   return (
     <>
       <Stack.Screen options={{ headerTitle: fullName || 'Contact' }} />
-      <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+      <ScrollView style={[styles.container, { backgroundColor: sys.background }]} contentContainerStyle={styles.content}>
         {/* Header card */}
         <Card style={styles.headerCard}>
           <View style={[styles.avatar, { backgroundColor: support.color + '20' }]}>
@@ -151,7 +154,6 @@ export default function ContactDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   content: {
     padding: spacing.base,
@@ -162,7 +164,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.cream,
   },
   headerCard: {
     padding: spacing.xl,
@@ -177,8 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarText: {
-    fontFamily: fonts.display,
-    fontSize: fontSizes.xl,
+    ...typography.title1,
   },
   section: {
     padding: spacing.base,

@@ -23,6 +23,8 @@ const REQUIRED_FIELDS = {
   yardsign: ['first_name', 'last_name', 'address', 'city', 'zip'],
   contact: ['first_name', 'email'],
   donate: ['first_name', 'last_name', 'email'],
+  cottage_meeting: ['first_name', 'last_name'],
+  delegate_interest: ['first_name', 'last_name', 'email'],
 };
 
 function validateFields(formType, fields) {
@@ -93,6 +95,18 @@ const WELCOME_TEMPLATES = {
 <p>Thank you for your generous contribution to the Kara Toone campaign. Your support makes a real difference.</p>
 <p>Best,<br>Team Kara Toone</p>`,
   },
+  cottage_meeting: {
+    subject: 'See you at the cottage meeting!',
+    html: `<p>Hi {first_name},</p>
+<p>Thanks for RSVPing to our cottage meeting! We look forward to seeing you there.</p>
+<p>Best,<br>Team Kara Toone</p>`,
+  },
+  delegate_interest: {
+    subject: 'Thanks for your delegate interest!',
+    html: `<p>Hi {first_name},</p>
+<p>Thank you for expressing interest in being a delegate. We'll follow up with more information soon.</p>
+<p>Best,<br>Team Kara Toone</p>`,
+  },
 };
 
 // ── Send welcome email via Resend ────────────
@@ -131,6 +145,8 @@ const FORM_TYPE_MAP = {
   yardsign: 'yardsign',
   contact: 'supporter',
   donate: 'donor',
+  cottage_meeting: 'supporter',
+  delegate_interest: 'delegate',
 };
 
 // ── Main handler ─────────────────────────────
@@ -250,6 +266,8 @@ export async function onRequestPost(context) {
       yardsign: `Your yard sign request has been submitted!`,
       contact: `Thanks for reaching out! We'll get back to you shortly.`,
       donate: `Thank you for your generous support!`,
+      cottage_meeting: `Thanks for RSVPing! We look forward to seeing you.`,
+      delegate_interest: `Thank you for your interest in being a delegate!`,
     };
 
     return jsonResponse({

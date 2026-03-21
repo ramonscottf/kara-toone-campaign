@@ -3,9 +3,12 @@ import { View, ScrollView, StyleSheet, RefreshControl } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { Text, Card, StatCard } from '../../../src/components/ui';
 import { fetchContacts } from '../../../src/api/contacts';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../src/theme';
+import { useTheme } from '../../../src/theme/ThemeContext';
+import { spacing } from '../../../src/theme';
 
 export default function PrecinctsScreen() {
+  const { sys } = useTheme();
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['contacts'],
     queryFn: () => fetchContacts(),
@@ -31,18 +34,18 @@ export default function PrecinctsScreen() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={colors.navy} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
       }
     >
       <View style={styles.summaryRow}>
         <View style={{ flex: 1 }}>
-          <StatCard label="Total Precincts" value={precinctData.length} accentColor={colors.navy} />
+          <StatCard label="Total Precincts" value={precinctData.length} accentColor={'#0EA5E9'} />
         </View>
         <View style={{ flex: 1 }}>
-          <StatCard label="Total Contacts" value={contacts.length} accentColor={colors.red} />
+          <StatCard label="Total Contacts" value={contacts.length} accentColor={'#EF4444'} />
         </View>
       </View>
 
@@ -55,8 +58,8 @@ export default function PrecinctsScreen() {
               <Text variant="caption">{p.total} contacts</Text>
             </View>
             <View style={styles.barContainer}>
-              <View style={styles.barBg}>
-                <View style={[styles.barFill, { width: `${contactRate}%`, backgroundColor: colors.navy }]} />
+              <View style={[styles.barBg, { backgroundColor: sys.fill }]}>
+                <View style={[styles.barFill, { width: `${contactRate}%`, backgroundColor: '#0EA5E9' }]} />
               </View>
               <Text variant="caption">{contactRate}% contacted</Text>
             </View>
@@ -70,7 +73,7 @@ export default function PrecinctsScreen() {
 
       {precinctData.length === 0 && (
         <View style={styles.empty}>
-          <Text variant="h3" color={colors.textSecondary}>No Precinct Data</Text>
+          <Text variant="h3" color={sys.secondaryLabel}>No Precinct Data</Text>
           <Text variant="caption">Add precinct info to contacts to see breakdowns here.</Text>
         </View>
       )}
@@ -79,13 +82,13 @@ export default function PrecinctsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.cream },
+  container: { flex: 1 },
   content: { padding: spacing.base, paddingBottom: spacing['3xl'] },
   summaryRow: { flexDirection: 'row', gap: spacing.sm, marginBottom: spacing.lg },
   card: { padding: spacing.md, marginBottom: spacing.sm },
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: spacing.sm },
   barContainer: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, marginBottom: spacing.sm },
-  barBg: { flex: 1, height: 8, backgroundColor: colors.light, borderRadius: 4, overflow: 'hidden' },
+  barBg: { flex: 1, height: 8, borderRadius: 4, overflow: 'hidden' },
   barFill: { height: '100%', borderRadius: 4 },
   miniStats: { flexDirection: 'row', gap: spacing.lg },
   empty: { alignItems: 'center', paddingVertical: spacing['3xl'], gap: spacing.sm },

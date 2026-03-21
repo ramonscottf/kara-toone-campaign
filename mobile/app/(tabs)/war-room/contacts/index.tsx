@@ -12,7 +12,9 @@ import * as Haptics from 'expo-haptics';
 import { Text, SearchBar, Badge, FilterChipGroup } from '../../../../src/components/ui';
 import { fetchContacts, Contact } from '../../../../src/api/contacts';
 import { getSupportConfig } from '../../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../../src/theme';
+import { useTheme } from '../../../../src/theme/ThemeContext';
+import { typography } from '../../../../src/theme/typography';
+import { spacing, borderRadius } from '../../../../src/theme';
 
 const filterOptions = [
   { label: 'All', value: '' },
@@ -24,6 +26,7 @@ const filterOptions = [
 
 export default function ContactsScreen() {
   const router = useRouter();
+  const { sys } = useTheme();
   const [search, setSearch] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
 
@@ -56,7 +59,7 @@ export default function ContactsScreen() {
     const support = getSupportConfig(item.support_level);
     return (
       <TouchableOpacity
-        style={styles.row}
+        style={[styles.row, { borderBottomColor: sys.separator }]}
         onPress={() => {
           Haptics.selectionAsync();
           router.push(`/(tabs)/war-room/contacts/${item.id}`);
@@ -70,10 +73,10 @@ export default function ContactsScreen() {
             </Text>
           </View>
           <View style={styles.rowInfo}>
-            <Text style={styles.name}>
+            <Text style={[styles.name, { color: sys.label }]}>
               {item.first_name} {item.last_name}
             </Text>
-            <Text style={styles.detail}>
+            <Text style={[styles.detail, { color: sys.secondaryLabel }]}>
               {item.email || item.phone || 'No contact info'}
             </Text>
           </View>
@@ -84,19 +87,19 @@ export default function ContactsScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: sys.background }]}>
       <View style={styles.searchContainer}>
         <SearchBar value={search} onChangeText={setSearch} placeholder="Search contacts..." />
       </View>
       <FilterChipGroup options={filterOptions} selected={typeFilter} onSelect={setTypeFilter} />
-      <Text style={styles.count}>{filtered.length} contacts</Text>
+      <Text style={[styles.count, { color: sys.secondaryLabel }]}>{filtered.length} contacts</Text>
       <FlatList
         data={filtered}
         renderItem={renderContact}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.list}
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={colors.navy} />
+          <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
         }
       />
     </View>
@@ -106,16 +109,13 @@ export default function ContactsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   searchContainer: {
     paddingHorizontal: spacing.base,
     paddingTop: spacing.sm,
   },
   count: {
-    fontFamily: fonts.body,
-    fontSize: fontSizes.sm,
-    color: colors.textSecondary,
+    ...typography.footnote,
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.sm,
   },
@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.base,
     paddingVertical: spacing.md,
     borderBottomWidth: 0.5,
-    borderBottomColor: colors.border,
   },
   rowMain: {
     flexDirection: 'row',
@@ -145,21 +144,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   avatarText: {
-    fontFamily: fonts.bodySemiBold,
-    fontSize: fontSizes.sm,
+    ...typography.footnote,
+    fontWeight: '600',
   },
   rowInfo: {
     flex: 1,
   },
   name: {
-    fontFamily: fonts.bodySemiBold,
-    fontSize: fontSizes.base,
-    color: colors.text,
+    ...typography.subheadline,
+    fontWeight: '600',
   },
   detail: {
-    fontFamily: fonts.body,
-    fontSize: fontSizes.sm,
-    color: colors.textSecondary,
+    ...typography.footnote,
   },
   supportDot: {
     width: 12,

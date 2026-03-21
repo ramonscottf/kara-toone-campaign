@@ -13,13 +13,16 @@ import * as Haptics from 'expo-haptics';
 import { Text, Button, FilterChipGroup } from '../../../../src/components/ui';
 import { sendSms } from '../../../../src/api/messages';
 import { audienceOptions } from '../../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../../src/theme';
+import { useTheme } from '../../../../src/theme/ThemeContext';
+import { typography } from '../../../../src/theme/typography';
+import { spacing, borderRadius } from '../../../../src/theme';
 
 const SMS_LIMIT = 160;
 const mergeFields = ['{first_name}', '{last_name}', '{precinct}', '{city}'];
 
 export default function SmsBlastScreen() {
   const router = useRouter();
+  const { sys } = useTheme();
   const [audience, setAudience] = useState('all-optin');
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
@@ -69,7 +72,7 @@ export default function SmsBlastScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView contentContainerStyle={styles.content}>
@@ -94,17 +97,17 @@ export default function SmsBlastScreen() {
         {/* Message */}
         <Text variant="label" style={styles.label}>Message</Text>
         <TextInput
-          style={[styles.input, styles.messageInput]}
+          style={[styles.input, styles.messageInput, { backgroundColor: sys.secondaryBackground, borderColor: sys.separator, color: sys.label }]}
           value={message}
           onChangeText={setMessage}
           placeholder="Type your SMS message..."
-          placeholderTextColor={colors.gray}
+          placeholderTextColor={sys.secondaryLabel}
           multiline
           textAlignVertical="top"
           maxLength={320}
         />
         <Text
-          style={[styles.charCount, isOverLimit && styles.charCountOver]}
+          style={[styles.charCount, { color: sys.secondaryLabel }, isOverLimit && styles.charCountOver]}
         >
           {charCount}/{SMS_LIMIT} characters
           {isOverLimit && ' (will be split into multiple messages)'}
@@ -128,7 +131,6 @@ export default function SmsBlastScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   content: {
     padding: spacing.base,
@@ -140,14 +142,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.xs,
   },
   input: {
-    backgroundColor: colors.white,
     borderRadius: borderRadius.md,
     borderWidth: 1,
-    borderColor: colors.border,
     padding: spacing.md,
-    fontFamily: fonts.body,
-    fontSize: fontSizes.base,
-    color: colors.text,
+    ...typography.subheadline,
   },
   messageInput: {
     height: 150,
@@ -158,14 +156,12 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   charCount: {
-    fontFamily: fonts.body,
-    fontSize: fontSizes.sm,
-    color: colors.textSecondary,
+    ...typography.footnote,
     textAlign: 'right',
     marginTop: spacing.xs,
   },
   charCountOver: {
-    color: colors.red,
+    color: '#EF4444',
   },
   sendButton: {
     marginTop: spacing.xl,

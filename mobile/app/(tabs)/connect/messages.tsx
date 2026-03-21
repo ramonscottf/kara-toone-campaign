@@ -3,9 +3,12 @@ import { View, FlatList, StyleSheet, RefreshControl } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { Text, Card, Badge } from '../../../src/components/ui';
 import { fetchMessageLog, MessageLogEntry } from '../../../src/api/messages';
-import { colors, spacing, fonts, fontSizes } from '../../../src/theme';
+import { useTheme } from '../../../src/theme/ThemeContext';
+import { spacing } from '../../../src/theme';
 
 export default function MessagesScreen() {
+  const { sys } = useTheme();
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['messageLog'],
     queryFn: () => fetchMessageLog(),
@@ -36,19 +39,19 @@ export default function MessagesScreen() {
 
   return (
     <FlatList
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       data={messages}
       renderItem={renderMessage}
       keyExtractor={(item, i) => `${item.contact_id}-${item.sent_at}-${i}`}
       ListEmptyComponent={
         <View style={styles.empty}>
-          <Text variant="h3" color={colors.textSecondary}>No Messages Yet</Text>
+          <Text variant="h3" color={sys.secondaryLabel}>No Messages Yet</Text>
           <Text variant="caption">Communication log will appear here after sending blasts.</Text>
         </View>
       }
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={colors.navy} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
       }
     />
   );
@@ -57,7 +60,6 @@ export default function MessagesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.cream,
   },
   content: {
     padding: spacing.base,
