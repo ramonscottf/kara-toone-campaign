@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Kara Toone",
+    "slug": "kara-toone",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "karatoone",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F7F3EE"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.karatoone.campaign",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to securely sign in"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      "expo-secure-store",
+      "expo-haptics",
+      "expo-apple-authentication"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
