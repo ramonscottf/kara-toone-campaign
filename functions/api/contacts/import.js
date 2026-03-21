@@ -5,8 +5,9 @@ import {
   jsonResponse,
   errorResponse,
   CONTACT_COLUMNS,
+  SHEET_TAB,
+  SHEET_LAST_COL,
   contactToRow,
-  generateId,
 } from "../_shared/sheets.js";
 
 /**
@@ -153,7 +154,7 @@ export async function onRequestPost(context) {
     }
 
     // Fetch existing contacts for deduplication
-    var existing = await sheetsGet(env, "Contacts!A2:Y");
+    var existing = await sheetsGet(env, SHEET_TAB + "!A2:" + SHEET_LAST_COL);
     var existingRows = existing.values || [];
     var existingKeys = {};
 
@@ -166,7 +167,6 @@ export async function onRequestPost(context) {
     }
 
     // Process incoming and deduplicate
-    var now = new Date().toISOString();
     var newRows = [];
     var skipped = 0;
 
@@ -189,16 +189,9 @@ export async function onRequestPost(context) {
         contact[col] = item[col] !== undefined ? String(item[col]) : "";
       }
 
-      contact.id = generateId();
-      contact.created_at = now;
-      contact.updated_at = now;
-
-      if (!contact.contacted) contact.contacted = "false";
-      if (!contact.contact_attempts) contact.contact_attempts = "0";
-      if (!contact.email_opened) contact.email_opened = "false";
-      if (!contact.phone_answered) contact.phone_answered = "false";
-      if (!contact.opt_email) contact.opt_email = "true";
-      if (!contact.opt_text) contact.opt_text = "true";
+      if (!contact.support_level) contact.support_level = "Unknown";
+      if (!contact.hd) contact.hd = "14";
+      if (!contact.contacted) contact.contacted = "No";
 
       newRows.push(contactToRow(contact));
     }
@@ -212,7 +205,7 @@ export async function onRequestPost(context) {
     }
 
     // Append all new rows in a single batch
-    await sheetsAppend(env, "Contacts!A:Y", newRows);
+    await sheetsAppend(env, SHEET_TAB + "!A:" + SHEET_LAST_COL, newRows);
 
     return jsonResponse({
       imported: newRows.length,

@@ -7,6 +7,9 @@ import {
   sheetsGet,
   sheetsAppend,
   sheetsUpdate,
+  SHEET_TAB,
+  SHEET_LAST_COL,
+  normalizeHeaders,
 } from "../_shared/sheets.js";
 
 // ── Twilio signature verification ────────────
@@ -119,15 +122,14 @@ export async function onRequestPost(context) {
     let contactRow = null;
 
     try {
-      const data = await sheetsGet(env, 'Contacts!A1:Z');
+      const data = await sheetsGet(env, SHEET_TAB + '!A1:' + SHEET_LAST_COL);
       const rows = data.values || [];
       if (rows.length >= 2) {
-        const headers = rows[0].map((h) => String(h).trim().toLowerCase());
+        const headers = normalizeHeaders(rows[0]);
         const dataRows = rows.slice(1);
         const found = findContactByPhone(dataRows, headers, from);
         if (found) {
-          const idIdx = headers.indexOf('id');
-          contactId = found.row[idIdx] || from;
+          contactId = from;
           contactRow = found;
         }
       }
@@ -144,13 +146,13 @@ export async function onRequestPost(context) {
       // Non-fatal
     }
 
-    // Update contact's last_contact_date
+    // Update contact's contacted field
     if (contactRow) {
       try {
-        const lastContactIdx = contactRow.headers.indexOf('last_contact_date');
-        if (lastContactIdx !== -1) {
-          const colLetter = String.fromCharCode(65 + lastContactIdx);
-          await sheetsUpdate(env, `Contacts!${colLetter}${contactRow.rowIndex}`, [[now]]);
+        const contactedIdx = contactRow.headers.indexOf('contacted');
+        if (contactedIdx !== -1) {
+          const colLetter = String.fromCharCode(65 + contactedIdx);
+          await sheetsUpdate(env, `${SHEET_TAB}!${colLetter}${contactRow.rowIndex}`, [['Yes']]);
         }
       } catch {
         // Non-fatal

@@ -9,38 +9,25 @@ const app = {
     currentTab: 'dashboard',
     contacts: [],
     totalContacts: 0,
-    filters: { search: '', support_level: '', type: '' },
+    filters: { search: '', support_level: '', precinct: '' },
     loading: false,
   },
 
-  // ── Color maps ────────────────────────────
+  // ── Color maps (matching sheet Status values) ──
   supportColors: {
-    strong_support: '#2e7d32',
-    leaning_support: '#66bb6a',
-    undecided: '#9e9e9e',
-    leaning_opponent: '#ff9800',
-    strong_opponent: '#f44336',
-    no_contact: '#e0e0e0',
+    'Confirmed Kara': '#2e7d32',
+    'Maybe Kara': '#66bb6a',
+    'Confirmed Not Kara': '#f44336',
+    'Unknown': '#9e9e9e',
     '': '#e0e0e0',
   },
 
   supportLabels: {
-    strong_support: 'Strong Support',
-    leaning_support: 'Leaning Support',
-    undecided: 'Undecided',
-    leaning_opponent: 'Leaning Opponent',
-    strong_opponent: 'Strong Opponent',
-    no_contact: 'No Contact',
-    '': 'No Contact',
-  },
-
-  typeColors: {
-    delegate: '#1a237e',
-    volunteer: '#E91E63',
-    donor: '#ff9800',
-    yardsign: '#2e7d32',
-    supporter: '#9c27b0',
-    '': '#9e9e9e',
+    'Confirmed Kara': 'Confirmed Kara',
+    'Maybe Kara': 'Maybe Kara',
+    'Confirmed Not Kara': 'Confirmed Not Kara',
+    'Unknown': 'Unknown',
+    '': 'Unknown',
   },
 
   // ── Initialize ────────────────────────────
@@ -137,7 +124,7 @@ const app = {
       const params = new URLSearchParams();
       if (this.state.filters.search) params.set('search', this.state.filters.search);
       if (this.state.filters.support_level) params.set('support', this.state.filters.support_level);
-      if (this.state.filters.type) params.set('type', this.state.filters.type);
+      if (this.state.filters.precinct) params.set('precinct', this.state.filters.precinct);
 
       const qs = params.toString();
       const data = await this.apiCall('GET', '/api/contacts' + (qs ? '?' + qs : ''));
@@ -156,30 +143,34 @@ const app = {
 
     const stats = {
       total: contacts.length,
-      delegates: contacts.filter(c => (c.type || '').includes('delegate')).length,
-      strong_support: contacts.filter(c => c.support_level === 'strong_support').length,
-      leaning_support: contacts.filter(c => c.support_level === 'leaning_support').length,
-      undecided: contacts.filter(c => !c.support_level || c.support_level === 'undecided').length,
-      volunteers: contacts.filter(c => (c.type || '').includes('volunteer')).length,
-      yard_signs: contacts.filter(c => (c.type || '').includes('yardsign') || (c.source || '').includes('yardsign')).length,
-      donors: contacts.filter(c => (c.type || '').includes('donor')).length,
+      confirmed_kara: contacts.filter(c => c.support_level === 'Confirmed Kara').length,
+      maybe_kara: contacts.filter(c => c.support_level === 'Maybe Kara').length,
+      confirmed_not: contacts.filter(c => c.support_level === 'Confirmed Not Kara').length,
+      unknown: contacts.filter(c => !c.support_level || c.support_level === 'Unknown').length,
+      contacted: contacts.filter(c => {
+        var v = (c.contacted || '').toLowerCase();
+        return v === 'yes' || v === 'true' || v === '1';
+      }).length,
+      has_email: contacts.filter(c => c.email && c.email.trim()).length,
+      has_phone: contacts.filter(c => c.phone && c.phone.trim()).length,
     };
 
     // Stat cards
     const cardData = [
-      { label: 'Total Contacts', value: stats.total, color: '#1a237e', filter: '' },
-      { label: 'Delegates', value: stats.delegates, color: '#1a237e', filter: 'delegate' },
-      { label: 'Strong Support', value: stats.strong_support, color: '#2e7d32', filter: 'strong_support', filterType: 'support' },
-      { label: 'Leaning Support', value: stats.leaning_support, color: '#66bb6a', filter: 'leaning_support', filterType: 'support' },
-      { label: 'Volunteers', value: stats.volunteers, color: '#E91E63', filter: 'volunteer' },
-      { label: 'Yard Signs', value: stats.yard_signs, color: '#2e7d32', filter: 'yardsign' },
-      { label: 'Donors', value: stats.donors, color: '#ff9800', filter: 'donor' },
+      { label: 'Total Delegates', value: stats.total, color: '#1a237e', filter: '' },
+      { label: 'Confirmed Kara', value: stats.confirmed_kara, color: '#2e7d32', filter: 'Confirmed Kara', filterType: 'support' },
+      { label: 'Maybe Kara', value: stats.maybe_kara, color: '#66bb6a', filter: 'Maybe Kara', filterType: 'support' },
+      { label: 'Not Kara', value: stats.confirmed_not, color: '#f44336', filter: 'Confirmed Not Kara', filterType: 'support' },
+      { label: 'Unknown', value: stats.unknown, color: '#9e9e9e', filter: 'Unknown', filterType: 'support' },
+      { label: 'Contacted', value: stats.contacted, color: '#1565c0', filter: '' },
+      { label: 'Has Email', value: stats.has_email, color: '#7b1fa2', filter: '' },
+      { label: 'Has Phone', value: stats.has_phone, color: '#e65100', filter: '' },
     ];
 
     const cardsEl = document.getElementById('stat-cards');
     if (cardsEl) {
       cardsEl.innerHTML = cardData.map(c => `
-        <div class="stat-card" data-filter="${c.filter}" data-filter-type="${c.filterType || 'type'}"
+        <div class="stat-card" data-filter="${c.filter}" data-filter-type="${c.filterType || ''}"
              style="border-top:4px solid ${c.color};cursor:pointer">
           <div class="stat-label">${c.label}</div>
           <div class="stat-value" style="color:${c.color}">${c.value}</div>
@@ -191,13 +182,10 @@ const app = {
           const filter = card.dataset.filter;
           const filterType = card.dataset.filterType;
           if (!filter) {
-            this.state.filters = { search: '', support_level: '', type: '' };
+            this.state.filters = { search: '', support_level: '', precinct: '' };
           } else if (filterType === 'support') {
             this.state.filters.support_level = filter;
-            this.state.filters.type = '';
-          } else {
-            this.state.filters.type = filter;
-            this.state.filters.support_level = '';
+            this.state.filters.precinct = '';
           }
           this.switchTab('contacts');
           this.loadContacts().then(() => this.renderContactsTable());
@@ -207,12 +195,10 @@ const app = {
 
     // Support breakdown chart
     const breakdown = [
-      { key: 'strong_support', count: stats.strong_support },
-      { key: 'leaning_support', count: stats.leaning_support },
-      { key: 'undecided', count: stats.undecided },
-      { key: 'leaning_opponent', count: contacts.filter(c => c.support_level === 'leaning_opponent').length },
-      { key: 'strong_opponent', count: contacts.filter(c => c.support_level === 'strong_opponent').length },
-      { key: 'no_contact', count: contacts.filter(c => c.support_level === 'no_contact').length },
+      { key: 'Confirmed Kara', count: stats.confirmed_kara },
+      { key: 'Maybe Kara', count: stats.maybe_kara },
+      { key: 'Unknown', count: stats.unknown },
+      { key: 'Confirmed Not Kara', count: stats.confirmed_not },
     ];
 
     const chartEl = document.getElementById('support-chart');
@@ -220,9 +206,9 @@ const app = {
       const maxCount = Math.max(...breakdown.map(b => b.count), 1);
       chartEl.innerHTML = breakdown.map(b => `
         <div class="chart-row">
-          <span class="chart-label">${this.supportLabels[b.key]}</span>
+          <span class="chart-label">${this.supportLabels[b.key] || b.key}</span>
           <div class="chart-bar-wrap">
-            <div class="chart-bar" style="width:${(b.count / maxCount) * 100}%;background:${this.supportColors[b.key]}"></div>
+            <div class="chart-bar" style="width:${(b.count / maxCount) * 100}%;background:${this.supportColors[b.key] || '#9e9e9e'}"></div>
           </div>
           <span class="chart-count">${b.count}</span>
         </div>
@@ -236,7 +222,7 @@ const app = {
     const tbody = document.getElementById('contacts-tbody');
     const countEl = document.getElementById('contacts-count');
 
-    if (countEl) countEl.textContent = `${contacts.length} contact${contacts.length !== 1 ? 's' : ''}`;
+    if (countEl) countEl.textContent = `${contacts.length} delegate${contacts.length !== 1 ? 's' : ''}`;
 
     if (!tbody) return;
 
@@ -247,29 +233,26 @@ const app = {
 
     tbody.innerHTML = contacts.map(c => {
       const name = ((c.first_name || '') + ' ' + (c.last_name || '')).trim() || '—';
-      const supportKey = c.support_level || '';
+      const supportKey = c.support_level || 'Unknown';
       const supportColor = this.supportColors[supportKey] || '#e0e0e0';
-      const supportText = this.supportLabels[supportKey] || 'No Contact';
-      const primaryType = (c.type || '').split(',')[0].trim();
-      const typeColor = this.typeColors[primaryType] || '#9e9e9e';
+      const contacted = (c.contacted || '').toLowerCase();
+      const isContacted = contacted === 'yes' || contacted === 'true' || contacted === '1';
 
       return `<tr>
         <td><strong>${this.escapeHtml(name)}</strong></td>
+        <td>${this.escapeHtml(c.precinct || '—')}</td>
         <td>${this.escapeHtml(c.email || '—')}</td>
         <td>${this.escapeHtml(c.phone || '—')}</td>
-        <td>${this.escapeHtml(c.precinct || '—')}</td>
-        <td><span class="pill" style="background:${typeColor}">${this.escapeHtml(primaryType || '—')}</span></td>
         <td>
           <select class="support-select" data-id="${c.id}" style="border-color:${supportColor}">
-            <option value="">No Contact</option>
-            <option value="strong_support"${supportKey === 'strong_support' ? ' selected' : ''}>Strong Support</option>
-            <option value="leaning_support"${supportKey === 'leaning_support' ? ' selected' : ''}>Leaning Support</option>
-            <option value="undecided"${supportKey === 'undecided' ? ' selected' : ''}>Undecided</option>
-            <option value="leaning_opponent"${supportKey === 'leaning_opponent' ? ' selected' : ''}>Leaning Opponent</option>
-            <option value="strong_opponent"${supportKey === 'strong_opponent' ? ' selected' : ''}>Strong Opponent</option>
+            <option value="Unknown"${supportKey === 'Unknown' ? ' selected' : ''}>Unknown</option>
+            <option value="Confirmed Kara"${supportKey === 'Confirmed Kara' ? ' selected' : ''}>Confirmed Kara</option>
+            <option value="Maybe Kara"${supportKey === 'Maybe Kara' ? ' selected' : ''}>Maybe Kara</option>
+            <option value="Confirmed Not Kara"${supportKey === 'Confirmed Not Kara' ? ' selected' : ''}>Confirmed Not Kara</option>
           </select>
         </td>
-        <td>${this.escapeHtml(c.priority || '—')}</td>
+        <td><span class="pill" style="background:${isContacted ? '#2e7d32' : '#9e9e9e'}">${isContacted ? 'Yes' : 'No'}</span></td>
+        <td>${this.escapeHtml(c.county_delegate || '—')}</td>
         <td>
           <button class="btn-small btn-danger" data-delete="${c.id}" title="Delete">X</button>
         </td>
@@ -282,9 +265,10 @@ const app = {
         const id = e.target.dataset.id;
         try {
           await this.apiCall('PATCH', '/api/contacts/' + id, { support_level: e.target.value });
-          this.showToast('Support level updated');
+          this.showToast('Status updated');
           const contact = this.state.contacts.find(c => c.id === id);
           if (contact) contact.support_level = e.target.value;
+          this.renderDashboard();
         } catch (err) {
           this.showToast('Update failed: ' + err.message, 'error');
         }
@@ -328,7 +312,7 @@ const app = {
   bindFilters() {
     document.querySelectorAll('.filter-pill').forEach(pill => {
       pill.addEventListener('click', async () => {
-        const filterType = pill.dataset.filterType || 'type';
+        const filterType = pill.dataset.filterType || 'support';
         const filterValue = pill.dataset.filter || '';
 
         document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
@@ -336,10 +320,6 @@ const app = {
 
         if (filterType === 'support') {
           this.state.filters.support_level = filterValue;
-          this.state.filters.type = '';
-        } else {
-          this.state.filters.type = filterValue;
-          this.state.filters.support_level = '';
         }
 
         await this.loadContacts();

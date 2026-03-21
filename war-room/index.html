@@ -905,12 +905,11 @@
       >
 
       <div class="filter-pills" id="filter-pills">
-        <button class="filter-pill active" data-filter="All" onclick="app.setContactFilter('All')">All</button>
-        <button class="filter-pill" data-filter="Supporter" onclick="app.setContactFilter('Supporter')">Supporter</button>
-        <button class="filter-pill" data-filter="Volunteer" onclick="app.setContactFilter('Volunteer')">Volunteer</button>
-        <button class="filter-pill" data-filter="Donor" onclick="app.setContactFilter('Donor')">Donor</button>
-        <button class="filter-pill" data-filter="Delegate" onclick="app.setContactFilter('Delegate')">Delegate</button>
-        <button class="filter-pill" data-filter="Yard Sign" onclick="app.setContactFilter('Yard Sign')">Yard Sign</button>
+        <button class="filter-pill active" data-filter="" data-filter-type="support">All</button>
+        <button class="filter-pill" data-filter="Confirmed Kara" data-filter-type="support">Confirmed Kara</button>
+        <button class="filter-pill" data-filter="Maybe Kara" data-filter-type="support">Maybe Kara</button>
+        <button class="filter-pill" data-filter="Unknown" data-filter-type="support">Unknown</button>
+        <button class="filter-pill" data-filter="Confirmed Not Kara" data-filter-type="support">Not Kara</button>
       </div>
 
       <div class="contacts-table-wrap">
@@ -918,12 +917,13 @@
           <thead>
             <tr>
               <th>Name</th>
+              <th>Precinct</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Type</th>
-              <th>Source</th>
-              <th>Email Opt-in</th>
-              <th>Text Opt-in</th>
+              <th>Status</th>
+              <th>Contacted</th>
+              <th>County Delegate</th>
+              <th></th>
             </tr>
           </thead>
           <tbody id="contacts-tbody">
@@ -933,7 +933,7 @@
       </div>
 
       <div class="contacts-footer" id="contacts-footer">
-        Showing 0 contacts
+        <span id="contacts-count">Showing 0 delegates</span>
       </div>
     </section>
 

@@ -9,6 +9,9 @@ import {
   CORS_HEADERS,
   jsonResponse,
   errorResponse,
+  SHEET_TAB,
+  SHEET_LAST_COL,
+  normalizeHeaders,
 } from "../_shared/sheets.js";
 
 // ── Audience filter ──────────────────────────
@@ -19,17 +22,15 @@ function matchesAudience(contact, headers, audience) {
 
   switch (audience) {
     case 'all-optin':
-      return val('opt_email') === 'true';
-    case 'volunteers':
-      return val('type') === 'volunteer' && val('opt_email') === 'true';
-    case 'donors':
-      return val('type') === 'donor' && val('opt_email') === 'true';
-    case 'delegates':
-      return val('type') === 'delegate' && val('opt_email') === 'true';
-    case 'yardsign':
-      return val('type') === 'yardsign' && val('opt_email') === 'true';
+      return true; // Everyone with an email
+    case 'confirmed':
+      return val('support_level') === 'confirmed kara';
+    case 'maybe':
+      return val('support_level') === 'maybe kara';
+    case 'unknown':
+      return val('support_level') === 'unknown';
     default:
-      return false;
+      return true;
   }
 }
 
@@ -95,23 +96,22 @@ export async function onRequestPost(context) {
     const fromAddress = `${fromName} <${env.RESEND_FROM_EMAIL || 'noreply@kara.wickowaypoint.com'}>`;
     const baseUrl = new URL(request.url).origin;
 
-    // Read contacts from Sheets
-    const data = await sheetsGet(env, 'Contacts!A1:Z');
+    // Read contacts from Sheets (include header row)
+    const data = await sheetsGet(env, SHEET_TAB + '!A1:' + SHEET_LAST_COL);
     const rows = data.values || [];
     if (rows.length < 2) {
       return errorResponse('No contacts found in sheet', 404);
     }
 
-    const headers = rows[0].map((h) => String(h).trim().toLowerCase());
+    const headers = normalizeHeaders(rows[0]);
     const contacts = rows.slice(1);
     const emailIdx = headers.indexOf('email');
-    const idIdx = headers.indexOf('id');
 
     if (emailIdx === -1) {
       return errorResponse('Contacts sheet missing email column', 500);
     }
 
-    // Filter by audience
+    // Filter by audience + has email
     const recipients = contacts.filter((c) => {
       const email = (c[emailIdx] || '').trim();
       return email && matchesAudience(c, headers, audience);
@@ -136,7 +136,7 @@ export async function onRequestPost(context) {
       const results = await Promise.allSettled(
         batch.map(async (contact) => {
           const email = contact[emailIdx].trim();
-          const contactId = contact[idIdx] || email;
+          const contactId = email; // Use email as identifier since no ID column
           const personalizedBody = replaceMergeFields(emailBody, contact, headers);
           const personalizedSubject = replaceMergeFields(subject, contact, headers);
           const pixel = trackingPixel(baseUrl, contactId, Date.now());

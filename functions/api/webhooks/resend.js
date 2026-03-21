@@ -8,6 +8,9 @@ import {
   sheetsAppend,
   sheetsUpdate,
   CORS_HEADERS,
+  SHEET_TAB,
+  SHEET_LAST_COL,
+  normalizeHeaders,
 } from "../_shared/sheets.js";
 
 // ── Webhook signature verification ───────────
@@ -99,15 +102,14 @@ export async function onRequestPost(context) {
     let contactId = 'unknown';
     let contactRow = null;
     try {
-      const data = await sheetsGet(env, 'Contacts!A1:Z');
+      const data = await sheetsGet(env, SHEET_TAB + '!A1:' + SHEET_LAST_COL);
       const rows = data.values || [];
       if (rows.length >= 2) {
-        const headers = rows[0].map((h) => String(h).trim().toLowerCase());
+        const headers = normalizeHeaders(rows[0]);
         const dataRows = rows.slice(1);
         const found = findContactByEmail(dataRows, headers, recipientEmail);
         if (found) {
-          const idIdx = headers.indexOf('id');
-          contactId = found.row[idIdx] || recipientEmail;
+          contactId = recipientEmail;
           contactRow = found;
         }
       }
@@ -129,12 +131,16 @@ export async function onRequestPost(context) {
           [contactId, 'email', `Opened: ${eventData.subject || ''}`.substring(0, 80), now, 'opened'],
         ]);
 
-        // Update contact's email_opened field
+        // Update contact's notes with open event
         if (contactRow) {
-          const emailOpenedIdx = contactRow.headers.indexOf('email_opened');
-          if (emailOpenedIdx !== -1) {
-            const colLetter = String.fromCharCode(65 + emailOpenedIdx);
-            await sheetsUpdate(env, `Contacts!${colLetter}${contactRow.rowIndex}`, [['true']]);
+          const notesIdx = contactRow.headers.indexOf('notes');
+          if (notesIdx !== -1) {
+            const colLetter = String.fromCharCode(65 + notesIdx);
+            const existingNotes = contactRow.row[notesIdx] || '';
+            const updated = existingNotes
+              ? `${existingNotes}; email-opened ${now}`
+              : `email-opened ${now}`;
+            await sheetsUpdate(env, `${SHEET_TAB}!${colLetter}${contactRow.rowIndex}`, [[updated]]);
           }
         }
         break;
@@ -153,7 +159,7 @@ export async function onRequestPost(context) {
           [contactId, 'email', `Bounced: ${eventData.bounce?.type || 'unknown'}`, now, 'bounced'],
         ]);
 
-        // Flag contact as bounced
+        // Flag contact as bounced in notes
         if (contactRow) {
           const notesIdx = contactRow.headers.indexOf('notes');
           if (notesIdx !== -1) {
@@ -162,7 +168,7 @@ export async function onRequestPost(context) {
             const updated = existingNotes
               ? `${existingNotes}; BOUNCED ${now}`
               : `BOUNCED ${now}`;
-            await sheetsUpdate(env, `Contacts!${colLetter}${contactRow.rowIndex}`, [[updated]]);
+            await sheetsUpdate(env, `${SHEET_TAB}!${colLetter}${contactRow.rowIndex}`, [[updated]]);
           }
         }
         break;

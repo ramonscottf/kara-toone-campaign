@@ -287,25 +287,94 @@ export function errorResponse(message, status) {
 }
 
 /**
- * Column definitions for the Contacts sheet.
+ * Sheet tab name and range constants.
+ */
+export const SHEET_TAB = "Working";
+export const SHEET_LAST_COL = "O";
+export const SHEET_TAB_GID = 1544349696;
+
+/**
+ * Column definitions for the Working sheet.
+ * Maps positional columns (A-O) to internal field names.
  */
 export const CONTACT_COLUMNS = [
-  "id", "first_name", "last_name", "email", "phone",
-  "address", "city", "zip", "precinct", "type",
-  "source", "confirmed", "support_level", "priority", "contacted",
-  "contact_attempts", "last_contact_date", "email_opened", "phone_answered",
-  "opt_email", "opt_text", "notes", "tags", "created_at", "updated_at"
+  "support_level",       // A: Status
+  "hd",                  // B: HD
+  "precinct",            // C: Precinct
+  "allocated_delegates", // D: Allocated Delegates
+  "first_name",          // E: First Name
+  "last_name",           // F: Last Name
+  "address",             // G: Address
+  "city",                // H: City
+  "zip",                 // I: Zip
+  "phone",               // J: Phone
+  "phone2",              // K: Phone 2
+  "email",               // L: Email Address
+  "county_delegate",     // M: County Delegate
+  "notes",               // N: Notes
+  "contacted",           // O: Contacted
 ];
 
 /**
- * Convert a row array to a contact object using CONTACT_COLUMNS.
+ * Map raw sheet header names (lowercased) to internal field names.
  */
-export function rowToContact(row) {
+var HEADER_MAP = {
+  "status": "support_level",
+  "hd": "hd",
+  "precinct": "precinct",
+  "allocated delegates": "allocated_delegates",
+  "first name": "first_name",
+  "last name": "last_name",
+  "address": "address",
+  "city": "city",
+  "zip": "zip",
+  "phone": "phone",
+  "phone 2": "phone2",
+  "email address": "email",
+  "county delegate": "county_delegate",
+  "notes": "notes",
+  "contacted": "contacted",
+};
+
+/**
+ * Normalize raw sheet headers to internal field names.
+ * @param {Array<string>} rawHeaders - Header row from the sheet.
+ * @returns {Array<string>} Normalized header names.
+ */
+export function normalizeHeaders(rawHeaders) {
+  return rawHeaders.map(function (h) {
+    var lower = String(h).trim().toLowerCase();
+    return HEADER_MAP[lower] || lower.replace(/\s+/g, "_");
+  });
+}
+
+/**
+ * Convert a row array to a contact object using CONTACT_COLUMNS.
+ * Adds a synthetic 'id' field based on the row index.
+ * @param {Array} row - Row data from the sheet.
+ * @param {number} [dataRowIndex] - 0-based index within data rows (row 0 = sheet row 2).
+ */
+export function rowToContact(row, dataRowIndex) {
   var contact = {};
   for (var i = 0; i < CONTACT_COLUMNS.length; i++) {
     contact[CONTACT_COLUMNS[i]] = (row[i] !== undefined && row[i] !== null) ? String(row[i]) : "";
   }
+  // Synthetic ID based on sheet row number (data row 0 = sheet row 2)
+  if (dataRowIndex !== undefined) {
+    contact.id = "row_" + (dataRowIndex + 2);
+  }
   return contact;
+}
+
+/**
+ * Parse a synthetic row ID to get the sheet row number.
+ * @param {string} id - e.g. "row_5"
+ * @returns {number|null} Sheet row number (1-based) or null if invalid.
+ */
+export function parseRowId(id) {
+  if (!id || !id.startsWith("row_")) return null;
+  var num = parseInt(id.substring(4), 10);
+  return isNaN(num) ? null : num;
 }
 
 /**

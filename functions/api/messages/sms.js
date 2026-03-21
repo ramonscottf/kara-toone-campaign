@@ -9,6 +9,9 @@ import {
   CORS_HEADERS,
   jsonResponse,
   errorResponse,
+  SHEET_TAB,
+  SHEET_LAST_COL,
+  normalizeHeaders,
 } from "../_shared/sheets.js";
 
 // ── Audience filter ──────────────────────────
@@ -17,9 +20,6 @@ function matchesAudience(contact, headers, audience) {
   const idx = (name) => headers.indexOf(name);
   const val = (name) => (contact[idx(name)] || '').trim().toLowerCase();
 
-  // SMS requires opt_text = true AND a phone number
-  if (val('opt_text') !== 'true') return false;
-
   const phoneIdx = idx('phone');
   const phone = (contact[phoneIdx] || '').trim();
   if (!phone) return false;
@@ -27,16 +27,14 @@ function matchesAudience(contact, headers, audience) {
   switch (audience) {
     case 'all-optin':
       return true;
-    case 'volunteers':
-      return val('type') === 'volunteer';
-    case 'donors':
-      return val('type') === 'donor';
-    case 'delegates':
-      return val('type') === 'delegate';
-    case 'yardsign':
-      return val('type') === 'yardsign';
+    case 'confirmed':
+      return val('support_level') === 'confirmed kara';
+    case 'maybe':
+      return val('support_level') === 'maybe kara';
+    case 'unknown':
+      return val('support_level') === 'unknown';
     default:
-      return false;
+      return true;
   }
 }
 
@@ -94,22 +92,21 @@ export async function onRequestPost(context) {
     }
 
     // Read contacts from Sheets
-    const data = await sheetsGet(env, 'Contacts!A1:Z');
+    const data = await sheetsGet(env, SHEET_TAB + '!A1:' + SHEET_LAST_COL);
     const rows = data.values || [];
     if (rows.length < 2) {
       return errorResponse('No contacts found in sheet', 404);
     }
 
-    const headers = rows[0].map((h) => String(h).trim().toLowerCase());
+    const headers = normalizeHeaders(rows[0]);
     const contacts = rows.slice(1);
     const phoneIdx = headers.indexOf('phone');
-    const idIdx = headers.indexOf('id');
 
     if (phoneIdx === -1) {
       return errorResponse('Contacts sheet missing phone column', 500);
     }
 
-    // Filter by audience + opt_text + has phone
+    // Filter by audience + has phone
     const recipients = contacts.filter((c) => matchesAudience(c, headers, audience));
 
     if (recipients.length === 0) {
@@ -131,7 +128,7 @@ export async function onRequestPost(context) {
       const results = await Promise.allSettled(
         batch.map(async (contact) => {
           const phone = contact[phoneIdx].trim();
-          const contactId = contact[idIdx] || phone;
+          const contactId = phone;
           const personalizedMessage = replaceMergeFields(message, contact, headers);
 
           await sendTwilioSMS({

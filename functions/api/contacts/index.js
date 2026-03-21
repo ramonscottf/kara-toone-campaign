@@ -5,9 +5,10 @@ import {
   jsonResponse,
   errorResponse,
   CONTACT_COLUMNS,
+  SHEET_TAB,
+  SHEET_LAST_COL,
   rowToContact,
   contactToRow,
-  generateId,
 } from "../_shared/sheets.js";
 
 /**
@@ -20,37 +21,29 @@ export function onRequestOptions() {
 /**
  * GET /api/contacts
  * List all contacts with optional filtering.
- * Query params: ?support=, ?type=, ?precinct=, ?search=, ?priority=
+ * Query params: ?support=, ?precinct=, ?search=, ?contacted=
  */
 export async function onRequestGet(context) {
   var env = context.env;
 
   try {
-    var data = await sheetsGet(env, "Contacts!A2:Y");
+    var data = await sheetsGet(env, SHEET_TAB + "!A2:" + SHEET_LAST_COL);
     var rows = data.values || [];
 
-    var contacts = rows.map(function (row) {
-      return rowToContact(row);
+    var contacts = rows.map(function (row, index) {
+      return rowToContact(row, index);
     });
 
     var url = new URL(context.request.url);
     var supportFilter = url.searchParams.get("support");
-    var typeFilter = url.searchParams.get("type");
     var precinctFilter = url.searchParams.get("precinct");
     var searchFilter = url.searchParams.get("search");
-    var priorityFilter = url.searchParams.get("priority");
+    var contactedFilter = url.searchParams.get("contacted");
 
     if (supportFilter) {
       var supportLower = supportFilter.toLowerCase();
       contacts = contacts.filter(function (c) {
         return c.support_level && c.support_level.toLowerCase() === supportLower;
-      });
-    }
-
-    if (typeFilter) {
-      var typeLower = typeFilter.toLowerCase();
-      contacts = contacts.filter(function (c) {
-        return c.type && c.type.toLowerCase() === typeLower;
       });
     }
 
@@ -61,10 +54,14 @@ export async function onRequestGet(context) {
       });
     }
 
-    if (priorityFilter) {
-      var priorityLower = priorityFilter.toLowerCase();
+    if (contactedFilter) {
+      var contactedLower = contactedFilter.toLowerCase();
       contacts = contacts.filter(function (c) {
-        return c.priority && c.priority.toLowerCase() === priorityLower;
+        var val = (c.contacted || "").toLowerCase();
+        if (contactedLower === "true" || contactedLower === "yes") {
+          return val === "true" || val === "yes" || val === "1";
+        }
+        return !val || val === "false" || val === "no" || val === "0";
       });
     }
 
@@ -75,11 +72,13 @@ export async function onRequestGet(context) {
         var email = (c.email || "").toLowerCase();
         var phone = (c.phone || "").toLowerCase();
         var address = (c.address || "").toLowerCase();
+        var precinct = (c.precinct || "").toLowerCase();
         return (
           fullName.indexOf(searchLower) !== -1 ||
           email.indexOf(searchLower) !== -1 ||
           phone.indexOf(searchLower) !== -1 ||
-          address.indexOf(searchLower) !== -1
+          address.indexOf(searchLower) !== -1 ||
+          precinct.indexOf(searchLower) !== -1
         );
       });
     }
@@ -100,7 +99,6 @@ export async function onRequestPost(context) {
   try {
     var body = await context.request.json();
 
-    var now = new Date().toISOString();
     var contact = {};
 
     // Copy provided fields
@@ -113,21 +111,13 @@ export async function onRequestPost(context) {
       }
     }
 
-    // Auto-set system fields
-    contact.id = generateId();
-    contact.created_at = now;
-    contact.updated_at = now;
-
     // Defaults
-    if (!contact.contacted) contact.contacted = "false";
-    if (!contact.contact_attempts) contact.contact_attempts = "0";
-    if (!contact.email_opened) contact.email_opened = "false";
-    if (!contact.phone_answered) contact.phone_answered = "false";
-    if (!contact.opt_email) contact.opt_email = "true";
-    if (!contact.opt_text) contact.opt_text = "true";
+    if (!contact.support_level) contact.support_level = "Unknown";
+    if (!contact.hd) contact.hd = "14";
+    if (!contact.contacted) contact.contacted = "No";
 
     var row = contactToRow(contact);
-    await sheetsAppend(env, "Contacts!A:Y", [row]);
+    await sheetsAppend(env, SHEET_TAB + "!A:" + SHEET_LAST_COL, [row]);
 
     return jsonResponse({ contact: contact, message: "Contact created" }, 201);
   } catch (err) {
