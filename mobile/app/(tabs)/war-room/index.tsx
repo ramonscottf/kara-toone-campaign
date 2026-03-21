@@ -1,16 +1,19 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, StyleSheet, RefreshControl } from 'react-native';
+import { View, ScrollView, StyleSheet, RefreshControl } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
 import { Text, StatCard, Card, Button } from '../../../src/components/ui';
-import { fetchContacts, Contact } from '../../../src/api/contacts';
+import { fetchContacts } from '../../../src/api/contacts';
 import { fetchMessageLog } from '../../../src/api/messages';
-import { getSupportConfig, supportLevelConfig } from '../../../src/utils/supportColors';
-import { colors, spacing, fonts, fontSizes, borderRadius } from '../../../src/theme';
+import { supportLevelConfig } from '../../../src/utils/supportColors';
+import { useTheme } from '../../../src/theme/ThemeContext';
+import { typography } from '../../../src/theme/typography';
+import { spacing, borderRadius } from '../../../src/theme/spacing';
 
 export default function WarRoomDashboard() {
   const router = useRouter();
+  const { sys } = useTheme();
 
   const { data: contactsData, isLoading, refetch } = useQuery({
     queryKey: ['contacts'],
@@ -25,92 +28,85 @@ export default function WarRoomDashboard() {
   const contacts = contactsData?.contacts || [];
   const log = logData || [];
 
-  // Compute KPIs
   const totalContacts = contacts.length;
-  const donors = contacts.filter(c => c.type?.includes('donor')).length;
-  const totalRaised = '$0'; // Would come from a donations endpoint
-  const volunteers = contacts.filter(c => c.type?.includes('volunteer')).length;
-  const delegates = contacts.filter(c => c.type?.includes('delegate')).length;
-  const yardSigns = contacts.filter(c => c.type?.includes('yardsign')).length;
+  const donors = contacts.filter((c: any) => c.type?.includes('donor')).length;
+  const volunteers = contacts.filter((c: any) => c.type?.includes('volunteer')).length;
+  const delegates = contacts.filter((c: any) => c.type?.includes('delegate')).length;
+  const yardSigns = contacts.filter((c: any) => c.type?.includes('yardsign')).length;
   const commsSent = log.length;
 
-  // Support breakdown
   const supportBreakdown = Object.entries(supportLevelConfig)
     .filter(([key]) => key !== '')
-    .map(([key, config]) => ({
+    .map(([key, config]: [string, any]) => ({
       key,
       label: config.label,
       color: config.color,
-      count: contacts.filter(c => c.support_level === key).length,
+      count: contacts.filter((c: any) => c.support_level === key).length,
     }))
-    .filter(item => item.count > 0);
+    .filter((item) => item.count > 0);
 
   const totalSupport = supportBreakdown.reduce((sum, item) => sum + item.count, 0) || 1;
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={colors.navy} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#0EA5E9" />
       }
     >
-      {/* KPI Grid */}
       <View style={styles.kpiGrid}>
         <View style={styles.kpiRow}>
           <View style={styles.kpiItem}>
-            <StatCard label="Total Contacts" value={totalContacts} accentColor={colors.navy} />
+            <StatCard label="Total Contacts" value={totalContacts} accentColor="#0EA5E9" />
           </View>
           <View style={styles.kpiItem}>
-            <StatCard label="Volunteers" value={volunteers} accentColor={colors.red} />
-          </View>
-        </View>
-        <View style={styles.kpiRow}>
-          <View style={styles.kpiItem}>
-            <StatCard label="Delegates" value={delegates} accentColor={colors.gold} />
-          </View>
-          <View style={styles.kpiItem}>
-            <StatCard label="Yard Signs" value={yardSigns} accentColor={colors.navy} />
+            <StatCard label="Volunteers" value={volunteers} accentColor="#EF4444" />
           </View>
         </View>
         <View style={styles.kpiRow}>
           <View style={styles.kpiItem}>
-            <StatCard label="Donors" value={donors} accentColor={colors.red} />
+            <StatCard label="Delegates" value={delegates} accentColor="#F97316" />
           </View>
           <View style={styles.kpiItem}>
-            <StatCard label="Comms Sent" value={commsSent} accentColor={colors.navy} />
+            <StatCard label="Yard Signs" value={yardSigns} accentColor="#10B981" />
+          </View>
+        </View>
+        <View style={styles.kpiRow}>
+          <View style={styles.kpiItem}>
+            <StatCard label="Donors" value={donors} accentColor="#8B5CF6" />
+          </View>
+          <View style={styles.kpiItem}>
+            <StatCard label="Comms Sent" value={commsSent} accentColor="#0EA5E9" />
           </View>
         </View>
       </View>
 
-      {/* Delegate Support Breakdown */}
       <Card style={styles.chartCard}>
-        <Text variant="h3" style={styles.chartTitle}>Delegate Support</Text>
+        <Text variant="title3">Delegate Support</Text>
         <View style={styles.chartBar}>
-          {supportBreakdown.map(item => (
+          {supportBreakdown.map((item) => (
             <View
               key={item.key}
               style={[
                 styles.barSegment,
-                {
-                  backgroundColor: item.color,
-                  flex: item.count / totalSupport,
-                },
+                { backgroundColor: item.color, flex: item.count / totalSupport },
               ]}
             />
           ))}
         </View>
         <View style={styles.legend}>
-          {supportBreakdown.map(item => (
+          {supportBreakdown.map((item) => (
             <View key={item.key} style={styles.legendItem}>
               <View style={[styles.legendDot, { backgroundColor: item.color }]} />
-              <Text style={styles.legendText}>{item.label}: {item.count}</Text>
+              <Text variant="footnote" secondary>
+                {item.label}: {item.count}
+              </Text>
             </View>
           ))}
         </View>
       </Card>
 
-      {/* Quick Actions */}
       <View style={styles.actions}>
         <Button
           title="View Contacts"
@@ -145,64 +141,22 @@ export default function WarRoomDashboard() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.cream,
-  },
-  content: {
-    padding: spacing.base,
-    paddingBottom: spacing['3xl'],
-  },
-  kpiGrid: {
-    gap: spacing.sm,
-    marginBottom: spacing.lg,
-  },
-  kpiRow: {
-    flexDirection: 'row',
-    gap: spacing.sm,
-  },
-  kpiItem: {
-    flex: 1,
-  },
-  chartCard: {
-    padding: spacing.base,
-    marginBottom: spacing.lg,
-  },
-  chartTitle: {
-    marginBottom: spacing.md,
-  },
+  container: { flex: 1 },
+  content: { padding: spacing.base, paddingBottom: 120 },
+  kpiGrid: { gap: spacing.sm, marginBottom: spacing.lg },
+  kpiRow: { flexDirection: 'row', gap: spacing.sm },
+  kpiItem: { flex: 1 },
+  chartCard: { padding: spacing.base, marginBottom: spacing.lg, gap: spacing.md },
   chartBar: {
     flexDirection: 'row',
     height: 24,
     borderRadius: borderRadius.full,
     overflow: 'hidden',
-    marginBottom: spacing.md,
   },
-  barSegment: {
-    height: '100%',
-  },
-  legend: {
-    gap: spacing.xs,
-  },
-  legendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.sm,
-  },
-  legendDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-  },
-  legendText: {
-    fontFamily: fonts.body,
-    fontSize: fontSizes.sm,
-    color: colors.textSecondary,
-  },
-  actions: {
-    gap: spacing.sm,
-  },
-  actionButton: {
-    width: '100%',
-  },
+  barSegment: { height: '100%' },
+  legend: { gap: spacing.xs },
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm },
+  legendDot: { width: 10, height: 10, borderRadius: 5 },
+  actions: { gap: spacing.sm },
+  actionButton: { width: '100%' },
 });

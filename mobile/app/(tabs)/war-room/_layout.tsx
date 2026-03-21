@@ -1,14 +1,16 @@
 import { Stack } from 'expo-router';
-import { colors, fonts, fontSizes } from '../../../src/theme';
+import { useTheme } from '../../../src/theme/ThemeContext';
 
 export default function WarRoomLayout() {
+  const { sys } = useTheme();
+
   return (
     <Stack
       screenOptions={{
-        headerStyle: { backgroundColor: colors.cream },
-        headerTitleStyle: { fontFamily: fonts.display, fontSize: fontSizes.lg, color: colors.deep },
+        headerStyle: { backgroundColor: sys.background },
+        headerTitleStyle: { fontWeight: '600', fontSize: 17, color: sys.label },
         headerShadowVisible: false,
-        headerTintColor: colors.navy,
+        headerTintColor: '#0EA5E9',
       }}
     >
       <Stack.Screen name="index" options={{ headerTitle: 'War Room' }} />

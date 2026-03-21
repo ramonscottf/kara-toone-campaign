@@ -1,7 +1,9 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { Text, Card } from '../../../src/components/ui';
-import { colors, spacing, fonts, fontSizes } from '../../../src/theme';
+import { useTheme } from '../../../src/theme/ThemeContext';
+import { typography } from '../../../src/theme/typography';
+import { spacing } from '../../../src/theme';
 
 const sections = [
   {
@@ -49,10 +51,12 @@ const sections = [
 ];
 
 export default function PlaybookScreen() {
+  const { sys } = useTheme();
+
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={[styles.container, { backgroundColor: sys.background }]} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text variant="accent" color={colors.red}>Campaign Playbook</Text>
+        <Text variant="accent" color={'#EF4444'}>Campaign Playbook</Text>
         <Text variant="caption">Messaging guide for the Kara Toone campaign team</Text>
       </View>
 
@@ -60,14 +64,14 @@ export default function PlaybookScreen() {
         <Card key={i} style={styles.card}>
           <Text variant="h3" style={styles.cardTitle}>{section.title}</Text>
           {section.content && (
-            <Text variant="body" style={styles.cardBody}>{section.content}</Text>
+            <Text variant="body" style={[styles.cardBody, { color: sys.secondaryLabel }]}>{section.content}</Text>
           )}
           {section.items && (
             <View style={styles.list}>
               {section.items.map((item, j) => (
                 <View key={j} style={styles.listItem}>
-                  <Text style={styles.bullet}>{'•'}</Text>
-                  <Text variant="body" style={styles.listText}>{item}</Text>
+                  <Text style={[styles.bullet, { color: '#EF4444' }]}>{'•'}</Text>
+                  <Text variant="body" style={[styles.listText, { color: sys.secondaryLabel }]}>{item}</Text>
                 </View>
               ))}
             </View>
@@ -79,14 +83,14 @@ export default function PlaybookScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: colors.cream },
+  container: { flex: 1 },
   content: { padding: spacing.base, paddingBottom: spacing['3xl'] },
   header: { marginBottom: spacing.lg, gap: spacing.xs },
   card: { padding: spacing.base, marginBottom: spacing.md },
   cardTitle: { marginBottom: spacing.sm },
-  cardBody: { color: colors.textSecondary, lineHeight: 22 },
+  cardBody: { lineHeight: 22 },
   list: { gap: spacing.sm },
   listItem: { flexDirection: 'row', gap: spacing.sm },
-  bullet: { color: colors.red, fontSize: 16, lineHeight: 22 },
-  listText: { flex: 1, color: colors.textSecondary, lineHeight: 22 },
+  bullet: { fontSize: 16, lineHeight: 22 },
+  listText: { flex: 1, lineHeight: 22 },
 });
