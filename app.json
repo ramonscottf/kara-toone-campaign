@@ -1,5 +1,20 @@
 {
   "expo": {
+    "name": "Kara Toone",
+    "slug": "kara-toone",
+    "owner": "rscottf",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "karatoone",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wickowaypoint.campaignconnect",
+      "appleTeamId": "572R4QQ2ZA",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
     "extra": {
       "eas": {
         "projectId": "9ee6d1d2-7161-4dbe-ba04-c25513284ef9"
