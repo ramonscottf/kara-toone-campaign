@@ -17,7 +17,9 @@
         "autoIncrement": true
       }
     },
-    "production": {}
+    "production": {
+      "autoIncrement": true
+    }
   },
   "submit": {
     "preview": {
