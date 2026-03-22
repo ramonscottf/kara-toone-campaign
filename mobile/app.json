@@ -33,6 +33,14 @@
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos for event and canvassing photos.",
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera for event and canvassing photos."
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "16.0"
+          }
+        }
       ]
     ],
     "experiments": {
