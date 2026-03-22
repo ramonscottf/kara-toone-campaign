@@ -39,7 +39,7 @@ export default function ConnectDashboard() {
       style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#0EA5E9" />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#ED2631" />
       }
     >
       {/* Stats Header */}
@@ -64,7 +64,7 @@ export default function ConnectDashboard() {
 
       <View style={styles.kpiRow}>
         <View style={{ flex: 1 }}>
-          <StatCard label="Total Contacts" value={totalContacts} accentColor="#0EA5E9" />
+          <StatCard label="Total Contacts" value={totalContacts} accentColor="#1B3A69" />
         </View>
         <View style={{ flex: 1 }}>
           <StatCard label="Delegates" value={delegates} accentColor="#F97316" />

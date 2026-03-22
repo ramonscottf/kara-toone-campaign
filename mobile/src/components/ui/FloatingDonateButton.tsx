@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { StyleSheet, Pressable, Platform } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import { useRouter } from 'expo-router';
-import { BlurView } from 'expo-blur';
+import { LiquidGlassView } from './LiquidGlassView';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -39,15 +39,9 @@ export function FloatingDonateButton() {
         router.push('/donate');
       }}
     >
-      {Platform.OS === 'ios' ? (
-        <BlurView intensity={80} tint="dark" style={styles.blur}>
-          <Ionicons name="heart" size={24} color="#FFFFFF" />
-        </BlurView>
-      ) : (
-        <Animated.View style={styles.fallback}>
-          <Ionicons name="heart" size={24} color="#FFFFFF" />
-        </Animated.View>
-      )}
+      <LiquidGlassView blurIntensity={80} blurTint="dark" style={styles.blur}>
+        <Ionicons name="heart" size={24} color="#FFFFFF" />
+      </LiquidGlassView>
     </AnimatedPressable>
   );
 }
@@ -58,7 +52,7 @@ const styles = StyleSheet.create({
     bottom: 100,
     right: 20,
     zIndex: 100,
-    shadowColor: '#EF4444',
+    shadowColor: '#ED2631',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -71,14 +65,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(239,68,68,0.7)',
-  },
-  fallback: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#EF4444',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: 'rgba(237,38,49,0.7)',
   },
 });

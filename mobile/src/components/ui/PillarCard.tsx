@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { BlurView } from 'expo-blur';
+import { LiquidGlassView } from './LiquidGlassView';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -67,17 +67,10 @@ export function PillarCard({
       <View style={styles.content}>
         <Text style={styles.title}>{title}</Text>
         <View style={styles.statContainer}>
-          {Platform.OS === 'ios' ? (
-            <BlurView intensity={30} tint="light" style={styles.statBlur}>
-              <Text style={styles.statNumber}>{statNumber}</Text>
-              <Text style={styles.statLabel}>{statLabel}</Text>
-            </BlurView>
-          ) : (
-            <View style={styles.statFallback}>
-              <Text style={styles.statNumber}>{statNumber}</Text>
-              <Text style={styles.statLabel}>{statLabel}</Text>
-            </View>
-          )}
+          <LiquidGlassView blurIntensity={30} blurTint="light" style={styles.statBlur}>
+            <Text style={styles.statNumber}>{statNumber}</Text>
+            <Text style={styles.statLabel}>{statLabel}</Text>
+          </LiquidGlassView>
         </View>
       </View>
     </AnimatedPressable>
@@ -113,12 +106,6 @@ const styles = StyleSheet.create({
   statBlur: {
     borderRadius: 12,
     overflow: 'hidden',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  statFallback: {
-    borderRadius: 12,
-    backgroundColor: 'rgba(255,255,255,0.2)',
     paddingHorizontal: 12,
     paddingVertical: 8,
   },

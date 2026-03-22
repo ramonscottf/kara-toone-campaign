@@ -56,7 +56,7 @@ export default function PlaybookScreen() {
   return (
     <ScrollView style={[styles.container, { backgroundColor: sys.background }]} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text variant="accent" color={'#EF4444'}>Campaign Playbook</Text>
+        <Text variant="accent" color={'#ED2631'}>Campaign Playbook</Text>
         <Text variant="caption">Messaging guide for the Kara Toone campaign team</Text>
       </View>
 
@@ -70,7 +70,7 @@ export default function PlaybookScreen() {
             <View style={styles.list}>
               {section.items.map((item, j) => (
                 <View key={j} style={styles.listItem}>
-                  <Text style={[styles.bullet, { color: '#EF4444' }]}>{'•'}</Text>
+                  <Text style={[styles.bullet, { color: '#ED2631' }]}>{'•'}</Text>
                   <Text variant="body" style={[styles.listText, { color: sys.secondaryLabel }]}>{item}</Text>
                 </View>
               ))}

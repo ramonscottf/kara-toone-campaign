@@ -37,15 +37,15 @@ export default function PrecinctsScreen() {
       style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#1B3A69'} />
       }
     >
       <View style={styles.summaryRow}>
         <View style={{ flex: 1 }}>
-          <StatCard label="Total Precincts" value={precinctData.length} accentColor={'#0EA5E9'} />
+          <StatCard label="Total Precincts" value={precinctData.length} accentColor={'#1B3A69'} />
         </View>
         <View style={{ flex: 1 }}>
-          <StatCard label="Total Contacts" value={contacts.length} accentColor={'#EF4444'} />
+          <StatCard label="Total Contacts" value={contacts.length} accentColor={'#ED2631'} />
         </View>
       </View>
 
@@ -59,7 +59,7 @@ export default function PrecinctsScreen() {
             </View>
             <View style={styles.barContainer}>
               <View style={[styles.barBg, { backgroundColor: sys.fill }]}>
-                <View style={[styles.barFill, { width: `${contactRate}%`, backgroundColor: '#0EA5E9' }]} />
+                <View style={[styles.barFill, { width: `${contactRate}%`, backgroundColor: '#1B3A69' }]} />
               </View>
               <Text variant="caption">{contactRate}% contacted</Text>
             </View>

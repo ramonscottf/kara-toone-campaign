@@ -26,7 +26,7 @@ export const brand = {
   socialToolsUrl: 'https://social.wickowaypoint.com',
   socialGenerateUrl: 'https://social.wickowaypoint.com/generate',
 
-  accentColor: '#0EA5E9',
+  accentColor: '#ED2631',
   footerDisclaimer:
     'Paid for by the Committee to Elect Kara Toone. Authorized by Kara Toone.',
   poweredBy: 'Powered by Wicko Waypoint',
@@ -101,9 +101,9 @@ export const brand = {
   ],
 
   pillarColors: {
-    growth: { primary: '#0EA5E9', gradientStart: '#0EA5E9', gradientEnd: '#0369A1' },
+    growth: { primary: '#1B3A69', gradientStart: '#1B3A69', gradientEnd: '#0F2340' },
     housing: { primary: '#F97316', gradientStart: '#F97316', gradientEnd: '#C2410C' },
-    safety: { primary: '#EF4444', gradientStart: '#EF4444', gradientEnd: '#B91C1C' },
+    safety: { primary: '#ED2631', gradientStart: '#ED2631', gradientEnd: '#B91C1C' },
     education: { primary: '#10B981', gradientStart: '#10B981', gradientEnd: '#047857' },
     fiscal: { primary: '#8B5CF6', gradientStart: '#8B5CF6', gradientEnd: '#6D28D9' },
   },

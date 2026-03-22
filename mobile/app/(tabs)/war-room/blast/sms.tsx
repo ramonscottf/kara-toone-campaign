@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   charCountOver: {
-    color: '#EF4444',
+    color: '#ED2631',
   },
   sendButton: {
     marginTop: spacing.xl,

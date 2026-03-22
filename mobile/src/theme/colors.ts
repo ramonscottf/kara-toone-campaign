@@ -46,9 +46,9 @@ export const systemColors = {
 } as const;
 
 export const pillarColors = {
-  growth: { primary: '#0EA5E9', gradientStart: '#0EA5E9', gradientEnd: '#0369A1', light: '#E0F2FE' },
+  growth: { primary: '#1B3A69', gradientStart: '#1B3A69', gradientEnd: '#0F2340', light: '#E8EDF4' },
   housing: { primary: '#F97316', gradientStart: '#F97316', gradientEnd: '#C2410C', light: '#FFF7ED' },
-  safety: { primary: '#EF4444', gradientStart: '#EF4444', gradientEnd: '#B91C1C', light: '#FEF2F2' },
+  safety: { primary: '#ED2631', gradientStart: '#ED2631', gradientEnd: '#B91C1C', light: '#FEF2F2' },
   education: { primary: '#10B981', gradientStart: '#10B981', gradientEnd: '#047857', light: '#ECFDF5' },
   fiscal: { primary: '#8B5CF6', gradientStart: '#8B5CF6', gradientEnd: '#6D28D9', light: '#F5F3FF' },
 } as const;

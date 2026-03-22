@@ -45,12 +45,12 @@ export function DonateButton({ label = 'Donate Now', style }: DonateButtonProps)
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#EF4444',
+    backgroundColor: '#ED2631',
     borderRadius: 16,
     paddingVertical: 16,
     paddingHorizontal: 32,
     alignItems: 'center',
-    shadowColor: '#EF4444',
+    shadowColor: '#ED2631',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,

@@ -52,16 +52,16 @@ export default function WarRoomDashboard() {
       style={[styles.container, { backgroundColor: sys.background }]}
       contentContainerStyle={styles.content}
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#0EA5E9" />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor="#1B3A69" />
       }
     >
       <View style={styles.kpiGrid}>
         <View style={styles.kpiRow}>
           <View style={styles.kpiItem}>
-            <StatCard label="Total Contacts" value={totalContacts} accentColor="#0EA5E9" />
+            <StatCard label="Total Contacts" value={totalContacts} accentColor="#1B3A69" />
           </View>
           <View style={styles.kpiItem}>
-            <StatCard label="Volunteers" value={volunteers} accentColor="#EF4444" />
+            <StatCard label="Volunteers" value={volunteers} accentColor="#ED2631" />
           </View>
         </View>
         <View style={styles.kpiRow}>
@@ -77,7 +77,7 @@ export default function WarRoomDashboard() {
             <StatCard label="Donors" value={donors} accentColor="#8B5CF6" />
           </View>
           <View style={styles.kpiItem}>
-            <StatCard label="Comms Sent" value={commsSent} accentColor="#0EA5E9" />
+            <StatCard label="Comms Sent" value={commsSent} accentColor="#1B3A69" />
           </View>
         </View>
       </View>

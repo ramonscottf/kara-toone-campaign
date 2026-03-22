@@ -6,6 +6,7 @@ import Animated, {
   useAnimatedScrollHandler,
   interpolate,
   Extrapolation,
+  type SharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { typography } from '../../theme/typography';
@@ -14,7 +15,7 @@ import { useTheme } from '../../theme/ThemeContext';
 interface LargeTitleProps {
   title: string;
   children: React.ReactNode;
-  scrollY?: Animated.SharedValue<number>;
+  scrollY?: SharedValue<number>;
   onRefresh?: () => void;
   refreshing?: boolean;
   contentPaddingBottom?: number;
