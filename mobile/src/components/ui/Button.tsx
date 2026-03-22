@@ -29,9 +29,9 @@ interface ButtonProps extends Omit<PressableProps, 'style'> {
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 const variantColors: Record<ButtonVariant, { bg: string; text: string; border?: string }> = {
-  primary: { bg: '#0EA5E9', text: '#FFFFFF' },
-  secondary: { bg: 'transparent', text: '#0EA5E9', border: '#0EA5E9' },
-  ghost: { bg: 'transparent', text: '#0EA5E9' },
+  primary: { bg: '#ED2631', text: '#FFFFFF' },
+  secondary: { bg: 'transparent', text: '#1B3A69', border: '#1B3A69' },
+  ghost: { bg: 'transparent', text: '#ED2631' },
   danger: { bg: '#FF3B30', text: '#FFFFFF' },
 };
 

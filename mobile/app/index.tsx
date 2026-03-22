@@ -2,24 +2,22 @@ import { useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { useAuth } from '../src/auth/AuthContext';
+import { colors } from '../src/theme/colors';
 
 export default function Index() {
-  const { isLoading, isAuthenticated } = useAuth();
+  const { isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!isLoading) {
-      if (isAuthenticated) {
-        router.replace('/(tabs)/home');
-      } else {
-        router.replace('/(auth)/login');
-      }
+      // Always go to tabs — public content is accessible without login
+      router.replace('/(tabs)/home');
     }
-  }, [isLoading, isAuthenticated]);
+  }, [isLoading]);
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#0EA5E9" />
+      <ActivityIndicator size="large" color={colors.red} />
     </View>
   );
 }
@@ -29,6 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.cream,
   },
 });

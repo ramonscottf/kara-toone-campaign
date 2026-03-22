@@ -12,3 +12,4 @@ export { PillarCard } from './PillarCard';
 export { DonateButton } from './DonateButton';
 export { FloatingDonateButton } from './FloatingDonateButton';
 export { LargeTitle } from './LargeTitle';
+export { LiquidGlassView, LiquidGlassContainer, isLiquidGlassSupported } from './LiquidGlassView';

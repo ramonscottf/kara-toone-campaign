@@ -19,8 +19,8 @@ interface BadgeProps {
 }
 
 export function Badge({ label, type = 'default', size = 'md' }: BadgeProps) {
-  let bg = colors.light;
-  let textColor = colors.navy;
+  let bg: string = colors.light;
+  let textColor: string = colors.navy;
 
   if (type === 'info') {
     bg = colors.navy;

@@ -1,32 +1,30 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  RefreshControl,
-} from 'react-native';
+import { View, StyleSheet, ScrollView, RefreshControl, Dimensions, Pressable, Text } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Image } from 'expo-image';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../src/theme/ThemeContext';
-import { typography } from '../../src/theme/typography';
 import { brand } from '../../src/config/brand';
 import { pillars } from '../../src/data/priorities';
-import { PillarCard } from '../../src/components/ui/PillarCard';
-import { DonateButton } from '../../src/components/ui/DonateButton';
+import { colors } from '../../src/theme/colors';
+import { fontFamilies } from '../../src/theme/typography';
 import type { PillarId } from '../../src/config/brand';
 
+// Section components
+import { HeroSection } from '../../src/components/sections/HeroSection';
+import { TickerStrip } from '../../src/components/sections/TickerStrip';
+import { StatsBar } from '../../src/components/sections/StatsBar';
+import { PhotoGallery } from '../../src/components/sections/PhotoGallery';
+import { EndorsementsSection } from '../../src/components/sections/EndorsementsSection';
+import { EventsList } from '../../src/components/sections/EventsList';
+import { GetInvolvedSection } from '../../src/components/sections/GetInvolvedSection';
+import { DonateBanner } from '../../src/components/sections/DonateBanner';
+import { CampaignFooter } from '../../src/components/sections/CampaignFooter';
+
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-const CARD_GAP = 12;
-const CARD_WIDTH = (SCREEN_WIDTH - 20 * 2 - CARD_GAP) / 2;
 
 export default function HomeScreen() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
-  const { sys } = useTheme();
   const [refreshing, setRefreshing] = React.useState(false);
 
   const onRefresh = () => {
@@ -37,81 +35,114 @@ export default function HomeScreen() {
   const sorted = [...pillars].sort((a, b) => a.priorityNumber - b.priorityNumber);
 
   return (
-    <View style={[styles.container, { backgroundColor: sys.background }]}>
+    <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 120 }}
+        contentContainerStyle={{ paddingBottom: 0 }}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* Hero */}
-        <View style={styles.heroContainer}>
-          <Image
-            source={{ uri: brand.heroImage }}
-            style={styles.heroImage}
-            contentFit="cover"
-            transition={300}
-          />
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.6)', 'rgba(0,0,0,0.85)']}
-            locations={[0, 0.5, 1]}
-            style={StyleSheet.absoluteFill}
-          />
-          <View style={[styles.heroContent, { paddingTop: insets.top + 16 }]}>
-            <Text style={styles.heroName}>{brand.candidateName}</Text>
-            <Text style={styles.heroDistrict}>{brand.district}</Text>
-            <Text style={styles.heroTagline}>{brand.tagline}</Text>
+        {/* 1. Hero Section */}
+        <HeroSection />
+
+        {/* 2. Ticker Strip */}
+        <TickerStrip />
+
+        {/* 3. About Preview */}
+        <View style={styles.aboutSection}>
+          <View style={styles.aboutGrid}>
+            <Image
+              source={{ uri: brand.images.heroBurgundy }}
+              style={styles.aboutImage}
+              contentFit="cover"
+              transition={300}
+            />
+            <View style={styles.aboutText}>
+              <View style={styles.eyebrow}>
+                <View style={styles.eyebrowLine} />
+                <Text style={styles.eyebrowText}>ABOUT KARA</Text>
+              </View>
+              <Text style={styles.aboutTitle}>
+                A Leader Who <Text style={{ color: colors.red, fontStyle: 'italic' }}>Listens</Text>
+              </Text>
+              <Text style={styles.aboutDesc}>
+                {brand.about.bio.split('\n')[0]}
+              </Text>
+              <Pressable onPress={() => router.push('/(tabs)/about')}>
+                <Text style={styles.readMore}>READ MORE →</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
 
-        {/* Section: Priorities */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: sys.label }]}>
-            Key Priorities
-          </Text>
+        {/* 4. Stats Band */}
+        <StatsBar />
 
-          <View style={styles.grid}>
-            {sorted.slice(0, 4).map((pillar, i) => (
-              <View key={pillar.id} style={styles.gridItem}>
-                <PillarCard
-                  pillarId={pillar.id as PillarId}
-                  title={pillar.title}
-                  statNumber={pillar.keyStat.number}
-                  statLabel={pillar.keyStat.label}
-                  onPress={() => router.push(`/(tabs)/priorities/${pillar.id}`)}
-                  compact
-                />
-              </View>
+        {/* 5. Priorities */}
+        <View style={styles.prioritiesSection}>
+          <View style={styles.prioritiesHeader}>
+            <Text style={styles.prioritiesTitle}>Key Priorities</Text>
+            <Text style={styles.prioritiesSubtitle}>
+              Building a stronger future for Davis County families.
+            </Text>
+          </View>
+          <View style={styles.prioritiesGrid}>
+            {sorted.map((pillar, i) => (
+              <Pressable
+                key={pillar.id}
+                style={[
+                  styles.priorityCard,
+                  i === sorted.length - 1 && styles.priorityCardFeatured,
+                ]}
+                onPress={() => router.push(`/(tabs)/priorities/${pillar.id}`)}
+              >
+                <Text style={[
+                  styles.cardNum,
+                  i === sorted.length - 1 && styles.cardNumFeatured,
+                ]}>
+                  {String(i + 1).padStart(2, '0')}
+                </Text>
+                <Text style={[
+                  styles.cardTitle,
+                  i === sorted.length - 1 && styles.cardTitleFeatured,
+                ]}>
+                  {pillar.title}
+                </Text>
+                <Text style={[
+                  styles.cardDesc,
+                  i === sorted.length - 1 && styles.cardDescFeatured,
+                ]}>
+                  {pillar.subtitle}
+                </Text>
+                <Text style={[
+                  styles.cardLink,
+                  i === sorted.length - 1 && styles.cardLinkFeatured,
+                ]}>
+                  LEARN MORE →
+                </Text>
+              </Pressable>
             ))}
           </View>
-
-          {/* Fifth pillar — full width */}
-          {sorted[4] && (
-            <View style={styles.fullWidth}>
-              <PillarCard
-                pillarId={sorted[4].id as PillarId}
-                title={sorted[4].title}
-                statNumber={sorted[4].keyStat.number}
-                statLabel={sorted[4].keyStat.label}
-                onPress={() => router.push(`/(tabs)/priorities/${sorted[4].id}`)}
-              />
-            </View>
-          )}
         </View>
 
-        {/* Donate */}
-        <View style={styles.donateSection}>
-          <DonateButton />
-        </View>
+        {/* 6. Endorsements */}
+        <EndorsementsSection />
 
-        {/* Footer */}
-        <Text style={[styles.footer, { color: sys.tertiaryLabel }]}>
-          {brand.footerDisclaimer}
-        </Text>
-        <Text style={[styles.poweredBy, { color: sys.tertiaryLabel }]}>
-          {brand.poweredBy}
-        </Text>
+        {/* 7. Events */}
+        <EventsList />
+
+        {/* 8. Get Involved */}
+        <GetInvolvedSection />
+
+        {/* 9. Photo Gallery */}
+        <PhotoGallery />
+
+        {/* 10. Donate Banner */}
+        <DonateBanner />
+
+        {/* 11. Footer */}
+        <CampaignFooter />
       </ScrollView>
     </View>
   );
@@ -120,69 +151,139 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.cream,
   },
-  heroContainer: {
-    height: 380,
-    overflow: 'hidden',
+  // About section
+  aboutSection: {
+    paddingVertical: 48,
+    paddingHorizontal: 24,
+    backgroundColor: colors.cream,
   },
-  heroImage: {
-    ...StyleSheet.absoluteFillObject,
+  aboutGrid: {
+    gap: 24,
+  },
+  aboutImage: {
     width: '100%',
-    height: '100%',
+    aspectRatio: 4 / 5,
+    borderRadius: 4,
+    backgroundColor: colors.light,
   },
-  heroContent: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    padding: 20,
-    paddingBottom: 28,
+  aboutText: {
+    gap: 0,
   },
-  heroName: {
-    ...typography.largeTitle,
-    color: '#FFFFFF',
-    marginBottom: 4,
-  },
-  heroDistrict: {
-    ...typography.headline,
-    color: 'rgba(255,255,255,0.9)',
-    marginBottom: 8,
-  },
-  heroTagline: {
-    ...typography.subheadline,
-    color: 'rgba(255,255,255,0.75)',
-  },
-  section: {
-    paddingHorizontal: 20,
-    paddingTop: 24,
-  },
-  sectionTitle: {
-    ...typography.title2,
+  eyebrow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
     marginBottom: 16,
   },
-  grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: CARD_GAP,
+  eyebrowLine: {
+    width: 28,
+    height: 1,
+    backgroundColor: colors.red,
   },
-  gridItem: {
-    width: CARD_WIDTH,
+  eyebrowText: {
+    fontFamily: fontFamilies.bodySemiBold,
+    fontSize: 11,
+    letterSpacing: 2,
+    color: colors.red,
   },
-  fullWidth: {
-    marginTop: CARD_GAP,
+  aboutTitle: {
+    fontFamily: fontFamilies.display,
+    fontSize: 28,
+    color: colors.navy,
+    lineHeight: 34,
+    marginBottom: 16,
   },
-  donateSection: {
-    paddingHorizontal: 20,
-    paddingTop: 32,
+  aboutDesc: {
+    fontFamily: fontFamilies.bodyLight,
+    fontSize: 15,
+    color: '#4A5568',
+    lineHeight: 26,
+    marginBottom: 16,
   },
-  footer: {
-    ...typography.caption1,
+  readMore: {
+    fontFamily: fontFamilies.bodySemiBold,
+    fontSize: 13,
+    letterSpacing: 1,
+    color: colors.red,
+  },
+  // Priorities section
+  prioritiesSection: {
+    paddingVertical: 48,
+    paddingHorizontal: 24,
+    backgroundColor: '#FFFFFF',
+  },
+  prioritiesHeader: {
+    alignItems: 'center',
+    marginBottom: 36,
+  },
+  prioritiesTitle: {
+    fontFamily: fontFamilies.display,
+    fontSize: 32,
+    color: colors.navy,
     textAlign: 'center',
-    paddingHorizontal: 20,
-    paddingTop: 32,
+    marginBottom: 10,
   },
-  poweredBy: {
-    ...typography.caption2,
+  prioritiesSubtitle: {
+    fontFamily: fontFamilies.bodyLight,
+    fontSize: 15,
+    color: colors.gray,
     textAlign: 'center',
-    paddingTop: 4,
-    paddingBottom: 16,
+    maxWidth: 340,
+    lineHeight: 22,
+  },
+  prioritiesGrid: {
+    gap: 16,
+  },
+  priorityCard: {
+    backgroundColor: colors.cream,
+    borderRadius: 4,
+    padding: 32,
+    borderWidth: 1,
+    borderColor: '#E0E8F0',
+  },
+  priorityCardFeatured: {
+    backgroundColor: colors.navy,
+    borderColor: 'rgba(255,255,255,0.08)',
+  },
+  cardNum: {
+    fontFamily: fontFamilies.accent,
+    fontSize: 36,
+    color: '#E0E8F0',
+    lineHeight: 40,
+    marginBottom: 12,
+  },
+  cardNumFeatured: {
+    color: 'rgba(255,255,255,0.1)',
+  },
+  cardTitle: {
+    fontFamily: fontFamilies.displayBold,
+    fontSize: 18,
+    color: colors.navy,
+    marginBottom: 8,
+    lineHeight: 24,
+  },
+  cardTitleFeatured: {
+    color: '#FFFFFF',
+  },
+  cardDesc: {
+    fontFamily: fontFamilies.bodyLight,
+    fontSize: 14,
+    color: colors.gray,
+    lineHeight: 22,
+    marginBottom: 16,
+  },
+  cardDescFeatured: {
+    color: 'rgba(255,255,255,0.6)',
+  },
+  cardLink: {
+    fontFamily: fontFamilies.bodySemiBold,
+    fontSize: 12,
+    letterSpacing: 1,
+    color: colors.red,
+  },
+  cardLinkFeatured: {
+    color: colors.gold,
   },
 });

@@ -65,16 +65,17 @@ export const colors = {
   gray: '#8A9AB0',
   light: '#E8EFF7',
 
-  background: '#F2F2F7',
+  background: '#F7F3EE', // cream — matches website
   surface: '#FFFFFF',
   surfaceElevated: '#FFFFFF',
-  text: '#000000',
-  textSecondary: 'rgba(60,60,67,0.6)',
+  text: '#1B3A69', // navy — matches website text
+  textSecondary: '#6B7A8D',
+  textMuted: '#4A5568',
   textInverse: '#FFFFFF',
-  accent: '#0EA5E9',
+  accent: '#ED2631', // red — matches website primary action
   highlight: '#FFD833',
-  border: 'rgba(60,60,67,0.29)',
-  divider: 'rgba(60,60,67,0.29)',
+  border: '#E0E8F0', // matches website card borders
+  divider: '#E0E8F0',
 
   // Support levels (war room) — unchanged
   supportStrong: '#2e7d32',

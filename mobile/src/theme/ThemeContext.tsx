@@ -4,10 +4,12 @@ import { systemColors, pillarColors } from './colors';
 
 type ColorScheme = 'light' | 'dark';
 
+type SystemColors = { [K in keyof (typeof systemColors)['light']]: string };
+
 interface ThemeContextValue {
   colorScheme: ColorScheme;
   isDark: boolean;
-  sys: (typeof systemColors)['light'];
+  sys: SystemColors;
   pillar: (id: keyof typeof pillarColors) => (typeof pillarColors)[keyof typeof pillarColors];
 }
 

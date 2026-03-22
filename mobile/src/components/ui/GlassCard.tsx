@@ -1,12 +1,14 @@
 import React from 'react';
-import { View, StyleSheet, Platform, ViewStyle } from 'react-native';
-import { BlurView } from 'expo-blur';
+import { View, StyleSheet, ViewStyle } from 'react-native';
+import { LiquidGlassView } from './LiquidGlassView';
 
 interface GlassCardProps {
   children: React.ReactNode;
   style?: ViewStyle;
   intensity?: number;
   tint?: 'light' | 'dark' | 'default';
+  glassStyle?: 'clear' | 'regular' | 'none';
+  padding?: number;
 }
 
 export function GlassCard({
@@ -14,51 +16,31 @@ export function GlassCard({
   style,
   intensity = 80,
   tint = 'light',
+  glassStyle = 'regular',
+  padding = 16,
 }: GlassCardProps) {
-  if (Platform.OS === 'android') {
-    return (
-      <View style={[styles.fallback, style]}>
-        {children}
-      </View>
-    );
-  }
-
   return (
-    <View style={[styles.container, style]}>
-      <BlurView intensity={intensity} tint={tint} style={StyleSheet.absoluteFill} />
-      <View style={styles.border} />
-      <View style={styles.content}>{children}</View>
-    </View>
+    <LiquidGlassView
+      style={{ ...styles.container, ...style } as any}
+      glassStyle={glassStyle}
+      blurIntensity={intensity}
+      blurTint={tint}
+    >
+      <View style={[styles.content, { padding }]}>{children}</View>
+    </LiquidGlassView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     borderRadius: 20,
-    overflow: 'hidden',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
     elevation: 4,
-  },
-  border: {
-    ...StyleSheet.absoluteFillObject,
-    borderRadius: 20,
-    borderWidth: 0.5,
-    borderColor: 'rgba(255,255,255,0.25)',
   },
   content: {
-    padding: 16,
-  },
-  fallback: {
-    borderRadius: 20,
-    backgroundColor: 'rgba(255,255,255,0.88)',
-    padding: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 12,
-    elevation: 4,
+    flex: 1,
   },
 });
