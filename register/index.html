@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register by April 1 — Kara Toone for House District 14</title>
+<meta name="description" content="Utah's Republican primary is closed. Update your voter registration by April 1 to have a voice in House District 14. It takes 2 minutes.">
+<meta property="og:title" content="Register by April 1 — Make Your Vote Count in HD14">
+<meta property="og:description" content="Utah's Republican primary is closed. If you're not registered Republican, you don't get a ballot. Deadline: April 1. Takes 2 minutes.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1D3A;
+    --navy-mid: #142B52;
+    --navy-light: #1E3A6E;
+    --cream: #FAF7F2;
+    --white: #FFFFFF;
+    --red: #C8102E;
+    --red-hover: #A00D24;
+    --gold: #D4A843;
+    --text: #1A1A1A;
+    --text-light: #5A5A5A;
+    --border: #E0DCD6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(30, 58, 110, 0.6) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(200, 16, 46, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+  }
+
+  .deadline-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(200, 16, 46, 0.15);
+    border: 1px solid rgba(200, 16, 46, 0.4);
+    color: #FF6B7A;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    margin-bottom: 2rem;
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  .deadline-badge .dot {
+    width: 8px;
+    height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.6; }
+  }
+
+  .hero h1 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding: 1.1rem 2.5rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary:hover {
+    background: var(--red-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(200, 16, 46, 0.3);
+  }
+
+  .btn-primary svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-primary:hover svg {
+    transform: translateX(3px);
+  }
+
+  .cta-sub {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.85rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ---- COUNTDOWN ---- */
+  .countdown-bar {
+    background: var(--red);
+    color: var(--white);
+    text-align: center;
+    padding: 1rem;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.03em;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .countdown-bar a {
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ---- SECTIONS ---- */
+  section {
+    padding: 5rem 1.5rem;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--navy);
+    font-weight: 400;
+  }
+
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+  }
+
+  /* ---- WHY SECTION ---- */
+  .why-cards {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  .why-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .why-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .why-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    background: var(--navy);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.4rem;
+  }
+
+  .why-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--navy);
+  }
+
+  .why-card p {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--text-light);
+  }
+
+  /* ---- STEPS ---- */
+  .steps {
+    counter-reset: step;
+    display: grid;
+    gap: 0;
+    margin-top: 2rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1.5rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    counter-increment: step;
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    background: var(--navy);
+    color: var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3rem;
+  }
+
+  .step-num::after {
+    content: counter(step);
+  }
+
+  .step h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--navy);
+  }
+
+  .step p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-light);
+  }
+
+  .step a {
+    color: var(--red);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .step a:hover {
+    border-bottom-color: var(--red);
+  }
+
+  /* ---- FAQ ---- */
+  .faq-list {
+    margin-top: 2rem;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 0;
+  }
+
+  .faq-item:first-child { padding-top: 0; }
+
+  .faq-q {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .faq-q::after {
+    content: '+';
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-light);
+    transition: transform 0.2s;
+  }
+
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-a {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-light);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .faq-item.open .faq-a {
+    max-height: 300px;
+    opacity: 1;
+  }
+
+  /* ---- KARA SECTION ---- */
+  .kara-section {
+    background: var(--navy);
+    color: var(--white);
+    padding: 5rem 1.5rem;
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .kara-section .inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .kara-section .section-label {
+    color: var(--gold);
+  }
+
+  .kara-section h2 {
+    color: var(--white);
+  }
+
+  .kara-section p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  /* ---- FINAL CTA ---- */
+  .final-cta {
+    background: var(--white);
+    border: 2px solid var(--red);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    margin: 4rem auto;
+    max-width: 600px;
+  }
+
+  .final-cta h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .final-cta p {
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  footer a {
+    color: var(--text-light);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* ---- ANIMATION ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 600px) {
+    section { padding: 3.5rem 1.25rem; }
+    .why-card { flex-direction: column; gap: 1rem; }
+    .step { gap: 1rem; }
+    .step-num { width: 42px; height: 42px; min-width: 42px; font-size: 1.1rem; }
+    .final-cta { padding: 2rem 1.5rem; margin: 3rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="deadline-badge">
+      <span class="dot"></span>
+      Deadline: April 1, 2026
+    </div>
+    <h1>Your vote only counts<br>if you're <em>registered</em></h1>
+    <p>Utah's Republican primary is closed. If you're not registered Republican by April 1, you don't get a ballot for House District 14 — the election that decides your representative.</p>
+    <div class="cta-group">
+      <a href="https://vote.utah.gov/register-to-vote/" class="btn-primary" target="_blank" rel="noopener">
+        Update Your Registration
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+      </a>
+      <span class="cta-sub">Takes 2 minutes at vote.utah.gov</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    Learn more
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+  </div>
+</div>
+
+<!-- COUNTDOWN STICKY BAR -->
+<div class="countdown-bar" id="countdown">
+  <span id="countdown-text"></span> — <a href="https://vote.utah.gov/register-to-vote/" target="_blank" rel="noopener">Register now</a>
+</div>
+
+<!-- WHY IT MATTERS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Why This Matters</div>
+    <h2>The primary is the real election</h2>
+    <p class="lead">In most Utah districts, the Republican nominee wins the general election. That means the primary decides who represents you. If you're not registered to vote in it, someone else makes that choice for you.</p>
+  </div>
+
+  <div class="why-cards">
+    <div class="why-card reveal">
+      <div class="why-icon">🔒</div>
+      <div>
+        <h3>Closed primary</h3>
+        <p>Only registered Republicans receive a Republican primary ballot. No exceptions.</p>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">📅</div>
+      <div>
+        <h3>April 1 is the deadline</h3>
+        <p>If you're currently registered with another party, you must switch by April 1 to participate. After that, you're locked out.</p>
+      </div>
+    </div>
+    <div class="why-card reveal">
+      <div class="why-icon">⏱️</div>
+      <div>
+        <h3>2 minutes, online</h3>
+        <p>Go to vote.utah.gov with your driver's license number. That's all you need. No forms to mail, no office to visit.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO STEPS -->
+<section>
+  <div class="reveal">
+    <div class="section-label">How To Do It</div>
+    <h2>Three steps. Two minutes.</h2>
+  </div>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num"></div>
+      <div>
+        <h3>Go to vote.utah.gov</h3>
+        <p>Click <a href="https://vote.utah.gov/register-to-vote/" target="_blank" rel="noopener">"Register to Vote or Update Registration"</a> on the state voter portal.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num"></div>
+      <div>
+        <h3>Enter your information</h3>
+        <p>You'll need your Utah driver's license or state ID number. If you don't have one, the last four digits of your Social Security number will work.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num"></div>
+      <div>
+        <h3>Select "Republican" as your party</h3>
+        <p>Update your party affiliation and submit. You'll receive confirmation. That's it — you're in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="reveal">
+    <div class="section-label">Common Questions</div>
+    <h2>You might be wondering</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q">What if I'm unaffiliated / independent?</div>
+      <div class="faq-a">Good news — unaffiliated voters can affiliate with a party at any time without the April 1 deadline restriction. But we'd recommend doing it now so there are no surprises when ballots go out in June.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Can I switch back after the primary?</div>
+      <div class="faq-a">Yes. You can change your party affiliation at any time. Just keep in mind that if you switch away from Republican and want to switch back later, the same annual deadline will apply.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Why is the Republican primary closed?</div>
+      <div class="faq-a">The Utah Republican Party requires voters to be registered with the party to participate in their primary elections. The Democratic Party holds an open primary. This is a party decision, not a state law.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">I'm already registered Republican. Do I need to do anything?</div>
+      <div class="faq-a">Nope — you're all set. You'll automatically receive your primary ballot by mail in early June. But you can help by sharing this page with friends and neighbors who might need to update their registration.</div>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">What is House District 14?</div>
+      <div class="faq-a">Utah House District 14 is a state legislative seat. Your state representative votes on education funding, taxes, public safety and the issues that affect your daily life more directly than any federal office.</div>
+    </div>
+  </div>
+</section>
+
+<!-- KARA SECTION -->
+<div class="kara-section">
+  <div class="inner reveal">
+    <div class="section-label">Meet Your Candidate</div>
+    <h2>Kara Toone for House District 14</h2>
+    <p>Kara is committed to our community, our schools and our families. She's running to represent the values and priorities of District 14 at the Utah State Legislature. Learn more about her vision and how you can get involved.</p>
+    <a href="https://kara.wickowaypoint.com" class="btn-primary">
+      Visit the Campaign Site
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+    </a>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<section>
+  <div class="final-cta reveal">
+    <h2>Don't miss the deadline</h2>
+    <p>April 1, 2026. After that, it's too late to participate in the Republican primary. Take two minutes right now.</p>
+    <a href="https://vote.utah.gov/register-to-vote/" class="btn-primary" target="_blank" rel="noopener">
+      Update Your Registration
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>Paid for by Kara Toone for Utah House District 14</p>
+  <p style="margin-top: 0.5rem;">Questions? <a href="/cdn-cgi/l/email-protection#5f363139301f28363c3430283e262f3036312b713c3032">Contact the campaign</a></p>
+  <p style="margin-top: 1rem; font-size: 0.75rem; color: #999;">This page is not affiliated with the State of Utah or any government office.</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Countdown
+function updateCountdown() {
+  const deadline = new Date('2026-04-01T23:59:59-06:00');
+  const now = new Date();
+  const diff = deadline - now;
+
+  if (diff <= 0) {
+    document.getElementById('countdown-text').textContent = 'The deadline has passed';
+    return;
+  }
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  let text = '';
+  if (days > 0) {
+    text = `${days} day${days !== 1 ? 's' : ''}, ${hours} hour${hours !== 1 ? 's' : ''} until the April 1 deadline`;
+  } else if (hours > 0) {
+    text = `${hours} hour${hours !== 1 ? 's' : ''}, ${minutes} minute${minutes !== 1 ? 's' : ''} left`;
+  } else {
+    text = `${minutes} minute${minutes !== 1 ? 's' : ''} left — do it NOW`;
+  }
+
+  document.getElementById('countdown-text').textContent = text;
+}
+
+updateCountdown();
+setInterval(updateCountdown, 60000);
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, i * 80);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.closest('.faq-item');
+    const wasOpen = item.classList.contains('open');
+    document.queryS
