@@ -1,0 +1,34 @@
+{
+  "project": "Kara Toone Campaign — Wicko Waypoint",
+  "lastUpdated": "2026-03-28T00:00:00Z",
+  "deadline": "2026-04-01T00:00:00Z",
+  "tasks": {
+    "01": { "name": "Fix all broken forms", "status": "todo", "priority": "critical", "tier": 1 },
+    "02": { "name": "Fix photo alignment", "status": "todo", "priority": "critical", "tier": 1 },
+    "03": { "name": "Replace generic icons", "status": "todo", "priority": "critical", "tier": 1 },
+    "04": { "name": "App rebrand — unified palette", "status": "todo", "priority": "critical", "tier": 1 },
+    "05": { "name": "Rebuild OLRGC charts", "status": "todo", "priority": "critical", "tier": 1 },
+    "06": { "name": "App internal vs public separation", "status": "todo", "priority": "critical", "tier": 1 },
+    "07": { "name": "Email infrastructure", "status": "todo", "priority": "high", "tier": 2 },
+    "08": { "name": "SEO foundation and meta tags", "status": "todo", "priority": "critical", "tier": 1 },
+    "09": { "name": "CRM backend (NocoDB)", "status": "todo", "priority": "high", "tier": 2 },
+    "10": { "name": "Twilio SMS integration", "status": "blocked", "priority": "high", "tier": 2, "blockedBy": "Twilio API keys" },
+    "11": { "name": "HD14 community resource hub", "status": "todo", "priority": "medium", "tier": 2 },
+    "12": { "name": "Social media content dashboard", "status": "todo", "priority": "medium", "tier": 2 },
+    "13": { "name": "Blog/SEO content structure", "status": "todo", "priority": "medium", "tier": 2 },
+    "14": { "name": "Delegate list + heat map", "status": "blocked", "priority": "medium", "tier": 2, "blockedBy": "Delegate data from Kara" },
+    "15": { "name": "Donation tracking", "status": "blocked", "priority": "low", "tier": 2, "blockedBy": "Anedot access" }
+  },
+  "humanTasks": {
+    "H1": { "name": "Organize campaign photos", "status": "todo", "assignee": "Scott" },
+    "H2": { "name": "Get FB page admin access from Kara", "status": "todo", "assignee": "Scott" },
+    "H3": { "name": "Get Instagram collaborator access", "status": "todo", "assignee": "Scott" },
+    "H4": { "name": "Get delegate list from Kara", "status": "todo", "assignee": "Scott" },
+    "H5": { "name": "Get Twilio API keys configured", "status": "todo", "assignee": "Scott" },
+    "H6": { "name": "Get Anedot dashboard access", "status": "todo", "assignee": "Scott" },
+    "H7": { "name": "Open Mercury business account", "status": "todo", "assignee": "Scott" },
+    "H8": { "name": "Send proposal to Kara", "status": "todo", "assignee": "Scott" },
+    "H9": { "name": "Edit and crop campaign photos", "status": "todo", "assignee": "Scott" },
+    "H10": { "name": "Write blog post drafts or talking points", "status": "todo", "assignee": "Scott" }
+  }
+}

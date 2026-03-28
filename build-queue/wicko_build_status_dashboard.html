@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wicko Waypoint — Build Status</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0F1B2D; color: #E2E8F0; min-height: 100vh; }
+  .header { padding: 24px 24px 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .logo { font-size: 11px; letter-spacing: 2px; color: #3B82F6; font-weight: 600; text-transform: uppercase; }
+  .client { font-size: 11px; color: #64748B; }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #94A3B8; }
+  .deadline { font-size: 12px; color: #F59E0B; margin-top: 8px; }
+  
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 16px 24px; }
+  .stat { background: #1C2B3A; border-radius: 10px; padding: 14px; text-align: center; }
+  .stat-num { font-size: 28px; font-weight: 700; }
+  .stat-label { font-size: 11px; color: #94A3B8; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .stat-done .stat-num { color: #10B981; }
+  .stat-prog .stat-num { color: #3B82F6; }
+  .stat-todo .stat-num { color: #94A3B8; }
+  .stat-block .stat-num { color: #F59E0B; }
+  
+  .progress-wrap { padding: 0 24px 16px; }
+  .progress-bar { height: 6px; background: #1C2B3A; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #10B981, #3B82F6); border-radius: 3px; transition: width 0.5s; }
+  .progress-label { font-size: 11px; color: #64748B; margin-top: 4px; text-align: right; }
+  
+  .section-title { padding: 16px 24px 8px; font-size: 13px; font-weight: 600; color: #64748B; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .task-list { padding: 0 24px 24px; }
+  .task { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #1C2B3A; border-radius: 8px; margin-bottom: 6px; }
+  .task-id { font-size: 11px; color: #64748B; font-weight: 600; min-width: 24px; }
+  .task-name { flex: 1; font-size: 14px; }
+  .task-badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .badge-done { background: rgba(16,185,129,0.15); color: #10B981; }
+  .badge-progress { background: rgba(59,130,246,0.15); color: #3B82F6; }
+  .badge-todo { background: rgba(148,163,184,0.1); color: #94A3B8; }
+  .badge-blocked { background: rgba(245,158,11,0.15); color: #F59E0B; }
+  .badge-human { background: rgba(168,85,247,0.15); color: #A855F7; }
+  .badge-critical { background: rgba(239,68,68,0.1); color: #EF4444; font-size: 9px; margin-right: 4px; }
+  
+  .tier-label { font-size: 11px; padding: 2px 8px; border-radius: 3px; margin-left: auto; }
+  .tier-1 { background: rgba(239,68,68,0.1); color: #EF4444; }
+  .tier-2 { background: rgba(59,130,246,0.1); color: #3B82F6; }
+  
+  .human-task { border-left: 3px solid #A855F7; }
+  .blocked-task { border-left: 3px solid #F59E0B; opacity: 0.7; }
+  
+  .footer { padding: 16px 24px; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; }
+  .footer a { color: #3B82F6; text-decoration: none; font-size: 12px; }
+  .last-updated { font-size: 11px; color: #475569; margin-top: 8px; }
+  
+  @media (max-width: 500px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">Wicko Waypoint</div>
+    <div class="client">Client: Kara Toone for HD14</div>
+  </div>
+  <h1>Campaign build status</h1>
+  <div class="subtitle">Real-time progress on your campaign platform</div>
+  <div class="deadline">Deadline: Tuesday, April 1, 2026</div>
+</div>
+
+<div class="stats" id="stats">
+  <div class="stat stat-done"><div class="stat-num" id="s-done">0</div><div class="stat-label">Done</div></div>
+  <div class="stat stat-prog"><div class="stat-num" id="s-prog">0</div><div class="stat-label">In progress</div></div>
+  <div class="stat stat-todo"><div class="stat-num" id="s-todo">0</div><div class="stat-label">To do</div></div>
+  <div class="stat stat-block"><div class="stat-num" id="s-block">0</div><div class="stat-label">Blocked</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width: 0%"></div></div>
+  <div class="progress-label" id="prog-label">0% complete</div>
+</div>
+
+<div class="section-title">Build tasks — ship by Tuesday</div>
+<div class="task-list" id="tier1-tasks"></div>
+
+<div class="section-title">Build tasks — ship this week</div>
+<div class="task-list" id="tier2-tasks"></div>
+
+<div class="section-title">Your tasks (human required)</div>
+<div class="task-list" id="human-tasks"></div>
+
+<div class="footer">
+  <a href="https://kara.wickowaypoint.com" target="_blank">View live campaign site</a>
+  <div class="last-updated" id="last-updated"></div>
+</div>
+
+<script>
+const STATUS = {
+  "lastUpdated": new Date().toISOString(),
+  "tasks": {
+    "01": { "name": "Fix all broken forms", "status": "todo", "priority": "critical", "tier": 1 },
+    "02": { "name": "Fix photo alignment", "status": "todo", "priority": "critical", "tier": 1 },
+    "03": { "name": "Replace generic icons", "status": "todo", "priority": "critical", "tier": 1 },
+    "04": { "name": "App rebrand — unified palette", "status": "todo", "priority": "critical", "tier": 1 },
+    "05": { "name": "Rebuild OLRGC charts", "status": "todo", "priority": "critical", "tier": 1 },
+    "06": { "name": "App internal vs public", "status": "todo", "priority": "critical", "tier": 1 },
+    "07": { "name": "Email infrastructure", "status": "todo", "priority": "high", "tier": 2 },
+    "08": { "name": "SEO and meta tags", "status": "todo", "priority": "critical", "tier": 1 },
+    "09": { "name": "CRM backend (NocoDB)", "status": "todo", "priority": "high", "tier": 2 },
+    "10": { "name": "Twilio SMS integration", "status": "blocked", "priority": "high", "tier": 2 },
+    "11": { "name": "HD14 community resource hub", "status": "todo", "priority": "medium", "tier": 2 },
+    "12": { "name": "Social media dashboard", "status": "todo", "priority": "medium", "tier": 2 },
+    "13": { "name": "Blog/SEO content structure", "status": "todo", "priority": "medium", "tier": 2 },
+    "14": { "name": "Delegate list + heat map", "status": "blocked", "priority": "medium", "tier": 2 },
+    "15": { "name": "Donation tracking", "status": "blocked", "priority": "low", "tier": 2 }
+  },
+  "humanTasks": {
+    "H1": { "name": "Organize campaign photos", "status": "todo" },
+    "H2": { "name": "Get FB page admin access", "status": "todo" },
+    "H3": { "name": "Get Instagram access", "status": "todo" },
+    "H4": { "name": "Get delegate list from Kara", "status": "todo" },
+    "H5": { "name": "Configure Twilio API keys", "status": "todo" },
+    "H6": { "name": "Get Anedot dashboard access", "status": "todo" },
+    "H7": { "name": "Open Mercury business account", "status": "todo" },
+    "H8": { "name": "Send proposal to Kara", "status": "todo" },
+    "H9": { "name": "Edit campaign photos", "status": "todo" },
+    "H10": { "name": "Write blog drafts", "status": "todo" }
+  }
+};
+
+function badgeHTML(status) {
+  const map = {
+    done: '<span class="task-badge badge-done">Done</span>',
+    in_progress: '<span class="task-badge badge-progress">Building</span>',
+    todo: '<span class="task-badge badge-todo">To do</span>',
+    blocked: '<span class="task-badge badge-blocked">Blocked</span>'
+  };
+  return map[status] || map.todo;
+}
+
+function render() {
+  const tasks = STATUS.tasks;
+  const human = STATUS.humanTasks;
+  
+  let done = 0, prog = 0, todo = 0, blocked = 0;
+  const tier1 = [], tier2 = [];
+  
+  Object.entries(tasks).forEach(([id, t]) => {
+    if (t.status === 'done') done++;
+    else if (t.status === 'in_progress') prog++;
+    else if (t.status === 'blocked') blocked++;
+    else todo++;
+    
+    const priorityBadge = t.priority === 'critical' ? '<span class="task-badge badge-critical">Critical</span>' : '';
+    const tierClass = t.status === 'blocked' ? 'blocked-task' : '';
+    const html = `<div class="task ${tierClass}">
+      <span class="task-id">${id}</span>
+      <span class="task-name">${t.name}</span>
+      ${priorityBadge}
+      ${badgeHTML(t.status)}
+    </div>`;
+    
+    if (t.tier === 1) tier1.push(html);
+    else tier2.push(html);
+  });
+  
+  document.getElementById('s-done').textContent = done;
+  document.getElementById('s-prog').textContent = prog;
+  document.getElementById('s-todo').textContent = todo;
+  document.getElementById('s-block').textContent = blocked;
+  
+  const total = Object.keys(tasks).length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = pct + '% complete (' + done + '/' + total + ')';
+  
+  document.getElementById('tier1-tasks').innerHTML = tier1.join('');
+  document.getElementById('tier2-tasks').innerHTML = tier2.join('');
+  
+  const humanHTML = Object.entries(human).map(([id, t]) => 
+    `<div class="task human-task">
+      <span class="task-id">${id}</span>
+      <span class="task-name">${t.name}</span>
+      ${badgeHTML(t.status)}
+    </div>`
+  ).join('');
+  document.getElementById('human-tasks').innerHTML = humanHTML;
+  
+  document.getElementById('last-updated').textContent = 'Last updated: ' + new Date(STATUS.lastUpdated).toLocaleString();
+}
+
+render();
+</script>
+</body>
+</html>
