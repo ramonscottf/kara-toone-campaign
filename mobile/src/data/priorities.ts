@@ -234,9 +234,9 @@ export const pillars: Pillar[] = [
     priorityNumber: 4,
     overviewTitle: "Education is Kara's Passion",
     overviewContent:
-      "For over a decade, Kara has worked directly in Davis County education as an executive at the Davis County Education Foundation. She knows our 72,000+ students, our 90+ schools, and our 5,000+ educators.\n\nEducation is the most important function of local government. Children who receive a great education are healthier, earn more, and build stronger families and communities. Yet our schools are underfunded. Teachers struggle with stagnant salaries. Schools lack modern facilities. Kara believes investing in education is the best investment any county can make.",
+      "For over a decade, Kara has worked directly in Davis County education as an executive at the Davis County Education Foundation. She knows our ~67,000 students, our 90+ schools, and our 5,000+ educators.\n\nEducation is the most important function of local government. Children who receive a great education are healthier, earn more, and build stronger families and communities. Yet our schools are underfunded. Teachers struggle with stagnant salaries. Schools lack modern facilities. Kara believes investing in education is the best investment any county can make.",
     stats: [
-      { number: '72,000+', label: 'Students', description: 'K-12 students in Davis County schools' },
+      { number: '~67,000', label: 'Students', description: 'K-12 students in Davis County schools' },
       { number: '90+', label: 'Schools', description: 'Public schools across Davis County' },
       { number: '5,000+', label: 'Educators', description: 'Teachers and support staff' },
       { number: '\u2191 12%', label: 'Growth Since 2015', description: 'Student population growth outpacing funding increases' },
