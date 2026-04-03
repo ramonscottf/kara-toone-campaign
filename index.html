@@ -689,6 +689,10 @@
   #clear-choice [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
   #clear-choice [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
 }
+@media (max-width: 480px) {
+  #clear-choice [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr !important; }
+  #clear-choice [style*="padding:48px 36px"] { padding: 32px 24px !important; }
+}
 </style>
 </head>
 <body>
