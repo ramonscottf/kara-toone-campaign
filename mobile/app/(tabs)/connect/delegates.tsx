@@ -54,7 +54,7 @@ export default function DelegatesScreen() {
         </Text>
       }
       refreshControl={
-        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#0EA5E9'} />
+        <RefreshControl refreshing={isLoading} onRefresh={refetch} tintColor={'#C9A84C'} />
       }
     />
   );

@@ -10,7 +10,7 @@ export default function WarRoomLayout() {
         headerStyle: { backgroundColor: sys.background },
         headerTitleStyle: { fontWeight: '600', fontSize: 17, color: sys.label },
         headerShadowVisible: false,
-        headerTintColor: '#0EA5E9',
+        headerTintColor: '#C9A84C',
       }}
     >
       <Stack.Screen name="index" options={{ headerTitle: 'War Room' }} />

@@ -12,7 +12,7 @@ interface StatCardProps {
   icon?: React.ReactNode;
 }
 
-export function StatCard({ label, value, accentColor = '#0EA5E9', icon }: StatCardProps) {
+export function StatCard({ label, value, accentColor = '#C9A84C', icon }: StatCardProps) {
   const { sys } = useTheme();
 
   return (

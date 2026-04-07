@@ -10,7 +10,7 @@ export default function DonateScreen() {
     <View style={styles.container}>
       {loading && (
         <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#0EA5E9" />
+          <ActivityIndicator size="large" color="#C9A84C" />
         </View>
       )}
       <WebView

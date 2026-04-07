@@ -8,7 +8,7 @@ export default function PrioritiesLayout() {
     <Stack
       screenOptions={{
         headerStyle: { backgroundColor: sys.background },
-        headerTintColor: '#0EA5E9',
+        headerTintColor: '#C9A84C',
         headerTitleStyle: { fontWeight: '600', fontSize: 17, color: sys.label },
         headerShadowVisible: false,
         headerBackTitle: 'Back',
