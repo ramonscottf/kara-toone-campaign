@@ -1100,34 +1100,34 @@
         <form class="vf-form" id="volunteerForm">
           <div class="form-row">
             <div class="form-group">
-              <label>First Name</label>
-              <input type="text" placeholder="Jane" required>
+              <label for="vol-first-name">First Name</label>
+              <input type="text" name="first_name" id="vol-first-name" placeholder="Jane" required>
             </div>
             <div class="form-group">
-              <label>Last Name</label>
-              <input type="text" placeholder="Smith" required>
+              <label for="vol-last-name">Last Name</label>
+              <input type="text" name="last_name" id="vol-last-name" placeholder="Smith" required>
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="jane@email.com" required>
+              <label for="vol-email">Email</label>
+              <input type="email" name="email" id="vol-email" placeholder="jane@email.com" required>
             </div>
             <div class="form-group">
-              <label>Phone</label>
-              <input type="tel" placeholder="(801) 555-0000">
+              <label for="vol-phone">Phone</label>
+              <input type="tel" name="phone" id="vol-phone" placeholder="(801) 555-0000">
             </div>
           </div>
           <div class="form-group">
-            <label>How Would You Like to Help?</label>
-            <select required>
+            <label for="vol-help-type">How Would You Like to Help?</label>
+            <select name="help_type" id="vol-help-type" required>
               <option value="" disabled selected>Select an option</option>
-              <option>Request a Yard Sign</option>
-              <option>Knock Doors</option>
-              <option>Host a Cottage Meeting</option>
-              <option>Become a Delegate</option>
-              <option>General Volunteering</option>
-              <option>Other</option>
+              <option value="yard_sign">Request a Yard Sign</option>
+              <option value="door_knock">Knock Doors</option>
+              <option value="cottage_meeting">Host a Cottage Meeting</option>
+              <option value="delegate">Become a Delegate</option>
+              <option value="general">General Volunteering</option>
+              <option value="other">Other</option>
             </select>
           </div>
           <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">

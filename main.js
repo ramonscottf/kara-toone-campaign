@@ -89,20 +89,47 @@ document.querySelectorAll('.amount-btn').forEach(btn => {
 // ─── VOLUNTEER FORM ───
 const volunteerForm = document.getElementById('volunteerForm');
 if (volunteerForm) {
-  volunteerForm.addEventListener('submit', e => {
+  volunteerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target;
-    const inputs = form.querySelectorAll('input, select');
-    const data = {};
-    inputs.forEach(input => {
-      const label = input.closest('.form-group')?.querySelector('label')?.textContent || input.name || input.type;
-      data[label] = input.value;
-    });
-    const subject = encodeURIComponent('Volunteer Form - ' + (data['First Name'] || '') + ' ' + (data['Last Name'] || ''));
-    const body = encodeURIComponent(Object.entries(data).map(([k, v]) => k + ': ' + v).join('\n'));
-    window.open('mailto:votekaratoone@gmail.com?subject=' + subject + '&body=' + body, '_self');
-    form.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const successEl = document.getElementById('formSuccess');
+
+    // Gather form data using name attributes
+    const formData = new FormData(form);
+    const payload = { form_type: 'volunteer' };
+    for (const [key, value] of formData.entries()) {
+      payload[key] = value;
+    }
+
+    // Disable button while submitting
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const res = await fetch('/api/forms/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        form.style.display = 'none';
+        if (successEl) {
+          successEl.style.display = 'block';
+          successEl.querySelector('p').textContent = result.message || "We'll be in touch within 24 hours. Welcome to the team.";
+        }
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit \u2192';
+        alert(result.error || 'Something went wrong. Please try again.');
+      }
+    } catch {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit \u2192';
+      alert('Network error. Please check your connection and try again.');
+    }
   });
 }
 

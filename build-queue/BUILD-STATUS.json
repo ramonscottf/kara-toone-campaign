@@ -1,0 +1,22 @@
+{
+  "project": "Kara Toone Campaign — Wicko Waypoint",
+  "lastUpdated": "2026-03-28T00:00:00Z",
+  "deadline": "2026-04-01T00:00:00Z",
+  "tasks": {
+    "01": { "name": "Fix all broken forms", "status": "done", "priority": "critical", "tier": 1 },
+    "02": { "name": "Fix photo alignment", "status": "todo", "priority": "critical", "tier": 1 },
+    "03": { "name": "Replace generic icons", "status": "todo", "priority": "critical", "tier": 1 },
+    "04": { "name": "App rebrand — unified palette", "status": "todo", "priority": "critical", "tier": 1 },
+    "05": { "name": "Rebuild OLRGC charts", "status": "todo", "priority": "critical", "tier": 1 },
+    "06": { "name": "App internal vs public separation", "status": "todo", "priority": "critical", "tier": 1 },
+    "07": { "name": "Email infrastructure", "status": "todo", "priority": "high", "tier": 2 },
+    "08": { "name": "SEO foundation and meta tags", "status": "todo", "priority": "critical", "tier": 1 },
+    "09": { "name": "CRM backend (NocoDB)", "status": "todo", "priority": "high", "tier": 2 },
+    "10": { "name": "Twilio SMS integration", "status": "blocked", "priority": "high", "tier": 2, "blockedBy": "Twilio API keys" },
+    "11": { "name": "HD14 community resource hub", "status": "todo", "priority": "medium", "tier": 2 },
+    "12": { "name": "Social media content dashboard", "status": "todo", "priority": "medium", "tier": 2 },
+    "13": { "name": "Blog/SEO content structure", "status": "todo", "priority": "medium", "tier": 2 },
+    "14": { "name": "Delegate list + heat map", "status": "blocked", "priority": "medium", "tier": 2, "blockedBy": "Delegate data from Kara" },
+    "15": { "name": "Donation tracking", "status": "blocked", "priority": "low", "tier": 2, "blockedBy": "Anedot access" }
+  }
+}
