@@ -4,7 +4,7 @@
   "deadline": "2026-04-01T00:00:00Z",
   "tasks": {
     "01": { "name": "Fix all broken forms", "status": "done", "priority": "critical", "tier": 1 },
-    "02": { "name": "Fix photo alignment", "status": "todo", "priority": "critical", "tier": 1 },
+    "02": { "name": "Fix photo alignment", "status": "done", "priority": "critical", "tier": 1 },
     "03": { "name": "Replace generic icons", "status": "todo", "priority": "critical", "tier": 1 },
     "04": { "name": "App rebrand — unified palette", "status": "todo", "priority": "critical", "tier": 1 },
     "05": { "name": "Rebuild OLRGC charts", "status": "todo", "priority": "critical", "tier": 1 },
