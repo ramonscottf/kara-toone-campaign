@@ -943,3 +943,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .priority-nav a { padding: 16px 16px; font-size: 0.72rem; }
   .cta-band { padding: 60px 0; }
 }
+
+/* ===== PHOTO FOCAL POINT FIX (Apr 29 2026) ===== */
+/* Default object-fit:cover centers vertically, which crops heads off portrait shots.
+   Pull focal point up to roughly head/face area (~30% from top). */
+.photo-grid img,
+.trail-card-img img,
+.content-image img,
+.about-image-placeholder img,
+.hero-photo-placeholder img,
+.card-image img {
+  object-position: center 25%;
+}
+
+/* For the family photo grid where the kids' heads are spread across the upper third */
+.photo-grid-family img {
+  object-position: center 20%;
+}
