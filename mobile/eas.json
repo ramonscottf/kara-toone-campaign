@@ -1,0 +1,36 @@
+{
+  "cli": {
+    "version": ">= 12.0.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      }
+    },
+    "preview": {
+      "distribution": "store",
+      "ios": {
+        "autoIncrement": true
+      }
+    },
+    "production": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "preview": {
+      "ios": {
+        "appleTeamId": "572R4QQ2ZA"
+      }
+    },
+    "production": {
+      "ios": {
+        "appleTeamId": "572R4QQ2ZA"
+      }
+    }
+  }
+}

@@ -689,6 +689,10 @@
   #clear-choice [style*="grid-template-columns:1fr 1fr"] { grid-template-columns: 1fr !important; }
   #clear-choice [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
 }
+@media (max-width: 480px) {
+  #clear-choice [style*="grid-template-columns:repeat(4"] { grid-template-columns: 1fr !important; }
+  #clear-choice [style*="padding:48px 36px"] { padding: 32px 24px !important; }
+}
 </style>
 </head>
 <body>
@@ -702,6 +706,7 @@
   <a href="index.html">Home</a>
   <a href="about.html">About Kara</a>
   <a href="index.html#priorities">Priorities</a>
+  <a href="district-data.html">District Data</a>
   <a href="index.html#events">Events</a>
   <a href="index.html#involved">Get Involved</a>
   <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" style="color:var(--gold)">Donate Now &rarr;</a>
@@ -713,6 +718,7 @@
   <ul class="nav-links">
     <li><a href="about.html">About</a></li>
     <li><a href="index.html#priorities">Priorities</a></li>
+    <li><a href="district-data.html">HD14 Data</a></li>
     <li><a href="index.html#events">Events</a></li>
     <li><a href="index.html#involved">Get Involved</a></li>
     <li><a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="nav-donate" target="_blank">Donate</a></li>
@@ -811,7 +817,7 @@
       <div class="about-image-wrap reveal">
         <div class="about-image-frame">
           <div class="about-image-placeholder">
-            <img src="https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/02_Hero_Images/Hero_BurgundySweater_Outdoor.jpg" alt="Kara Toone, Executive Director of Davis Education Foundation">
+            <img src="https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/02_Hero_Images/Hero_BurgundySweater_Outdoor.jpg" alt="Kara Toone, Executive Director of Davis Education Foundation" loading="lazy">
           </div>
           <div class="about-image-label">Executive Director &middot; Davis Education Foundation</div>
         </div>
@@ -848,7 +854,7 @@
       <div class="stat-label">Children Raised Here</div>
     </div>
     <div class="stat-item reveal reveal-delay-3">
-      <div class="stat-number" data-suffix="K+">72</div>
+      <div class="stat-number" data-target="67" data-suffix="K+">0</div>
       <div class="stat-label">Students She Serves</div>
     </div>
   </div>
@@ -906,42 +912,11 @@
 <!-- Endorsements -->
 <section id="endorsements">
   <div class="section-inner">
-    <div class="endorsements-header">
+    <div class="endorsements-header" style="max-width:640px; margin:0 auto;">
       <div class="section-eyebrow reveal" style="color: rgba(255,255,255,0.7); justify-content:center"><span style="background:rgba(255,255,255,0.3); width:28px; height:1px; display:inline-block; margin-right:12px;"></span>Endorsements</div>
       <h2 class="reveal reveal-delay-1">Trusted by community leaders.</h2>
-      <p class="reveal reveal-delay-2">Neighbors, leaders, and organizations who believe in Kara's vision for District 14.</p>
-    </div>
-    <div class="endorsements-grid">
-      <div class="endorsement-card reveal">
-        <p class="endorsement-quote">"Kara brings the rare combination of deep community roots and serious policy expertise. She's exactly the representative District 14 needs."</p>
-        <div class="endorsement-author">
-          <div class="endorsement-avatar">CL</div>
-          <div class="endorsement-info">
-            <strong>Community Leader</strong>
-            <span>Davis County</span>
-          </div>
-        </div>
-      </div>
-      <div class="endorsement-card reveal reveal-delay-1">
-        <p class="endorsement-quote">"As a fellow education advocate, I've watched Kara fight for students year after year. She doesn't just talk about schools &mdash; she's in the trenches every day."</p>
-        <div class="endorsement-author">
-          <div class="endorsement-avatar">EA</div>
-          <div class="endorsement-info">
-            <strong>Education Advocate</strong>
-            <span>Davis School District</span>
-          </div>
-        </div>
-      </div>
-      <div class="endorsement-card reveal reveal-delay-2">
-        <p class="endorsement-quote">"Kara understands the growth challenges facing Clearfield and Syracuse. She's the kind of practical, level-headed leader we need at the state level."</p>
-        <div class="endorsement-author">
-          <div class="endorsement-avatar">NB</div>
-          <div class="endorsement-info">
-            <strong>Neighbor &amp; Business Owner</strong>
-            <span>Clearfield, UT</span>
-          </div>
-        </div>
-      </div>
+      <p class="reveal reveal-delay-2" style="font-size:1.05rem; line-height:1.8; margin-bottom:32px;">Endorsements from neighbors, educators, business owners, and community leaders across District 14 are being collected and will be posted here soon.</p>
+      <p class="reveal reveal-delay-3" style="font-size:0.92rem;">Want to endorse Kara? <a href="mailto:votekaratoone@gmail.com?subject=Endorsement%20for%20Kara%20Toone" style="color:var(--gold); text-decoration:underline; font-weight:600;">Contact the campaign &rarr;</a></p>
     </div>
   </div>
 </section>
@@ -951,8 +926,8 @@
   <div class="section-inner">
     <div style="text-align:center; margin-bottom:64px;">
       <div class="section-eyebrow reveal" style="justify-content:center;">The Clear Choice</div>
-      <h2 class="reveal reveal-delay-1" style="font-family:'League Spartan',sans-serif; font-size:clamp(2.2rem,3.5vw,3rem); font-weight:900; color:var(--navy); margin-bottom:16px;">This race is about <em style="color:var(--red); font-style:italic;">who shows up.</em></h2>
-      <p class="reveal reveal-delay-2" style="font-size:1.05rem; color:#6B7A8D; max-width:600px; margin:0 auto; line-height:1.7; font-weight:300;">District 14 deserves a representative with roots in this community, real policy expertise, and a proven record of service. The choice is clear.</p>
+      <h2 class="reveal reveal-delay-1" style="font-family:'League Spartan',sans-serif; font-size:clamp(2.2rem,3.5vw,3rem); font-weight:900; color:var(--navy); margin-bottom:16px;">This race is about <em style="color:var(--red); font-style:italic;">substance.</em></h2>
+      <p class="reveal reveal-delay-2" style="font-size:1.05rem; color:#6B7A8D; max-width:700px; margin:0 auto; line-height:1.7; font-weight:300;">District 14 is an open seat for the first time in nearly a decade. The Republican primary on June 23 will decide who represents Clearfield and Syracuse. Compare the candidates.</p>
     </div>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:32px; max-width:900px; margin:0 auto;" class="reveal reveal-delay-3">
@@ -963,15 +938,19 @@
         <ul style="list-style:none; margin:0; padding:0;">
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
-            <span><strong style="color:white;">40+ years</strong> in Davis County &mdash; Viewmont High grad, 20+ years in Clearfield</span>
+            <span><strong style="color:white;">40+ years in Davis County</strong> &mdash; Viewmont High grad, 20+ years in Clearfield</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
-            <span><strong style="color:white;">Master's in Public Policy</strong> from the University of Utah</span>
+            <span><strong style="color:white;">Master&rsquo;s in Public Policy</strong> from the University of Utah</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
-            <span><strong style="color:white;">Exec. Director, Davis Education Foundation</strong> &mdash; serves 73,459 students daily</span>
+            <span><strong style="color:white;">Exec. Director, Davis Education Foundation</strong> &mdash; serves ~67,000 students daily</span>
+          </li>
+          <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
+            <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
+            <span><strong style="color:white;">Chairs Davis Chamber Legislative Affairs Committee</strong> &mdash; connects business priorities to state-level decisions</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
@@ -981,13 +960,9 @@
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
             <span><strong style="color:white;">Mother of four</strong> &mdash; kids in local schools, drives these roads, shops these stores</span>
           </li>
-          <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
-            <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
-            <span><strong style="color:white;">Data-driven conservative</strong> &mdash; real solutions backed by real research on growth, housing, schools, crime, and fiscal policy</span>
-          </li>
           <li style="display:flex; align-items:flex-start; gap:12px; font-size:0.92rem; color:rgba(255,255,255,0.85); line-height:1.6;">
             <span style="color:var(--gold); font-weight:700; flex-shrink:0;">&#10003;</span>
-            <span><strong style="color:white;">Chairs Davis Chamber Legislative Affairs Committee</strong> &mdash; connects business priorities to state-level decisions</span>
+            <span><strong style="color:white;">Data-driven conservative</strong> &mdash; 5 detailed policy positions backed by real research on growth, housing, schools, crime, and fiscal policy</span>
           </li>
         </ul>
       </div>
@@ -995,32 +970,36 @@
       <!-- Opponent Column -->
       <div style="background:var(--white); border-radius:4px; padding:48px 36px; border:1px solid #E0E8F0; position:relative;">
         <div style="position:absolute; top:0; left:0; right:0; height:4px; background:#D0D8E0;"></div>
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:0.15em; color:var(--gray); margin-bottom:20px;">THE OPPONENT</div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:0.15em; color:var(--gray); margin-bottom:20px;">JOHN TAYLOR</div>
         <ul style="list-style:none; margin:0; padding:0;">
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
             <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
-            <span>No public policy credentials or advanced degree</span>
+            <span>25 years in Davis County</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
             <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
-            <span>No daily experience serving 73,000+ students or managing education budgets</span>
+            <span>Army Intelligence Officer (retired) &mdash; no public policy degree or credentials listed</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
             <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
-            <span>No proven track record of Republican Party leadership or grassroots organizing in Davis County</span>
+            <span>No education leadership experience &mdash; no role serving district students or managing education budgets</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
             <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
-            <span>No connection to the Davis Chamber Legislative Affairs Committee or local business leadership</span>
+            <span>No legislative committee work &mdash; no Davis Chamber or legislative engagement listed</span>
           </li>
           <li style="display:flex; align-items:flex-start; gap:12px; margin-bottom:16px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
             <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
-            <span>No demonstrated deep-dive knowledge of the data driving growth, housing, education, and public safety challenges in HD14</span>
+            <span>Republican Party leader &mdash; specifics not detailed publicly</span>
+          </li>
+          <li style="display:flex; align-items:flex-start; gap:12px; font-size:0.92rem; color:#6B7A8D; line-height:1.6;">
+            <span style="color:#D0D8E0; font-weight:700; flex-shrink:0;">?</span>
+            <span>No published policy positions &mdash; website Issues page has no specific proposals (URL is literally /services-store &mdash; unchanged Squarespace default)</span>
           </li>
         </ul>
         <div style="margin-top:24px; padding:20px; background:var(--cream); border-radius:4px; border-left:3px solid var(--gold);">
           <p style="font-size:0.85rem; color:#4A5568; line-height:1.6; margin:0; font-weight:400;">
-            <strong style="color:var(--navy);">District 14 deserves substance over status quo.</strong> This seat is open for the first time in nearly a decade. The Republican primary on June 23, 2026 will decide who represents our community. Choose the candidate who has done the work.
+            <strong style="color:var(--navy);">District 14 deserves substance over slogans.</strong> This seat is open for the first time in nearly a decade. The Republican primary on June 23, 2026 will decide who represents our community. Choose the candidate who has done the work.
           </p>
         </div>
       </div>
@@ -1037,7 +1016,7 @@
         <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase; margin-top:6px;">Median Home Price</div>
       </div>
       <div style="padding:16px 24px; border-right:1px solid rgba(255,255,255,0.08);">
-        <div style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--gold); line-height:1;">73,459</div>
+        <div style="font-family:'Bebas Neue',sans-serif; font-size:2.8rem; color:var(--gold); line-height:1;">~67,000</div>
         <div style="font-size:0.7rem; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase; margin-top:6px;">Students Kara Serves</div>
       </div>
       <div style="padding:16px 24px;">
@@ -1055,60 +1034,12 @@
 <!-- Events -->
 <section id="events">
   <div class="section-inner">
-    <div class="events-header">
-      <div class="section-eyebrow reveal">Upcoming Events</div>
+    <div class="events-header" style="max-width:640px; margin:0 auto; text-align:center;">
+      <div class="section-eyebrow reveal" style="justify-content:center;">Upcoming Events</div>
       <h2 class="reveal reveal-delay-1">Meet Kara in person.</h2>
-      <p class="reveal reveal-delay-2">Come out, ask questions, and learn how you can help shape the future of District 14.</p>
-    </div>
-    <div class="events-list">
-      <div class="event-item reveal">
-        <div class="event-date">
-          <div class="event-month">Apr</div>
-          <div class="event-day">5</div>
-          <div class="event-weekday">Saturday</div>
-        </div>
-        <div class="event-details">
-          <h3>Neighborhood Meet &amp; Greet</h3>
-          <p>Join Kara for an informal conversation about the issues that matter most to you and your family.</p>
-          <div class="event-meta">
-            <span>&#x1F4CD; Clearfield, UT</span>
-            <span>&#x1F552; 10:00 AM</span>
-          </div>
-        </div>
-        <a href="mailto:votekaratoone@gmail.com?subject=RSVP%3A%20Apr%205%20Meet%20%26%20Greet" class="event-rsvp">RSVP</a>
-      </div>
-      <div class="event-item reveal reveal-delay-1">
-        <div class="event-date">
-          <div class="event-month">Apr</div>
-          <div class="event-day">12</div>
-          <div class="event-weekday">Saturday</div>
-        </div>
-        <div class="event-details">
-          <h3>Door Knocking Kickoff</h3>
-          <p>Join our volunteer team for a morning of canvassing. Training provided &mdash; no experience needed!</p>
-          <div class="event-meta">
-            <span>&#x1F4CD; Syracuse, UT</span>
-            <span>&#x1F552; 9:00 AM</span>
-          </div>
-        </div>
-        <a href="mailto:votekaratoone@gmail.com?subject=RSVP%3A%20Apr%2012%20Door%20Knocking" class="event-rsvp">RSVP</a>
-      </div>
-      <div class="event-item reveal reveal-delay-2">
-        <div class="event-date">
-          <div class="event-month">Apr</div>
-          <div class="event-day">22</div>
-          <div class="event-weekday">Tuesday</div>
-        </div>
-        <div class="event-details">
-          <h3>Cottage Meeting &mdash; Education &amp; Schools</h3>
-          <p>An intimate gathering focused on public education funding, school choice, and what families need from the legislature.</p>
-          <div class="event-meta">
-            <span>&#x1F4CD; Clearfield, UT</span>
-            <span>&#x1F552; 6:30 PM</span>
-          </div>
-        </div>
-        <a href="mailto:votekaratoone@gmail.com?subject=RSVP%3A%20Apr%2022%20Cottage%20Meeting" class="event-rsvp">RSVP</a>
-      </div>
+      <p class="reveal reveal-delay-2" style="font-size:1.05rem; line-height:1.8; color:#6B7A8D; margin-bottom:32px;">Cottage meetings, neighborhood meet-and-greets, and door knocking shifts are being scheduled across Clearfield and Syracuse. Sign up below to be the first to know when events are posted.</p>
+      <a href="#volunteer-form" class="btn-primary reveal reveal-delay-3" style="display:inline-block; margin-bottom:24px;">Get Event Updates &rarr;</a>
+      <p class="reveal reveal-delay-3" style="font-size:0.88rem; color:#9BA8B7; line-height:1.6;">Events will be posted here as they&rsquo;re confirmed. Check back soon &mdash; or follow Kara on <a href="https://www.instagram.com/karatooneforutah/" target="_blank" style="color:var(--red); text-decoration:underline;">Instagram</a> for real-time updates.</p>
     </div>
   </div>
 </section>
@@ -1264,6 +1195,7 @@
           <li><a href="priorities/public-safety.html">Safe Communities</a></li>
           <li><a href="priorities/education.html">Education &amp; Schools</a></li>
           <li><a href="priorities/fiscal-responsibility.html">Fiscal Responsibility</a></li>
+          <li><a href="district-data.html">District Data</a></li>
         </ul>
       </div>
       <div class="footer-col">

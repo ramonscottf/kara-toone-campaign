@@ -1,0 +1,56 @@
+{
+  "expo": {
+    "name": "Kara Toone",
+    "slug": "kara-toone",
+    "owner": "rscottf",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "karatoone",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F2F2F7"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wickowaypoint.campaignconnect",
+      "appleTeamId": "572R4QQ2ZA",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to securely sign in",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-apple-authentication",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photos for event and canvassing photos.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera for event and canvassing photos."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "deploymentTarget": "16.0"
+          }
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "1ecd20a7-bcdc-4c5a-bcb9-623ad758f113"
+      }
+    }
+  }
+}

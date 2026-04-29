@@ -29,5 +29,11 @@ build/
 *.tmp
 *.bak
 
+# Expo / React Native
+mobile/.expo/
+mobile/ios/
+mobile/android/
+mobile/.expo-shared/
+
 # Note: static/images/uploads/ should be committed to git
 # as DecapCMS needs to store images there

@@ -9,7 +9,7 @@ hero_image: "https://media.kara.fosterlabs.org/Website%20Media%20(Organized)/01_
 overview_section:
   title: "Education is Kara's Passion"
   content: |
-    For over a decade, Kara has worked directly in Davis County education as an executive at the Davis County Education Foundation. She knows our schools intimately. She knows our 72,000+ students. She knows our 90+ schools. And she knows our 5,000+ educators—the people who show up every day to shape our children's futures.
+    For over a decade, Kara has worked directly in Davis County education as an executive at the Davis County Education Foundation. She knows our schools intimately. She knows our ~67,000 students. She knows our 90+ schools. And she knows our 5,000+ educators—the people who show up every day to shape our children's futures.
 
     Education is the most important function of local government. Everything else flows from it. Children who receive a great education are healthier, earn more, commit fewer crimes, and build stronger families and communities. Great schools make communities thrive.
 
@@ -18,7 +18,7 @@ overview_section:
     Kara believes that investing in education is the best investment any county can make. She's committed to fully funding our schools and supporting the teachers and students who make them great.
 
 stats:
-  - number: "72,000+"
+  - number: "~67,000"
     label: "Students"
     description: "K-12 students in Davis County schools"
   - number: "90+"

@@ -11,9 +11,10 @@ import {
   jsonResponse,
   errorResponse,
   CONTACT_COLUMNS,
-  SHEET_TAB,
-  SHEET_LAST_COL,
+  generateId,
 } from "../_shared/sheets.js";
+
+// ── Contact column definitions ───────────────
 
 // ── Validation ───────────────────────────────
 
@@ -22,6 +23,8 @@ const REQUIRED_FIELDS = {
   yardsign: ['first_name', 'last_name', 'address', 'city', 'zip'],
   contact: ['first_name', 'email'],
   donate: ['first_name', 'last_name', 'email'],
+  cottage_meeting: ['first_name', 'last_name'],
+  delegate_interest: ['first_name', 'last_name', 'email'],
 };
 
 function validateFields(formType, fields) {
@@ -92,6 +95,18 @@ const WELCOME_TEMPLATES = {
 <p>Thank you for your generous contribution to the Kara Toone campaign. Your support makes a real difference.</p>
 <p>Best,<br>Team Kara Toone</p>`,
   },
+  cottage_meeting: {
+    subject: 'See you at the cottage meeting!',
+    html: `<p>Hi {first_name},</p>
+<p>Thanks for RSVPing to our cottage meeting! We look forward to seeing you there.</p>
+<p>Best,<br>Team Kara Toone</p>`,
+  },
+  delegate_interest: {
+    subject: 'Thanks for your delegate interest!',
+    html: `<p>Hi {first_name},</p>
+<p>Thank you for expressing interest in being a delegate. We'll follow up with more information soon.</p>
+<p>Best,<br>Team Kara Toone</p>`,
+  },
 };
 
 // ── Send welcome email via Resend ────────────
@@ -123,6 +138,17 @@ async function sendWelcomeEmail(env, email, firstName, formType) {
   }
 }
 
+// ── Form type to contact type mapping ────────
+
+const FORM_TYPE_MAP = {
+  volunteer: 'volunteer',
+  yardsign: 'yardsign',
+  contact: 'supporter',
+  donate: 'donor',
+  cottage_meeting: 'supporter',
+  delegate_interest: 'delegate',
+};
+
 // ── Main handler ─────────────────────────────
 
 export async function onRequestPost(context) {
@@ -147,8 +173,10 @@ export async function onRequestPost(context) {
       return errorResponse(validationErrors.join('; '), 400);
     }
 
+    const now = new Date().toISOString();
+
     // Read existing contacts to check for duplicates
-    const data = await sheetsGet(env, SHEET_TAB + '!A2:' + SHEET_LAST_COL);
+    const data = await sheetsGet(env, 'Contacts!A2:Y');
     const rows = data.values || [];
 
     const existing = rows.length > 0
@@ -159,7 +187,7 @@ export async function onRequestPost(context) {
 
     if (existing) {
       // Update existing contact — merge new data without overwriting existing values
-      contactId = 'row_' + existing.rowIndex;
+      contactId = existing.row[CONTACT_COLUMNS.indexOf('id')] || generateId();
       const updatedRow = [...existing.row];
 
       // Ensure row is long enough for all columns
@@ -175,31 +203,56 @@ export async function onRequestPost(context) {
         }
       }
 
-      // Append form type to notes
-      const notesIdx = CONTACT_COLUMNS.indexOf('notes');
-      if (notesIdx !== -1) {
-        const existingNotes = updatedRow[notesIdx] || '';
-        const formNote = form_type + '-form';
-        if (!existingNotes.includes(formNote)) {
-          updatedRow[notesIdx] = existingNotes ? `${existingNotes}; ${formNote}` : formNote;
+      // Update type if it adds a new role (append with comma)
+      const typeIdx = CONTACT_COLUMNS.indexOf('type');
+      const newType = FORM_TYPE_MAP[form_type] || form_type;
+      const existingType = (updatedRow[typeIdx] || '').toLowerCase();
+      if (typeIdx !== -1 && !existingType.includes(newType)) {
+        updatedRow[typeIdx] = existingType ? `${updatedRow[typeIdx]},${newType}` : newType;
+      }
+
+      // Update source to note the new form submission
+      const sourceIdx = CONTACT_COLUMNS.indexOf('source');
+      if (sourceIdx !== -1) {
+        const existingSource = updatedRow[sourceIdx] || '';
+        const newSource = `${form_type}-form`;
+        if (!existingSource.includes(newSource)) {
+          updatedRow[sourceIdx] = existingSource ? `${existingSource},${newSource}` : newSource;
         }
       }
 
+      // Update timestamps
+      const updatedAtIdx = CONTACT_COLUMNS.indexOf('updated_at');
+      if (updatedAtIdx !== -1) updatedRow[updatedAtIdx] = now;
+
+      // Ensure opt-in defaults
+      const optEmailIdx = CONTACT_COLUMNS.indexOf('opt_email');
+      if (optEmailIdx !== -1 && !updatedRow[optEmailIdx]) updatedRow[optEmailIdx] = 'true';
+      const optTextIdx = CONTACT_COLUMNS.indexOf('opt_text');
+      if (optTextIdx !== -1 && !updatedRow[optTextIdx]) updatedRow[optTextIdx] = 'true';
+
       // Write back the updated row
-      const rowRange = `${SHEET_TAB}!A${existing.rowIndex}:${SHEET_LAST_COL}${existing.rowIndex}`;
+      const rowRange = `Contacts!A${existing.rowIndex}:${String.fromCharCode(64 + CONTACT_COLUMNS.length)}${existing.rowIndex}`;
       await sheetsUpdate(env, rowRange, [updatedRow]);
     } else {
       // Create new contact
+      contactId = generateId();
       const newRow = CONTACT_COLUMNS.map((col) => {
-        if (col === 'support_level') return 'Unknown';
-        if (col === 'hd') return '14';
-        if (col === 'contacted') return 'No';
-        if (col === 'notes') return form_type + '-form';
+        if (col === 'id') return contactId;
+        if (col === 'type') return FORM_TYPE_MAP[form_type] || form_type;
+        if (col === 'source') return `${form_type}-form`;
+        if (col === 'contacted') return 'false';
+        if (col === 'contact_attempts') return '0';
+        if (col === 'email_opened') return 'false';
+        if (col === 'phone_answered') return 'false';
+        if (col === 'opt_email') return 'true';
+        if (col === 'opt_text') return 'true';
+        if (col === 'created_at') return now;
+        if (col === 'updated_at') return now;
         return fields[col] ? fields[col].toString().trim() : '';
       });
 
-      await sheetsAppend(env, SHEET_TAB + '!A:' + SHEET_LAST_COL, [newRow]);
-      contactId = 'new';
+      await sheetsAppend(env, 'Contacts!A:Y', [newRow]);
     }
 
     // Send welcome email (non-blocking — fire and forget)
@@ -213,6 +266,8 @@ export async function onRequestPost(context) {
       yardsign: `Your yard sign request has been submitted!`,
       contact: `Thanks for reaching out! We'll get back to you shortly.`,
       donate: `Thank you for your generous support!`,
+      cottage_meeting: `Thanks for RSVPing! We look forward to seeing you.`,
+      delegate_interest: `Thank you for your interest in being a delegate!`,
     };
 
     return jsonResponse({
