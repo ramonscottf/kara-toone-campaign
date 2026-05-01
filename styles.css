@@ -5,11 +5,11 @@
 :root {
   --navy: #1B3A69;
   --deep: #152E54;
-  --red: #ED2631;
-  --red-bright: #F03A44;
-  --gold: #FFD833;
-  --sun: #FFE066;
-  --gold-deep: #E6BD00;
+  --red: #D60306;
+  --red-bright: #ED2631;
+  --gold: #D79602;
+  --sun: #F9B60C;
+  --gold-deep: #B57E00;
   --cream: #F7F3EE;
   --white: #FFFFFF;
   --gray: #8A9AB0;
@@ -274,18 +274,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   background: var(--gold);
   border: none; border-radius: 50%;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(255,216,51,0.4);
+  box-shadow: 0 4px 20px rgba(215,150,2,0.4);
   animation: heartPulse 2s ease-in-out infinite;
 }
 .donate-heart-float svg {
   width: 24px; height: 24px; fill: var(--navy);
 }
 @keyframes heartPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
-  15% { transform: scale(1.12); box-shadow: 0 6px 28px rgba(255,216,51,0.55); }
-  30% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
-  45% { transform: scale(1.10); box-shadow: 0 6px 28px rgba(255,216,51,0.55); }
-  60% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(255,216,51,0.35); }
+  0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(215,150,2,0.35); }
+  15% { transform: scale(1.12); box-shadow: 0 6px 28px rgba(215,150,2,0.55); }
+  30% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(215,150,2,0.35); }
+  45% { transform: scale(1.10); box-shadow: 0 6px 28px rgba(215,150,2,0.55); }
+  60% { transform: scale(1.0); box-shadow: 0 4px 20px rgba(215,150,2,0.35); }
 }
 
 /* ─── ANIMATIONS ─── */
@@ -576,14 +576,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   content: '';
   position: absolute; top: -120px; right: -80px;
   width: 420px; height: 420px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,216,51,0.12) 0%, rgba(255,216,51,0) 70%);
+  background: radial-gradient(circle, rgba(215,150,2,0.12) 0%, rgba(215,150,2,0) 70%);
   animation: driftBlob 12s ease-in-out infinite alternate;
 }
 .cta-band::after {
   content: '';
   position: absolute; bottom: -100px; left: -60px;
   width: 350px; height: 350px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,216,51,0.08) 0%, rgba(255,216,51,0) 70%);
+  background: radial-gradient(circle, rgba(215,150,2,0.08) 0%, rgba(215,150,2,0) 70%);
   animation: driftBlob 10s ease-in-out 2s infinite alternate-reverse;
 }
 @keyframes driftBlob {
@@ -715,7 +715,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   transform: scale(1.03);
 }
 .amount-btn.active {
-  background: rgba(255,216,51,0.18);
+  background: rgba(215,150,2,0.18);
   border-color: var(--gold);
   color: var(--gold);
   transform: scale(1.03);
@@ -756,7 +756,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   content: '';
   position: absolute; top: -60px; right: -40px;
   width: 300px; height: 300px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,216,51,0.10) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(215,150,2,0.10) 0%, transparent 70%);
   animation: driftBlob 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -764,7 +764,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   content: '';
   position: absolute; bottom: -40px; left: -20px;
   width: 250px; height: 250px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,216,51,0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(215,150,2,0.07) 0%, transparent 70%);
   animation: driftBlob 11s ease-in-out 3s infinite alternate-reverse;
   pointer-events: none;
 }
