@@ -33,7 +33,7 @@
   position: relative; min-height: 100vh;
   display: flex; align-items: center;
   overflow: hidden;
-  background: var(--navy);
+  background: var(--gold);
 }
 .hero-video-wrap {
   position: absolute; inset: 0; z-index: 0;
@@ -50,13 +50,13 @@
 }
 .hero-bg-pattern {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(21,46,84,0.88) 0%, rgba(21,46,84,0.82) 35%, rgba(21,46,84,0.5) 55%, rgba(21,46,84,0.15) 75%, transparent 100%);
+  background: linear-gradient(to right, rgba(255,216,51,0.92) 0%, rgba(255,216,51,0.85) 35%, rgba(255,216,51,0.5) 55%, rgba(255,216,51,0.15) 75%, transparent 100%);
   z-index: 1;
 }
 .hero-accent-stripe {
   position: absolute; left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: var(--gold);
+  width: 8px;
+  background: var(--navy);
   z-index: 2;
 }
 .hero-photo-col {
@@ -67,10 +67,10 @@
   content: '';
   position: absolute; left: -60px; top: 0; bottom: 0; width: 400px;
   background: linear-gradient(to right,
-    rgba(21,46,84,0.95) 0%,
-    rgba(21,46,84,0.7) 25%,
-    rgba(21,46,84,0.35) 50%,
-    rgba(21,46,84,0.1) 75%,
+    rgba(255,216,51,0.95) 0%,
+    rgba(255,216,51,0.7) 25%,
+    rgba(255,216,51,0.35) 50%,
+    rgba(255,216,51,0.1) 75%,
     transparent 100%);
   z-index: 2;
   pointer-events: none;
@@ -78,14 +78,14 @@
 .hero-photo-col::after {
   content: '';
   position: absolute; left: 0; right: 0; bottom: 0; height: 200px;
-  background: linear-gradient(to top, rgba(21,46,84,0.8) 0%, transparent 100%);
+  background: linear-gradient(to top, rgba(255,216,51,0.8) 0%, transparent 100%);
   z-index: 2;
   pointer-events: none;
 }
 .hero-photo-placeholder {
   width: 100%; height: 100%;
   position: relative;
-  background: linear-gradient(160deg, #152E54 0%, #1B3A69 100%);
+  background: linear-gradient(160deg, var(--gold) 0%, var(--sun) 100%);
   display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
 }
 .hero-photo-placeholder img {
@@ -99,22 +99,22 @@
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 12px;
   font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--gold); font-weight: 600; margin-bottom: 28px;
+  color: var(--navy); font-weight: 700; margin-bottom: 28px;
   opacity: 0; transform: translateY(20px);
   animation: fadeUp 0.7s 0.3s ease forwards;
 }
 .hero-eyebrow::before {
-  content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  content: ''; display: block; width: 32px; height: 2px; background: var(--red);
 }
 .hero-name {
   font-family: 'League Spartan', sans-serif;
   font-size: clamp(3.5rem, 6vw, 6rem);
   font-weight: 900; line-height: 1.0;
-  color: var(--white); margin-bottom: 8px;
+  color: var(--navy); margin-bottom: 8px;
   opacity: 0; transform: translateY(30px);
   animation: fadeUp 0.8s 0.5s ease forwards;
 }
-.hero-name-first { color: var(--gold); }
+.hero-name-first { color: var(--navy); }
 .hero-tagline {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(1.8rem, 3.5vw, 3rem);
@@ -126,9 +126,9 @@
 }
 .hero-desc {
   font-size: 1.05rem; line-height: 1.7;
-  color: rgba(255,255,255,0.7);
+  color: var(--navy);
   max-width: 480px; margin-bottom: 48px;
-  font-weight: 300;
+  font-weight: 400;
   opacity: 0; transform: translateY(20px);
   animation: fadeUp 0.8s 0.9s ease forwards;
 }
@@ -145,14 +145,14 @@
 .hero-badge-item {
   display: flex; flex-direction: column;
   padding: 12px 24px;
-  border-left: 2px solid var(--gold);
+  border-left: 3px solid var(--red);
 }
 .hero-badge-item strong {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.8rem; color: var(--white); line-height: 1;
+  font-size: 1.8rem; color: var(--navy); line-height: 1;
 }
 .hero-badge-item span {
-  font-size: 0.7rem; color: var(--gray); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;
+  font-size: 0.7rem; color: var(--navy); opacity: 0.7; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px;
 }
 .scroll-indicator {
   position: absolute; bottom: 32px; right: 48px; z-index: 3;
@@ -161,11 +161,11 @@
 }
 .scroll-indicator span {
   font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.4); writing-mode: vertical-rl;
+  color: rgba(21,46,84,0.6); writing-mode: vertical-rl;
 }
 .scroll-line {
   width: 1px; height: 48px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+  background: linear-gradient(to bottom, rgba(21,46,84,0.5), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
 }
 @keyframes scrollPulse {
@@ -174,7 +174,7 @@
 }
 
 /* ─── ABOUT (home) ─── */
-#about { padding: 120px 0; background: var(--cream); }
+#about { padding: 120px 0; background: var(--sun); }
 .about-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
 }
@@ -199,7 +199,7 @@
 .about-image-accent {
   position: absolute; bottom: -20px; right: -20px;
   width: 120px; height: 120px;
-  background: var(--gold); opacity: 0.2;
+  background: var(--red); opacity: 1;
   border-radius: 2px; z-index: 0;
 }
 .about-image-label {
@@ -218,7 +218,7 @@
 .about-text h2 em { font-style: italic; color: var(--red); }
 .about-text p {
   font-size: 1rem; line-height: 1.8;
-  color: #4A5568; margin-bottom: 20px; font-weight: 300;
+  color: var(--navy); margin-bottom: 20px; font-weight: 400;
 }
 .about-read-more {
   display: inline-flex; align-items: center; gap: 8px;
@@ -231,9 +231,9 @@
 
 /* ─── STATS BAND ─── */
 .stats-band {
-  background: var(--navy); padding: 72px 0;
-  border-top: 2px solid var(--gold);
-  border-bottom: 2px solid var(--gold);
+  background: var(--gold); padding: 72px 0;
+  border-top: 4px solid var(--navy);
+  border-bottom: 4px solid var(--navy);
 }
 .stats-grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -241,17 +241,17 @@
 }
 .stat-item {
   text-align: center; padding: 24px;
-  border-right: 1px solid rgba(255,255,255,0.08);
+  border-right: 1px solid rgba(21,46,84,0.12);
 }
 .stat-item:last-child { border-right: none; }
 .stat-number {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 3.5rem; color: var(--gold); line-height: 1;
+  font-size: 3.5rem; color: var(--navy); line-height: 1;
   margin-bottom: 8px;
 }
 .stat-label {
-  font-size: 0.75rem; color: rgba(255,255,255,0.5);
-  letter-spacing: 0.1em; text-transform: uppercase;
+  font-size: 0.75rem; color: var(--navy); opacity: 0.7;
+  letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
 }
 
 /* ─── PRIORITIES (home cards) ─── */
@@ -369,7 +369,10 @@
 }
 
 /* ─── EVENTS ─── */
-#events { padding: 120px 0; background: var(--cream); }
+#events { padding: 120px 0; background: var(--gold); }
+#events .events-header h2 { color: var(--navy); }
+#events .events-header p { color: var(--navy) !important; opacity: 0.85; }
+#events p[style*="9BA8B7"] { color: var(--navy) !important; opacity: 0.7; }
 .events-header { margin-bottom: 56px; }
 .events-header h2 {
   font-family: 'League Spartan', sans-serif;
@@ -425,16 +428,20 @@
 }
 .event-rsvp:hover { background: var(--navy); color: white; }
 
+/* ─── CLEAR CHOICE — yellow bg overrides ─── */
+#clear-choice .reveal-delay-2 { color: var(--navy) !important; opacity: 0.78; }
+#clear-choice h2 { color: var(--navy); }
+
 /* ─── GET INVOLVED ─── */
 #involved {
-  padding: 120px 0; background: var(--cream);
+  padding: 120px 0; background: var(--sun);
   position: relative; overflow: hidden;
 }
 #involved::before {
   content: 'DISTRICT 14';
   position: absolute; right: -40px; top: 50%; transform: translateY(-50%) rotate(90deg);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 8rem; color: rgba(13,31,60,0.04);
+  font-size: 8rem; color: rgba(13,31,60,0.08);
   letter-spacing: 0.1em; white-space: nowrap; pointer-events: none;
 }
 .involved-header { margin-bottom: 64px; }
@@ -667,25 +674,26 @@
 /* ─── YELLOW RIBBON ─── */
 .yellow-ribbon {
   background: var(--gold);
-  padding: 14px 24px;
+  padding: 22px 24px;
   text-align: center;
   overflow: hidden;
   position: relative;
-  border-top: 1px solid rgba(13,31,60,0.08);
-  border-bottom: 1px solid rgba(13,31,60,0.08);
+  border-top: 4px solid var(--navy);
+  border-bottom: 4px solid var(--navy);
 }
 .yellow-ribbon-text {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.25rem;
-  letter-spacing: 0.18em;
+  font-size: 1.6rem;
+  letter-spacing: 0.22em;
   color: var(--navy);
   text-transform: uppercase;
   white-space: nowrap;
   display: inline-block;
+  font-weight: 400;
 }
 @media (max-width: 768px) {
-  .yellow-ribbon { padding: 12px 16px; }
-  .yellow-ribbon-text { font-size: 0.95rem; letter-spacing: 0.12em; }
+  .yellow-ribbon { padding: 16px 12px; }
+  .yellow-ribbon-text { font-size: 1rem; letter-spacing: 0.14em; }
 }
 
 /* ─── RESPONSIVE ─── */
@@ -782,7 +790,7 @@
     </p>
     <div class="hero-ctas">
       <a href="about.html" class="btn-primary">Meet Kara</a>
-      <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-outline" target="_blank">Support the Campaign</a>
+      <a href="https://secure.anedot.com/117e8124-433e-4d99-acbd-249fa76c6e0c/donate" class="btn-outline-dark" target="_blank">Support the Campaign</a>
     </div>
   </div>
 
@@ -958,7 +966,7 @@
 </section>
 
 <!-- The Clear Choice -->
-<section id="clear-choice" style="padding:100px 0; background:var(--cream); position:relative; overflow:hidden;">
+<section id="clear-choice" style="padding:100px 0; background:var(--gold); position:relative; overflow:hidden;">
   <div class="section-inner">
     <div style="text-align:center; margin-bottom:64px;">
       <div class="section-eyebrow reveal" style="justify-content:center;">The Clear Choice</div>
