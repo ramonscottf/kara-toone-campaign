@@ -8,6 +8,8 @@
   --red: #ED2631;
   --red-bright: #F03A44;
   --gold: #FFD833;
+  --sun: #FFE066;
+  --gold-deep: #E6BD00;
   --cream: #F7F3EE;
   --white: #FFFFFF;
   --gray: #8A9AB0;
@@ -41,18 +43,29 @@ nav.scrolled {
 .nav-logo {
   display: flex; align-items: center;
   text-decoration: none;
+  background: var(--navy);
+  padding: 6px 14px;
+  border-radius: 4px;
+  transition: background 0.4s, padding 0.4s;
 }
 .nav-logo img {
   height: 36px; width: auto; max-width: 160px; object-fit: contain;
 }
+nav.scrolled .nav-logo {
+  background: transparent;
+  padding: 0;
+}
 .nav-links { display: flex; gap: 36px; align-items: center; list-style: none; }
 .nav-links a {
-  color: rgba(255,255,255,0.8); font-size: 0.85rem; font-weight: 500;
+  color: rgba(21,46,84,0.85); font-size: 0.85rem; font-weight: 600;
   text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--gold); }
-.nav-links a.active { color: var(--gold); }
+.nav-links a:hover { color: var(--red); }
+.nav-links a.active { color: var(--red); }
+nav.scrolled .nav-links a { color: rgba(255,255,255,0.85); }
+nav.scrolled .nav-links a:hover { color: var(--gold); }
+nav.scrolled .nav-links a.active { color: var(--gold); }
 .nav-donate {
   background: var(--red); color: white !important;
   padding: 10px 24px; border-radius: 2px;
@@ -66,9 +79,10 @@ nav.scrolled {
   background: none; border: none; cursor: pointer; padding: 8px;
 }
 .hamburger span {
-  display: block; width: 24px; height: 2px; background: white;
+  display: block; width: 24px; height: 2px; background: var(--navy);
   transition: all 0.3s;
 }
+nav.scrolled .hamburger span { background: white; }
 
 /* ─── SECTION BASE ─── */
 section { position: relative; }
@@ -78,7 +92,7 @@ section { position: relative; }
   font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--red); font-weight: 600; margin-bottom: 20px;
 }
-.section-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--red); }
+.section-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
 
 /* ─── BUTTONS ─── */
 .btn-primary {
@@ -696,8 +710,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   border-radius: 2px; cursor: pointer;
   transition: all 0.2s; text-align: center;
 }
-.amount-btn:hover, .amount-btn.active {
+.amount-btn:hover {
   background: rgba(255,255,255,0.25); border-color: white;
+  transform: scale(1.03);
+}
+.amount-btn.active {
+  background: rgba(255,216,51,0.18);
+  border-color: var(--gold);
+  color: var(--gold);
   transform: scale(1.03);
 }
 .amount-sublabel { font-family: 'DM Sans', sans-serif; font-size: 0.55rem; display: block; opacity: 0.7; letter-spacing: 0.08em; text-transform: uppercase; }
